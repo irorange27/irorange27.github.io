@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Git的学习与使用</title>
+    <url>/2023-02-24-11-Git%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>If you find any bugs or grammar issues, please don’t hesitate to contact me to fix them. Anyway, thanks again for accepting my poor English.</p>
+<p>Git是一个版本管理语言。在多人合作项目中有出色的表现，若在个人开发中就养成使用git的习惯，也有助于使开发逻辑保持清晰。这篇只是简单的入门，只能完成推送到远程仓库的步骤。更多的内容，我之后会继续更新。</p>
+<p>3月14日</p>
+<hr>
+<p>Git is a language to control version of  coding.<br>Git was created by <em><strong>Linus Torvalds</strong></em> in order to manage <strong>Linux core code</strong> for convenience.</p>
+<p><strong>Feature</strong>:</p>
+<ol>
+<li>Distribution</li>
+<li>Version Management</li>
+</ol>
+<p> <img src="/2023-02-24-11-Git%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BD%BF%E7%94%A8/20230308220609.png" alt="png"></p>
+<h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><p>我们开始吧。<br>安装好git，配置好环境变量之后。<br>我们需要配置用户名和邮箱，仅用作远程提交时的身份显示。但不用于身份验证。即使这样也不能随意配置。</p>
+<h3 id="配置用户名和邮箱"><a href="#配置用户名和邮箱" class="headerlink" title="配置用户名和邮箱"></a>配置用户名和邮箱</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name &lt;username&gt;</span><br><span class="line">git config --global user.email &lt;email&gt;</span><br></pre></td></tr></table></figure>
+<p>查看配置信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --list</span><br><span class="line">git config user.name</span><br><span class="line">git config user.email</span><br></pre></td></tr></table></figure>
+
+<h2 id="本地操作——常用操作"><a href="#本地操作——常用操作" class="headerlink" title="本地操作——常用操作"></a>本地操作——常用操作</h2><p>我们介绍一些Git常用的<strong>本地操作</strong>。</p>
+<h3 id="初始化仓库"><a href="#初始化仓库" class="headerlink" title="初始化仓库"></a>初始化仓库</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<h3 id="添加文件到暂存区"><a href="#添加文件到暂存区" class="headerlink" title="添加文件到暂存区"></a>添加文件到暂存区</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git add &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">rm</span> &lt;filename&gt; <span class="comment"># Remove the file from stage and workspace</span></span><br><span class="line">git <span class="built_in">rm</span> --cached &lt;filename&gt; <span class="comment"># Only remove it from stage</span></span><br></pre></td></tr></table></figure>
+<h3 id="查看仓库状态"><a href="#查看仓库状态" class="headerlink" title="查看仓库状态"></a>查看仓库状态</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
+
+<h3 id="比较版本差异"><a href="#比较版本差异" class="headerlink" title="比较版本差异"></a>比较版本差异</h3><p>其中版本号是哈希值。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git diff <span class="comment"># difference bewteen stage and workspace</span></span><br><span class="line">git diff --cached <span class="comment"># difference bewteen stage and last commit</span></span><br><span class="line">git diff &lt;first-branch&gt; &lt;second-branch&gt; <span class="comment"># difference bewteen two branch</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="提交暂存区到仓库"><a href="#提交暂存区到仓库" class="headerlink" title="提交暂存区到仓库"></a>提交暂存区到仓库</h3><p>commit会将所有stage中的文件都提交到repo里。<br>我们可以通过.gitignore来控制上传到stage的进程（猜测）。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git  commit -m &lt;message&gt; <span class="comment"># After $ git add</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查看历史提交记录"><a href="#查看历史提交记录" class="headerlink" title="查看历史提交记录"></a>查看历史提交记录</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+<h3 id="回退版本"><a href="#回退版本" class="headerlink" title="回退版本"></a>回退版本</h3><p>git log查看版本号。<br>回退时只需要版本号哈希值的前七位即可。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git reset HEAD^ <span class="comment"># Back recent version</span></span><br><span class="line">git reset --mixed &lt;version&gt; <span class="comment"># Go Back and save changed data to worksapce</span></span><br><span class="line">git reset --soft &lt;version&gt; <span class="comment"># Go Back and save changed data to stage</span></span><br><span class="line">git reset --hard &lt;version&gt; <span class="comment"># Absolutely Go Back to the version</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="撤销add操作"><a href="#撤销add操作" class="headerlink" title="撤销add操作"></a>撤销add操作</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git reset HEAD &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="本地操作——分支管理"><a href="#本地操作——分支管理" class="headerlink" title="本地操作——分支管理"></a>本地操作——分支管理</h2><p><strong>分支管理</strong>是实现多版本管理的关键。</p>
+<h3 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a><strong>基础操作</strong></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git branch &lt;branch_name&gt; <span class="comment"># Create a new branch based pre-existing branch</span></span><br><span class="line">git branch -v <span class="comment"># overlook all branches</span></span><br><span class="line">git branch -d &lt;branch_name&gt; <span class="comment"># delete branch </span></span><br><span class="line">git branch -m &lt;old-name&gt; &lt;new-name&gt; <span class="comment"># Change branch name</span></span><br><span class="line">git checkout &lt;branch_name&gt; <span class="comment"># Shift the branch</span></span><br><span class="line">git checkout -b &lt;branch_name&gt; <span class="comment"># Create and Shift a new branch</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分支合并"><a href="#分支合并" class="headerlink" title="分支合并"></a>分支合并</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git merge &lt;branch_name&gt; <span class="comment"># merge with other branch</span></span><br></pre></td></tr></table></figure>
+<p>可能会出现<strong>分支冲突</strong>的现象——即不同分支对同一内容进行了不同的修改。<br>这时我们需要根据git的提示信息手动修改冲突的位置。通过VSCode等IDE可以直接选择保留哪一分支的内容。</p>
+<h2 id="远程操作——托管平台"><a href="#远程操作——托管平台" class="headerlink" title="远程操作——托管平台"></a>远程操作——托管平台</h2><p><strong>常用的托管平台</strong><br>Github<br>Gitee<br>清华还有自己的Gitlab，羡慕了。</p>
+<p><strong>身份验证</strong><br>远程操作需要验证。<br>而本地仓库和托管平台之间的身份验证一般是通过<strong>SSH加密</strong>实现的。</p>
+<blockquote>
+<p>Using <code>ssh-keygen -t rsa -C &quot;email&quot;</code>  to generate SSH key.<br>And copy <code>.ssh/id_rsa.pub</code> to GitHub-&gt;setting-&gt;sshkey.</p>
+</blockquote>
+<p>这就完成身份验证的配置了。</p>
+<h2 id="远程操作——基本操作"><a href="#远程操作——基本操作" class="headerlink" title="远程操作——基本操作"></a>远程操作——基本操作</h2><h3 id="绑定远程仓库"><a href="#绑定远程仓库" class="headerlink" title="绑定远程仓库"></a>绑定远程仓库</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote add &lt;name&gt; &lt;url&gt; <span class="comment"># name usually as origin</span></span><br><span class="line">git remote -v <span class="comment"># checkout the remote repository address </span></span><br><span class="line">git remote <span class="built_in">rm</span> &lt;name&gt; <span class="comment"># 解除绑定</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="拉取远程仓库"><a href="#拉取远程仓库" class="headerlink" title="拉取远程仓库"></a>拉取远程仓库</h3><p>第一个branch_name是指远程的分支名。第二个是本地的分支名。不指定可能会造成某种冲突。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> &lt;url&gt; -b &lt;branch_name&gt; <span class="comment"># &lt;-b&gt; to restrict branch</span></span><br><span class="line">git pull origin &lt;branch_name&gt; (:&lt;branch_name&gt;)</span><br><span class="line">git fetch origin &lt;branch_name&gt; (:&lt;branch_name&gt;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>pull、clone、fetch的区别</strong><br><code>git clone</code>是直接把远程仓库复制到本地，不需要git init。这也是我作为一个完全不懂git的小白最常用的操作。<br><code>git fetch</code>是拉取远程分支，只拉取不合并，需要手动merge到本地分支<br><code>git pull = git fetch + git merge</code>，直接将本地分支更新到远程版本。<br>使用pull和fetch可能会<strong>出现</strong>冲突，原因是远程版本和本地版本对<strong>同一内容</strong>有<strong>不同修改</strong>，解决方法是拉取到一个新的branch，手动解决后再merge。</p>
+</blockquote>
+<h3 id="推送到远程仓库"><a href="#推送到远程仓库" class="headerlink" title="推送到远程仓库"></a>推送到远程仓库</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push origin &lt;branch&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>推送到别人的仓库</strong><br>他人的仓库是无法直接push的（毕竟不能往别人的仓库乱扔东西）。<br>解决方法通常分为两种：</p>
+<ul>
+<li>1.请求别人将自己添加为collaborators。</li>
+<li>2.发起Pull Request\Merge Request,大家俗称的PR\pr（不是Adobe Premiere）</li>
+</ul>
+<blockquote>
+<p><strong>PR</strong>:申请对方拉取自己的代码。当想要向别人的仓库发送代码时，就需要发起PR。<br>一般你要需要写申请的理由，你做的内容等等。</p>
+</blockquote>
+<blockquote>
+<p>issue(问题讨论)<br>提出项目的Bug，记录milestone。甚至可以作为Blog或者forum。</p>
+</blockquote>
+<h2 id="Gitignore——我不需要提交xxx"><a href="#Gitignore——我不需要提交xxx" class="headerlink" title="Gitignore——我不需要提交xxx"></a>Gitignore——我不需要提交xxx</h2><p>实际开发时，我们并不需要提交所有的文件。（那就是文件地狱了）<br>例如当我们用Visual Studio写了一个cpp程序，项目文件夹会非常大，但我们其实只需要提交其中的.hpp文件和.cpp文件即可。这时如果我们直接使用git add。将会提交很多不必要的文件。<del>很恐怖的好吗</del></p>
+<p>Gitignore的作用是设置文件的忽略规则，让Git根据该规则有选择地忽略文件的更改。</p>
+<p>使用gitignore的方式便是在目录中创建名为.gitignore的文本文件，在该文本文件里编写忽略规则。</p>
+<blockquote>
+<p>最常见的规则：<br>1.直接写上文件名。PS:重名文件需要给出目录<br>2.忽略文件夹<br><code>忽略所有名为bin的文件夹内的文件</code><br><code>bin/</code><br><code>忽略当前目录下名为bin的文件夹内的文件</code><br><code>./bin/</code><br>即也是和html一样的路径写法。</p>
+</blockquote>
+<p>因为需要忽略的文件是可以找到共性的，一定有文件不需要上传。所以会有Gitignore模板。<br>Git语法和Gitignore模板都可以在github找到。</p>
+<p>还有很多操作（通配符、反向操作）。想要学习的去RTFM吧！</p>
+<h1 id="实战演示"><a href="#实战演示" class="headerlink" title="实战演示"></a>实战演示</h1><p>下面是我们需要提交到远程仓库的文件。<br>因为需要提交的文件较简单较少，所以可以不写gitignore文件。<br><img src="/2023-02-24-11-Git%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BD%BF%E7%94%A8/20230311203733.png" alt="png"></p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p><img src="/2023-02-24-11-Git%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BD%BF%E7%94%A8/20230311201125.png" alt="png"></p>
+<h2 id="绑定远程仓库并检查"><a href="#绑定远程仓库并检查" class="headerlink" title="绑定远程仓库并检查"></a>绑定远程仓库并检查</h2><p><img src="/2023-02-24-11-Git%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BD%BF%E7%94%A8/20230311201417.png" alt="png"></p>
+<h2 id="上传到缓存区并查看"><a href="#上传到缓存区并查看" class="headerlink" title="上传到缓存区并查看"></a>上传到缓存区并查看</h2><p><img src="/2023-02-24-11-Git%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BD%BF%E7%94%A8/20230311201530.png" alt="png"></p>
+<h2 id="提交到远程仓库"><a href="#提交到远程仓库" class="headerlink" title="提交到远程仓库"></a>提交到远程仓库</h2><p><img src="/2023-02-24-11-Git%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BD%BF%E7%94%A8/20230311202107.png" alt="png"></p>
+<h2 id="push到远程仓库"><a href="#push到远程仓库" class="headerlink" title="push到远程仓库"></a>push到远程仓库</h2><p><img src="/2023-02-24-11-Git%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BD%BF%E7%94%A8/20230311203241.png" alt="png"><br>git push的时候会被墙，需要VPN。<br><code>git branch -m master</code>这步操作可以省略。我没搞懂它有什么用，因为懒没做对比实验去排除干扰，读者自行去实验。</p>
+<h2 id="完成"><a href="#完成" class="headerlink" title="完成"></a>完成</h2><p><img src="/2023-02-24-11-Git%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%BD%BF%E7%94%A8/20230311203511.png" alt="png"><br>显示的时间是commit到stage的时间。</p>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2022秋学期总结</title>
+    <url>/2023-01-22-26-2022%E7%A7%8B%E5%AD%A6%E6%9C%9F%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="16400edab241b3b1722481b2ace2b5176446a7e58a021baf4fce676f44d4ad67">4085ae3d0da14ca5aedfbef54e630317fb3bbefa7cb56e0ffbd2dccf753ee457b4d9073c4a0aba7ef5689c09b9178e8c7e6166319141ff8fe0933d9c3914e37fc308093f7d746fff6122607c7848f62f8b25d4f4f496ce9b5d864b262247fe9894c16770e3450eb2b4300f0c4493999452c947fc7cdf5920774019a3490e5ea4c03bd562338323b3969e1a545940d3c1ab852b882b6530a2575458e735a2e1d4f0d6cb524d7a00ac2a7e929ff3994d35dc57fa9d14307d11da90f6eee13ae020a7f24bbc1066a4aea17982b7f7986ec66190c53cb557086dfabfb15d0767f8464966935a55b765d02632dbe5e84142f4023faa974de06632b4672ade98e082c0a6b3d7208a05e4b29068a48f7cfad27ca9a7a9e670a1591d71ac297f3183cc6c6759a5fcba10104f6e6d6f1094d23878de62a84f9c15309f5da237ec779c218f9f4070ad725bfa2ed5b064a95dfc7c431fba260bbd2816395082788ffd10e2fa2201783e67f2dc3afb83c2c47563cdcae76e78a3983f5833de054a37a73e9d1fcf8bb2cfa2feec9d8ed1c61f9791af9b329915e8bdf3641b93b78df3993f07bb9d6273510ebf743b1327d2e8a29d61c8179221410a108385a09b4c1acb3367d8b57512d62fbfdab1f32df9eeead03e490cb66940bfb4f673a17d3c2f06bd3faae67b306d63f8558b80fee7084c43628e22e627915ba00665bdc4e44177a2f90a214491ee553772632d75e92ae21f074a171b49210c184d781381b5c40f60bfd998f9703665c5d7e3cebebaded882db28bac8f36f05fc0f21802e1096fc7862d5c081bc19a67da8e7ed50eba0c68e6e06c94e6f715ec6e02ee9404df81098857d8257736a3be5aa7c7f820fe2fcca4da9f4f2500db84a47dd3bfb6653f2b4b17c10c3dcbf48f330cddd59dd8eafb17f3cd5b5aef5ee7a4e2d94092a1e75eabe460792ba1c98eeef5574d40b1387548a7ae80c55053001342eb2041f031c93f55dd648ac7c8b3566876b41b65401db2bb1a672a32061ace26bcc0feb20d55227ce667dcaf463efbe0d8455391bf5b2c71ef416e7288aaa12facffd8fa7054621cab155a5d653f08ca9af455ceaa19a69885c833ef0b789674f5667c9fd12818bc9c276ff568a59988107cc091f247c16c9678df6cdb27b0b7389f800a2b765f37b4de6f072612d236b2edcfe3668d22974cebdc172a18cea6a379709c574c770347c043afa9e1209f66280c9e838bd6be97d7d2f1ffe55ee581fe0df3432e4d6739ca7f50ea81ac16d189ec0ff79fc3f91c50d1b5f6a897bcc5d72267e00713c692d9ae34514709598ff915a37c525ad23b5db088615997dbccebd7ddb3016131c7ce19a9bd88a7eb2e469dd8002b1c1ef8b3b7d45793d9f700fc975a06817dd8e61dcd0de68fb633eaeb013d688bba1025816dcdb794a49e0a50e8334bc135f5e623be5a671f3ca6fdbf50f6e80c457f34676c56d84a3a1d83651a9c0ad7ccb410d28f9b0653833fd83a88e7cdf76c329467932f6e0d5c8c8d714de75fce73924bbbb5bbebc6ad133c5d78ea85531fb940d2581419fb797395ef989a7d3617481436031bf62f51674b889e8ba07c1ca00a231253ea5d9716de6254cac5117c50286683157b5fdc33b4ead83519c4d7319c257cde2ac8df5ad15e27665f1191265f3e840b0c36da516c04eacf65c9259df02616d13eb6182099463bc42578acd5e740dcbbd8febbc757661d5d3b07c82c5bbe0a57cceac0170f40a370482ac0eb70ed8ced3b8343ac27f63025f698357faf1e3b273e95dc314ce5be0f8f15c22b593b446d00b04b4994830100616beb5d8b495e7203afd47e0b1838d4542d713faaa657f80dded1c1c85a476959c02de61932cd000a5fb9bfc07493330fd6ba3ca52ed646ec24d2ab38e123a427567efd7a575453bb007eaad899ce638de8f94a7c8791a6915e95de85d9b0a9d78f033fd428cd51ba6ebb355087f02cb8015f1d8d2290a94d38e033ac307a5295535845da001533a670fc2427171c8730007c57ddec4f5f16a65390fe06fc0a86ec0b18d04acc68ba1a56c353b8cc0f89b305a1e57e5122097d654be8c0c53e6c5f99b024d1ec6b04f9725698197fdfe6d89e244266014237661e7f9fb2e131782ac486ccbb88b38ed3dc4f426451f5306b89a0b6a7a61008094f2e51576fccea98c6e8564317739744c1900cabcac4856f8573efbda3276ceebc01ba2d524b31c0364411860504913acf0322a8ec86ae5550450696f0b6f33a296a9cab1bdc0b8d99f57770206b7fea8c3a56c38e746b7f00ac50149b01319760e24c64219e9d2aa1226e5e7458944431e29c058b36e0ea4f417fb57484781391e7d409971708f356530a3d5747359464e001431840650e67405e8061e195e511a492d6bae4a4c2888f4baa679aebe1d58d9dcc4702a44a1e1d67bef62c5a6900f53c82f725b6aaba52c06fb092b28b1e59393dc1568b3ed5d3ecec69f6f073775b393f5bf72eec294c5098543f56563b861d5ca7fdd0cf31511fc48d3133019d06988f7c4492b46bbc617e1132d6c6f7737eda03800fd0741ddf4286c8a2e7fc5aa1191938a4d1d6cd381d5dc52f2baa955756f6eff41a912b766999b91ec4136493d704aabdc2b4944d4b0decb581b56f7712982b2894e021df881d54a34d7212a52c25701b4f5c7d8de8c0dc378bd66b64b7af25ed4ef6aff2cd54bea0b5d713629f2e9fb65028970bcca47a93d55760e8c903aa7418ee79d94965a3c33bd93888f03952692f7ca3791416afc9851d266d26387a6b7642fb5d2012a93576ec2858003ed248567e3e9740fe9d8ffb69450b0c775e39e9bc05688a8addf269d137acefee2923c1170c3eac8b6bca6e683d3b6aa3148a750d6c21a3ff7d61c482c186cacc627aa95450ec0e78188f733c86ebbb40494bde9e151f0fb4eaec5959c3e94c0b9f108e584825f8e7f4d7e02b0416be50eb35423aacba14476372758635440ef3f0d6f9d92651901513ad5b5fc75cc8844387e438d17179f0169d249829f3880eb67f93cf7cc1ea89320879cd614914e82f70494fa770f9393d0730320a9a3ce379a89dd95af63f93a91b2a8afdc5acc472dbba6fb414d6ecd0244a167f727f56750add5041a0117933f306de0c87ba4a69af20f5e83fcad4d849cf2e5e0af4e1da27c7ea2bbfb0a76e9a8867b85249ff41f25e66ae55ee68e46423943013e89b29cdc985a8a651abe35c2a651993bf1df00649c08fddef5dcf6453b75412c28e14d30114ab6011590ef0ea0f126f5873bf55824be51194a09f1d370b8805f0e84500426a00c6695a796b5bafbd0d1ba78efdf3d3392cbd0f4c18ad414cbef3dd0077fb093cb6e152a18ce2d9802e1e2f3bb0691e4c1da21f379c54f53f8716bab38e0aa4398adca92469d8a9d59d9c9caf5f9e5a61f290baef5fe29802735430fd2e7c028d697dab3cdd110a096b3cb3443df42d894134cad7ad593f8d890af4f26f89771eef66844d24f01da89e464487e50d9d139074b8ffaa60dba2a9830447bc7b65e9964402408b5f5b54b4e1638c8530ce5147aaf964744d6955f90e25b84a1742ee37ec311b5b6bb434a3e43fc5296747c04f405c7d3a131ffe7546744571665a7a600108a6dc5b3c8c07a740162db2b6ad01591e0d3b2b7dd3978877457f1fe36042dbbb27869df59d4f9949e5052dcb8fbc2858a1d7b1a6aff81499060b87c0a8e2976f59f33f4fdd434a3b4b726b2c49efc4569ea52add23cd2fb96c456e8f90772a9ef64863cf71500eddd8c1e84f29574219f66d21b80874b1e61d94e5d2ca74c6a11c78f2b514a51d0fe6ff448bb4236f2970213355036dae0e493960e8f4f459dd9c1de0413c400778fa65b803a4a8002de9d9faeee71f6f358cd5ddb034eabcf821615f94d7f62e784c794acba565ffd6c1aa9dc0fc34a055de41f6ff747617abb971b7b1db8f8c07cfca22c3ede721e33e0223004304e24483b802eb3a6fbf839626051f627e33144990a0313b8822ed664159ab903465e52aef762a0dc82b0e0b110a32b1a0c150a00f2e7c45267577133f9da3ab18d0307df3091aeafd023c69090d675cc07ed8ba930883d9b2bceffd3a3db247f5e56e750ad262fd382a508d0ec4b06176532277839e6afba7623c92828f3c5a18bf094cac666e7acf9d2ac216f78da8590a5a18568b6f4f9d911eac47a4dd485eb6aa1868497d7c7ced9b9b0fd1c21a5a013a8de4d8c78848a2b89a4542e5bcc6fc138aa3a5821a6a5c7289e1a24437557fcb6abca9a868cbccd30faeb8f076f9ba3b669394d8b688673d39f008af9e8786063f4c85fea8ccca83d84cfb36a21623d14077a3e01565baf0f701a96c2987f5549f6a0ff6f3add3080abdb4b9bbad9b1b788ac12c2466abfa2d2e72e62ff87faee74edc2e50e0de3bc7b14468626ab5e9845bfd50ffe7a55109dc361d9ce6e6ea97feb3fb18fd8c887ab3f85560d806f4257f7516b204d3043f545563558e3470a74cd5c94d342761ba2ebb4a49cb9b7e30d996d39f609bc05c465fbea8720538fa7171100d4b8999cf18cc995bfa6000291c247f0a8f73a8ba87b27c29b9bb2f3f162deeec1bcd394e150161f0c7de15fa38a79971da2631d0ca48068420810fe6b16839835ade654d6122d6d97b518d9e04675dbaa6bf91c0dd3928664355955dcb435293031aa50438a5bab13845af8745244cc5a9f96427bd55ba6c1464bbb76ed49db68760e0c1079afd3e0640bd79b8f893efc1034117a33accf9694698137245abdcf48f80d58fc0cc020ed566f325dad6d68464628428e0d9b5d54e298af69b69ef024b3d26e66127440b564481e4a8c851382e8789ecc7dd4c2d5fa3845f78c91e05ca447068703ea3ce341bc16d4550cc66b1ec7cf2a9e716c439ace2f46ada3dbfedb0420ac158ae01007f11e629bf0a9b196191ba4b97a5517d973bd9a48fbfadeb13a65ac1aa390e58859308458c205f97c8e505af317c636eb6fd7e65465a86e40e0ae996842e2a25efce98ad1508a174d595fde6f500c53dc3faa1cdfae6a0d093b52f725db8b1cb4b7b1ba19df536f374f1fcb2212e9654a1845331fc7b6d0b58b5450bf45f6cb5470cc66685d5daf6250758fe9ed1a04ebdf401e6ad32f9a42e02adb0409aaa9061b6b221dd1ed5d4ff1012ab610bf4a98fc672520110161dc25f981216feb30a2f264a4c88465f34a5f46f51f674e535a822f5b3cb32e056e0c7cef6fc6cfd5a57701040d6457695f2f7ddb267247d766c9327c373c94abb6fae6d989cacbb8b73b723315985aedd2b392dfc7d78d9654c7b0ac3c95184b4f1d2b776a81bda5531e4919175cc1c50d2267fbdb859b8531a93785b9d2d3dc7648c68763ec84d00c4006408680cee0b18af176d2652c2e31b9d4c3500cf7d47c637860c4592901b734f71036a7eac9009a66316f21bcb142f2dd97a9d6f961d6be589926bf14960d0b5c04d68b030c1b913d1748db17c3d415bcecdaa02e6644627c26fb5b0f2da8d0cdf5e40cbd29a967331cca434c6650b4f759f15c20b66d250c0263f16b8c942bcecb52d58894a53031378cb66c34d26c0e4366f1011cef4a962caad4b5cd2ff467e32fb7cc9a9e63cb9580cd4bb1bd5d6a8944e16566dfdb07d25cd7a57e6cb4634fcb4ef93ee3dddf9aa31df3fe0ac8926cd356de8b058ef24e5ef0a58756ea368c1101637fc38ce4686781a066a04a4be09fcc1a4772ef2139e742025fc0b45f984ab62d507e56f4c98ff776e728d9a141e30dd8922e67d54b01e9b6d729103d1e5ace29771396482bcaf91a44b933d692833cf5552d6e00fbfd176679d49c391c02bbc5deb85730c6d9c66fb00b3280a9fff83169b9600df38268b1f3d22b225595b8d0c219f46fe42c725b29b097b378f10a6644778a78b94273b677fed2748f1db5339eab5ebf1c554412cff1621ea69b189fbb6e5a1e1a1c8d5c12889156f58bf37c</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">FORBIDDEN</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>Summary</category>
+      </categories>
+      <tags>
+        <tag>Summary</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MNIST-数字识别</title>
+    <url>/2023-01-22-16-MNIST-%E6%95%B0%E5%AD%97%E8%AF%86%E5%88%AB/</url>
+    <content><![CDATA[<p>来源kaggle的数字识别源码学习。</p>
+<span id="more"></span>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> keras.utils.np_utils <span class="keyword">import</span> to_categorical</span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense,Dropout,Flatten,Conv2D,MaxPool2D,BatchNormalization</span><br><span class="line"><span class="keyword">from</span> keras.preprocessing.image <span class="keyword">import</span> ImageDataGenerator</span><br><span class="line"><span class="keyword">from</span> keras.callbacks <span class="keyword">import</span> LearningRateScheduler</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">train = pd.read_csv(<span class="string">r&#x27;E:\train.csv&#x27;</span>)</span><br><span class="line">test = pd.read_csv(<span class="string">r&#x27;E:\test.csv&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Why？</span></span><br><span class="line">Y_train = train[<span class="string">&#x27;label&#x27;</span>]</span><br><span class="line">X_train = train.drop(labels=[<span class="string">&#x27;label&#x27;</span>],axis=<span class="number">1</span>)</span><br><span class="line">X_test = X_train / <span class="number">255.0</span></span><br><span class="line">X_test = test / <span class="number">255.0</span></span><br><span class="line">X_train = X_train.values.reshape(-<span class="number">1</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">1</span>)</span><br><span class="line">X_test = X_test.values.reshape(-<span class="number">1</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">1</span>)</span><br><span class="line"><span class="comment"># 调用to_categorical将label按10个类别转换为独热编码</span></span><br><span class="line">Y_train = to_categorical(Y_train,num_classes=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="comment"># 绘制子图</span></span><br><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">4.5</span>))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">30</span>):</span><br><span class="line">    plt.subplot(<span class="number">3</span>,<span class="number">10</span>,i+<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># ？？？</span></span><br><span class="line">    plt.imshow(X_train[i].reshape((<span class="number">28</span>,<span class="number">28</span>)),cmap=plt.cm.binary)</span><br><span class="line">    plt.axis(<span class="string">&#x27;off&#x27;</span>)</span><br><span class="line">plt.subplots_adjust(wspace=-<span class="number">0.1</span>,hspace=-<span class="number">0.1</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="/2023-01-22-16-MNIST-%E6%95%B0%E5%AD%97%E8%AF%86%E5%88%AB/output_3_0.png" alt="png"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ？</span></span><br><span class="line">datagen = ImageDataGenerator(</span><br><span class="line">        rotation_range=<span class="number">10</span>,</span><br><span class="line">        zoom_range=<span class="number">0.10</span>,</span><br><span class="line">        width_shift_range=<span class="number">0.1</span>,</span><br><span class="line">        height_shift_range=<span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Perview augmented images</span></span><br><span class="line">X_train3 = X_train[<span class="number">9</span>,].reshape((<span class="number">1</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">1</span>))</span><br><span class="line">Y_train3 = Y_train[<span class="number">9</span>,].reshape((<span class="number">1</span>,<span class="number">10</span>))</span><br><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">4.5</span>))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">30</span>):</span><br><span class="line">    plt.subplot(<span class="number">3</span>,<span class="number">10</span>,i+<span class="number">1</span>)</span><br><span class="line">    X_train2,Y_train2 = datagen.flow(X_train3,Y_train3).<span class="built_in">next</span>()</span><br><span class="line">    plt.imshow(X_train2[<span class="number">0</span>].reshape((<span class="number">28</span>,<span class="number">28</span>)),cmap=plt.cm.binary)</span><br><span class="line">    plt.axis(<span class="string">&#x27;off&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> i == <span class="number">9</span>:X_train3 = X_train[<span class="number">11</span>,].reshape((<span class="number">1</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">1</span>))</span><br><span class="line">    <span class="keyword">if</span> i == <span class="number">19</span>:X_train3 = X_train[<span class="number">18</span>,].reshape((<span class="number">1</span>,<span class="number">28</span>,<span class="number">28</span>,<span class="number">1</span>))</span><br><span class="line">plt.subplots_adjust(wspace=-<span class="number">0.1</span>,hspace=-<span class="number">0.1</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="/2023-01-22-16-MNIST-%E6%95%B0%E5%AD%97%E8%AF%86%E5%88%AB/output_5_0.png" alt="png"></p>
+<h1 id="Build-15-Convolutional-Neural-Networks"><a href="#Build-15-Convolutional-Neural-Networks" class="headerlink" title="Build 15 Convolutional Neural Networks!"></a>Build 15 Convolutional Neural Networks!</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">nets = <span class="number">15</span></span><br><span class="line">model = [<span class="number">0</span>] * nets</span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(nets):</span><br><span class="line">    model[j] = Sequential()</span><br><span class="line">    </span><br><span class="line">    model[j].add(Conv2D(<span class="number">32</span>,kernel_size=<span class="number">3</span>,activation=<span class="string">&#x27;relu&#x27;</span>,input_shape=(<span class="number">28</span>,<span class="number">28</span>,<span class="number">1</span>)))</span><br><span class="line">    model[j].add(BatchNormalization())</span><br><span class="line">    model[j].add(Conv2D(<span class="number">32</span>, kernel_size = <span class="number">3</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">    model[j].add(BatchNormalization())</span><br><span class="line">    model[j].add(Conv2D(<span class="number">32</span>, kernel_size = <span class="number">5</span>, strides=<span class="number">2</span>, padding=<span class="string">&#x27;same&#x27;</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">    model[j].add(BatchNormalization())</span><br><span class="line">    model[j].add(Dropout(<span class="number">0.4</span>))</span><br><span class="line">    </span><br><span class="line">    model[j].add(Conv2D(<span class="number">64</span>, kernel_size = <span class="number">3</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">    model[j].add(BatchNormalization())</span><br><span class="line">    model[j].add(Conv2D(<span class="number">64</span>, kernel_size = <span class="number">3</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">    model[j].add(BatchNormalization())</span><br><span class="line">    model[j].add(Conv2D(<span class="number">64</span>, kernel_size = <span class="number">5</span>, strides=<span class="number">2</span>, padding=<span class="string">&#x27;same&#x27;</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">    model[j].add(BatchNormalization())</span><br><span class="line">    model[j].add(Dropout(<span class="number">0.4</span>))</span><br><span class="line">    </span><br><span class="line">    model[j].add(Conv2D(<span class="number">128</span>, kernel_size = <span class="number">4</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">    model[j].add(BatchNormalization())</span><br><span class="line">    model[j].add(Flatten())</span><br><span class="line">    model[j].add(Dropout(<span class="number">0.4</span>))</span><br><span class="line">    model[j].add(Dense(<span class="number">10</span>, activation=<span class="string">&#x27;softmax&#x27;</span>))</span><br><span class="line">    </span><br><span class="line">    model[j].<span class="built_in">compile</span>(optimizer=<span class="string">&#x27;adam&#x27;</span>,loss=<span class="string">&#x27;categorical_crossentropy&#x27;</span>,metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<h1 id="Train-15-CNNs"><a href="#Train-15-CNNs" class="headerlink" title="Train 15 CNNs"></a>Train 15 CNNs</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">%%time</span><br><span class="line"><span class="comment"># 调节学习率</span></span><br><span class="line">annealer = LearningRateScheduler(<span class="keyword">lambda</span> x:<span class="number">1e-3</span> * <span class="number">0.95</span> ** x)</span><br><span class="line"><span class="comment"># 训练网络</span></span><br><span class="line">history = [<span class="number">0</span>] * nets</span><br><span class="line">epochs = <span class="number">45</span></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(nets):</span><br><span class="line">    X_train2,X_val2,Y_train2,Y_val2 = train_test_split(X_train,Y_train,test_size=<span class="number">0.1</span>)</span><br><span class="line">    history[j] = model[j].fit(datagen.flow(X_train2,Y_train2,batch_size=<span class="number">64</span>),</span><br><span class="line">                                       epochs=epochs,steps_per_epoch=X_train2.shape[<span class="number">0</span>]//<span class="number">64</span>,</span><br><span class="line">                                       validation_data=(X_val2,Y_val2),callbacks=[annealer],verbose=<span class="number">0</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;CNN&#123;0:d&#125;:Epochs=&#123;1:d&#125;,Train accuracy=&#123;2:.5f&#125;,Validation accuracy=&#123;3:.5f&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">    j+<span class="number">1</span>,epochs,<span class="built_in">max</span>(history[j].history[<span class="string">&#x27;accuracy&#x27;</span>]),<span class="built_in">max</span>(history[j].history[<span class="string">&#x27;val_accuracy&#x27;</span>])))</span><br></pre></td></tr></table></figure>
+
+<pre><code>CNN1:Epochs=45,Train accuracy=0.99626,Validation accuracy=0.99667
+CNN2:Epochs=45,Train accuracy=0.99592,Validation accuracy=0.99690
+CNN3:Epochs=45,Train accuracy=0.99648,Validation accuracy=0.99714
+CNN4:Epochs=45,Train accuracy=0.99642,Validation accuracy=0.99571
+CNN5:Epochs=45,Train accuracy=0.99677,Validation accuracy=0.99405
+CNN6:Epochs=45,Train accuracy=0.99661,Validation accuracy=0.99667
+CNN7:Epochs=45,Train accuracy=0.99640,Validation accuracy=0.99667
+CNN8:Epochs=45,Train accuracy=0.99656,Validation accuracy=0.99595
+CNN9:Epochs=45,Train accuracy=0.99637,Validation accuracy=0.99619
+CNN10:Epochs=45,Train accuracy=0.99592,Validation accuracy=0.99595
+CNN11:Epochs=45,Train accuracy=0.99618,Validation accuracy=0.99738
+CNN12:Epochs=45,Train accuracy=0.99589,Validation accuracy=0.99714
+CNN13:Epochs=45,Train accuracy=0.99624,Validation accuracy=0.99714
+CNN14:Epochs=45,Train accuracy=0.99629,Validation accuracy=0.99595
+CNN15:Epochs=45,Train accuracy=0.99648,Validation accuracy=0.99595
+CPU times: total: 2d 18h 49min 44s
+Wall time: 14h 14min 29s
+</code></pre>
+<h1 id="集成15个CNN预测结果并呈现"><a href="#集成15个CNN预测结果并呈现" class="headerlink" title="集成15个CNN预测结果并呈现"></a>集成15个CNN预测结果并呈现</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># SAVE IT</span></span><br><span class="line">save_path = <span class="string">r&#x27;E:\Models\MNIST_CNN_digreg.h5&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(nets):</span><br><span class="line">    model[i].save(save_path)</span><br><span class="line"><span class="comment"># 集成并呈现</span></span><br><span class="line">results = np.zeros((X_test.shape[<span class="number">0</span>],<span class="number">10</span>))</span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(nets):</span><br><span class="line">    results = results + model[j].predict(X_test)</span><br><span class="line">results = np.argmax(results,axis=<span class="number">1</span>)</span><br><span class="line">results = pd.Series(results,name=<span class="string">&#x27;Label&#x27;</span>)</span><br><span class="line">submission = pd.concat([pd.Series(<span class="built_in">range</span>(<span class="number">1</span>,<span class="number">28001</span>),name=<span class="string">&#x27;ImageId&#x27;</span>),results],axis=<span class="number">1</span>)</span><br><span class="line">submission.to_csv(<span class="string">r&quot;E:\MNIST-CNN-ENSEMBLE.csv&quot;</span>,index=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>875/875 [==============================] - 17s 19ms/step
+875/875 [==============================] - 15s 17ms/step
+875/875 [==============================] - 16s 18ms/step
+875/875 [==============================] - 15s 17ms/step
+875/875 [==============================] - 13s 15ms/step
+875/875 [==============================] - 13s 15ms/step
+875/875 [==============================] - 14s 16ms/step
+875/875 [==============================] - 15s 17ms/step
+875/875 [==============================] - 14s 17ms/step
+875/875 [==============================] - 14s 16ms/step
+875/875 [==============================] - 16s 18ms/step
+875/875 [==============================] - 14s 16ms/step
+875/875 [==============================] - 16s 19ms/step
+875/875 [==============================] - 16s 19ms/step
+875/875 [==============================] - 18s 20ms/step
+</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 预览预测内容</span></span><br><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">6</span>))</span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">40</span>):</span><br><span class="line">    plt.subplot(<span class="number">4</span>,<span class="number">10</span>,k+<span class="number">1</span>)</span><br><span class="line">    plt.imshow(X_test[k].reshape((<span class="number">28</span>,<span class="number">28</span>)),cmap=plt.cm.binary)</span><br><span class="line">    plt.title(<span class="string">&#x27;predict=%d&#x27;</span> % results[k],y=<span class="number">0.9</span>)</span><br><span class="line">    plt.axis(<span class="string">&#x27;off&#x27;</span>)</span><br><span class="line">plt.subplots_adjust(wspace=<span class="number">0.3</span>,hspace=-<span class="number">0.1</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+<p><img src="/2023-01-22-16-MNIST-%E6%95%B0%E5%AD%97%E8%AF%86%E5%88%AB/output_12_0.png" alt="png"></p>
+<h1 id="完成！"><a href="#完成！" class="headerlink" title="完成！"></a>完成！</h1><p>用cpu进行CNN训练的速度好慢.一次模型训练耗时14h。具体折腾了2天。</p>
+<p>但还是收获满满。感觉对深度学习有了大概的了解。对流程、概念有了进一步认知。</p>
+<p>但只是照搬别人的而已。我还需要再进一步。加油！</p>
+<p>2023&#x2F;1&#x2F;15.</p>
+<p>本身是个在简单的数据集（MNIST）上做分类的问题。采取了自监督学习的神经网络方式去进行分类。数据预处理过程中使用数据增强以增加数据量，所以导致训练时长增加。当然，这样做也使得精确率非常之高。</p>
+<p>整体体现了python开发的高效性，但是运行速度确实很吃亏。</p>
+<p>考虑学习cpp后实现matrix类。</p>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+      <tags>
+        <tag>TensorFlow</tag>
+        <tag>Kaggle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python实现处理PDF文件</title>
+    <url>/2023-02-27-01-Python%E5%AE%9E%E7%8E%B0%E5%A4%84%E7%90%86PDF%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>OS：Windows 11（版本22H2）</p>
+<p>Python版本：3.9.13</p>
+<p>pdfplumber-Version: 0.8.0</p>
+<p>项目地址：<a href="https://github.com/jsvine/pdfplumber">https://github.com/jsvine/pdfplumber</a></p>
+<p>PyPDF2-Version：3.0.1</p>
+<p>项目地址：<a href="https://pypi.org/project/PyPDF2/">https://pypi.org/project/PyPDF2/</a></p>
+<p><em><strong>还在学习过程中…</strong></em></p>
+<hr>
+<h2 id="1-安装模块"><a href="#1-安装模块" class="headerlink" title="1.安装模块"></a>1.安装模块</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install pdfplumber</span><br><span class="line">pip install pypdf2</span><br></pre></td></tr></table></figure>
+<p>成功安装后检查版本号</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip show pdfplumber</span><br><span class="line">pip show pypdf2</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-基本实战"><a href="#2-基本实战" class="headerlink" title="2.基本实战"></a>2.基本实战</h2><ul>
+<li>1）提取PDF文字<br>保存形式为txt。可选的文件形式包括但不限于txt、csv、xlsx等。<br>这里以最简单的txt文件为演示。<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pdfplumber</span><br><span class="line"></span><br><span class="line">filename = <span class="string">r&#x27;D:\Paper\通识课\研讨课\新生研讨课\共生的生命世界\细胞共生论.pdf&#x27;</span></span><br><span class="line">index = [<span class="string">&#x27;生态共生论.pdf&#x27;</span>,<span class="string">&#x27;机体共生论.pdf&#x27;</span>,<span class="string">&#x27;细胞共生论.pdf&#x27;</span>,<span class="string">&#x27;社会共生论.pdf&#x27;</span>]</span><br><span class="line"><span class="keyword">with</span> pdfplumber.<span class="built_in">open</span>(filename) <span class="keyword">as</span> pdf:</span><br><span class="line">    <span class="keyword">for</span> pages <span class="keyword">in</span> pdf.pages:</span><br><span class="line">        text = pages.extract_text()  <span class="comment">#对指定页提取文本</span></span><br><span class="line">        <span class="comment">#新建文件追加模式打开</span></span><br><span class="line">        files = <span class="built_in">open</span>(<span class="string">r&#x27;D:\Paper\通识课\研讨课\新生研讨课\共生的生命世界\共生论稿.txt&#x27;</span>,mode=<span class="string">&#x27;a&#x27;</span>)             </span><br><span class="line">        files.write(text)         <span class="comment">#写入文本</span></span><br></pre></td></tr></table></figure>
+提取</li>
+<li></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>python</tag>
+        <tag>PDF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python爬虫初步</title>
+    <url>/2023-02-27-38-Python%E7%88%AC%E8%99%AB%E5%88%9D%E6%AD%A5/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>python</tag>
+        <tag>爬虫</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【个人总结】关于课外扩展和兴趣自学的方法步骤及注意事项</title>
+    <url>/2023-01-31-45-%E3%80%90%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93%E3%80%91%E5%85%B3%E4%BA%8E%E8%AF%BE%E5%A4%96%E6%89%A9%E5%B1%95%E5%92%8C%E5%85%B4%E8%B6%A3%E8%87%AA%E5%AD%A6%E7%9A%84%E6%96%B9%E6%B3%95%E6%AD%A5%E9%AA%A4%E5%8F%8A%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
+    <content><![CDATA[<p>关于基于课内内容扩展学习和自学其他无关领域的方法步骤和应当避免的错误弯路。PS：写的简陋了，抱歉。</p>
+<span id="more"></span>
+<p>这是关于以往自学的总结。</p>
+<p>首先，我们假定读者学有余力，对课内知识有较好的掌握，因此进行扩展或学习新的知识，并且每周有足够的时间接触互联网。<br>我们需要明确，学习新知识是要有驱动力的，无论外界还是自身，这里我们多指源自自身的驱动力。</p>
+<p>现在我们开始。</p>
+<p>我们有一下几条准则：</p>
+<ul>
+<li>一.请带有目的的去学习。在正式学习前请先想明白——学此的目的是什么？要达到怎样的高度？</li>
+<li>二.学习的第一步是要对要学习的内容有大致了解。对物体有概念之后才可以合理地规划、合理地学习。</li>
+<li>三.在以上步骤的基础，尽自己的一切可能去学习。珍惜每次的学习机会，把每一次的学习当作最后一次学习。</li>
+<li>四.学习了较长一段时间（阶段）后，请可能采取方法检验成果加以反馈。</li>
+<li>五.坚持下去！</li>
+</ul>
+<p>在以上准则的基础上学习会事半功倍。</p>
+<p>现在我来细化准则的内容。主要是对<em><strong>准则二</strong></em>进行补充。</p>
+<p>首先从准则一说起。学习一定会有目的，请让自己<strong>明确你的目的</strong>。无论是“学完就可以去玩了”，“学它到达到像他一样的程度”等等，都是有益的。特别对于中学生来说，“学完就可以去玩”这一观点是需要提倡的。有了目的之后，便要确定如何学习了，这是在<strong>选择学习路径</strong>。因为达成一个目的是有很多手段和方法的，请选择一个适合你的去做，而不是按照你知道的，这是因为在<strong>未学习之前</strong>，你对其的认知是有<strong>偏见的</strong>、是<strong>片面的</strong>。你需要了解现在的人在学习什么？他们的体系是什么？再去学习。</p>
+<p>而规划学习路径要求你知道学习对象是什么？现在是什么？未来可能会发展成什么？而是否现存什么方便的途径去学习，这些都是学习要考虑的。这便是<em><strong>准则二</strong></em>的内容，当然我们的认知也是在学习的过程中不过更迭的，所以这里我们做的只是最简单、最初步的认知。</p>
+<p>在这个步骤请善用互联网资源。</p>
+<p>确定好学习路径之后，那就投身学习吧！告诉自己这是你的最后一次学习了，像这样的珍惜、沉浸。这个过程中注意要将学习过程变为可执行的一个个小步骤，将遥远的大目标化为摸得到的可行目标。</p>
+<p>此外考虑你能考虑的一切成本，包括但不限于时间成本、经济成本、情绪成本等等乃至沉没成本。是否值得你最初的目的。如果不值得，在时间有限的情况下，当断则断。</p>
+<p>最后，请坚持下去。</p>
+<p>感觉写了一些不知所谓看了也没有任何帮助的话，删了的话又不太好（？）所以接下来补充一些资源和途径。</p>
+<p>推荐一些自学的资源：</p>
+<ul>
+<li>1.<strong>目标理想类</strong>：</li>
+</ul>
+<p><a href="https://survivesjtu.gitbook.io/survivesjtumanual/">上海交通大学生存手册</a></p>
+<p><a href="https://shuosc.github.io/fly/">上海大学飞跃手册</a> </p>
+<p>还有一些学长前辈的博客，这里就不放出来了。可以自行探索（开源社区会有相关博客链接）</p>
+<ul>
+<li>2.<strong>自学资源类</strong>：</li>
+</ul>
+<p><strong>计算机相关</strong>：</p>
+<p><strong><a href="https://csdiy.wiki/">北大信科学长的自学仓库！！</a></strong></p>
+<p><em><a href="https://www.w3schools.com/">W3School</a></em> </p>
+<p><em><a href="https://www.kaggle.com/" title="数据科学机器学习的竞赛源码数据集都可以在这里！！">Kaggle</a></em></p>
+<p>整理资料。</p>
+<ul>
+<li><strong>微积分</strong>：</li>
+</ul>
+<p>wyc老师会上传一些习题讲解，同时他也是我们学校负责讲竞赛课的老师，心态很年轻。<br><a href="https://space.bilibili.com/3591306">https://space.bilibili.com/3591306</a></p>
+<ul>
+<li><strong>大学物理</strong>：</li>
+</ul>
+<p>年少多金，就是上课很困。适合听他的网课，人很好。</p>
+<p><a href="https://space.bilibili.com/1532021508">Kilar</a></p>
+<ul>
+<li><strong>数据科学与智能计算</strong>：</li>
+</ul>
+<p>选课前可以观看：<a href="https://blog.csdn.net/qq_27133869/category_9999569.html">https://blog.csdn.net/qq_27133869/category_9999569.html</a> 中的入门篇。</p>
+<ul>
+<li><p><strong>线性代数</strong>：<br>MIT的课程</p>
+</li>
+<li><p><strong>其他内容</strong>：</p>
+</li>
+</ul>
+<p><a href="https://shuosc.github.io/fly/">飞跃手册</a>怎么能不看？学长学姐经验分享 </p>
+<ul>
+<li><strong>计算机基础</strong></li>
+</ul>
+<p> <a href="https://www.bilibili.com/video/BV12T411Z716/">windows命令行与批处理基础</a> </p>
+<p> 命令行入门，很实用。<br> 帮助理解计算机，和一些基本操作。</p>
+<p>就先暂时到这里了。。想的起来的资源并不多。抱歉。</p>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+      <tags>
+        <tag>经验</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【数据科学与智能计算】conda包管理与pytorch入门</title>
+    <url>/2023-02-01-23-%E3%80%90%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%99%BA%E8%83%BD%E8%AE%A1%E7%AE%97%E3%80%91conda%E5%8C%85%E7%AE%A1%E7%90%86%E4%B8%8Epytorch%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<p>conda创建环境</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda create -n your_env_name python=X.X.X</span><br></pre></td></tr></table></figure>
+
+<p>conda激活切换环境<br>需要注意的是，conda本身的根环境和计算机本体的环境（cmd、powershell）是不同的。<br>初始conda环境默认为root</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda activate your_env_name</span><br></pre></td></tr></table></figure>
+
+<p>下载open模块</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install opencv-python #only install main much bag</span><br><span class="line"># Or</span><br><span class="line">pip install opencv-contrib-python #both main and other</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>conda</tag>
+        <tag>pytorch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【论文分享】DiffSinger：通过浅层扩散机制进行歌声合成</title>
+    <url>/2023-01-29-11-%E3%80%90%E8%AE%BA%E6%96%87%E5%88%86%E4%BA%AB%E3%80%91DiffSinger%EF%BC%9A%E9%80%9A%E8%BF%87%E6%B5%85%E5%B1%82%E6%89%A9%E6%95%A3%E6%9C%BA%E5%88%B6%E8%BF%9B%E8%A1%8C%E6%AD%8C%E5%A3%B0%E5%90%88%E6%88%90/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<p><a href="http://arxiv.org/abs/2105.02446">论文地址</a></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>歌声合成(Singing Voice Synthesis,SVS)系统是为了合成高质量、有表现力的歌声而构建的，其中声学模型在给定乐谱的情况下生成声学特征(例如,梅尔谱图,Mel-spectrogram)。以往的歌唱声学模型采用简单的损失(例如, L1和L2)或生成对抗网络(GAN)来重建声学特征，分别存在过度平滑和训练不稳定的问题，阻碍了合成歌唱的自然性。在这项工作中，我们提出了DiffSinger，一个基于扩散概率模型的SVS声学模型。DiffSinger是一个参数化的马尔科夫链，通过迭代将噪声转化为以乐谱为条件的梅尔频谱。通过隐式优化变分界，DiffSinger可以稳定训练并生成逼真的输出。为了进一步提高语音质量和加快推理速度，我们引入了浅层扩散机制，以更好地利用简单损失学习到的先验知识。具体来说，DiffSinger根据地面真值梅尔谱图的扩散轨迹与简单的梅尔谱图解码器预测的扩散轨迹的交点，以小于总扩散步数的较浅步长开始生成。此外，我们提出了边界预测方法来定位交叉点并自适应地确定浅层步长。在中文歌唱数据集上的评估表明，DiffSinger优于当前最先进的SVS工作。扩展实验也证明了我们的方法在文本到语音任务( DiffSpeech )上的泛化性。音频样本：<a href="https://diffsinger.github.io/">https://diffsinger.github.io</a>. 源码：<a href="https://github.com/Moonintheriver/Diffsinger">https://github.com/Moonintheriver/Diffsinger</a>。</p>
+<h1 id="1-引言"><a href="#1-引言" class="headerlink" title="1 引言"></a>1 引言</h1><p>歌唱声音合成(Singing Voice Synthesis,SVS)旨在从乐谱(Wu和Luan 2020)中合成自然且富有表现力的歌唱声音，越来越受到研究界和娱乐界(Zhang等 2020)的关注。SVS的管道通常由一个声学模型和一个声码器组成，前者用于生成以乐谱为条件的声学特征(例如,梅尔谱图,Mel-spectrogram)，后者用于将声学特征转换为波形(Nakamura et al.2019; Lee et al. 2019; Blaauw and Bonada 2020; Ren et al. 2020; Chen et al. 2020).</p>
+<p>以往的歌唱声学模型主要利用简单损失(例如, L1或L2)来重建声学特征。然而，这种优化是基于错误的单峰分布假设，导致输出模糊和过度平滑。尽管现有方法通过生成对抗网络(Generative Adversarial Network，GAN)(Lee等 2019;Chen等 2020)来解决这个问题，但由于判别器不稳定，训练一个有效的GAN有时会失败。这些问题阻碍了合成唱法的自然性。</p>
+<p>最近，一种高度灵活、易于处理的生成模型- -扩散概率模型(a.k.a.扩散模型,diffusion model)(Sohl Dickstein et al 2015 ; Ho , Jain和Abbeel 2020 ; Song , Meng , and Ermon 2021)应运而生。扩散模型包括两个过程：扩散过程和逆过程(也称为去噪过程)。扩散过程是一个参数固定的Markov链( (当使用( Ho , Jain , and Abbeel 2020中的某种参数化) )，通过逐步加入高斯噪声，将复杂的数据转换为各向同性的高斯分布；而反向过程是由神经网络实现的Markov链，通过迭代学习从高斯白噪声中恢复出原始数据。通过隐式优化数据似然函数的变分下界(ELBO)，可以稳定地训练扩散模型。已经证明，扩散模型在图像生成(Ho , Jain和Abbeel 2020 ; Song , Meng , and Ermon 2021)和神经声码器(Chen et al 2021 ;孔祥智等2021)领域可以产生很好的效果。</p>
+<p>在这项工作中，我们提出了DiffSinger，一个基于扩散模型的SVS声学模型，它将噪声转换为基于乐谱的梅尔频谱图。DiffSinger可以通过优化ELBO进行高效训练，无需对抗反馈，生成与真实分布强匹配的真实感谱图。</p>
+<p>为了进一步提高语音质量和加快推理速度，我们引入了浅层扩散机制，以更好地利用简单损失学习到的先验知识。具体来说，我们发现地面真谱图M和简单谱图解码器M2预测的谱图轨迹之间存在交集：当扩散步长足够大(但没有达到畸变的梅尔谱变成高斯白噪声的深层步骤)时，真实的Mel谱图M和简单的Mel谱图解码器M2预测的Mel谱图M的轨迹：将M和’ M送入扩散过程会导致类似的扭曲的Mel谱图。因此，在推断阶段我们1 )利用简单的谱图解码器生成”M”)通过扩散过程计算出浅台阶k处的样品：’Mk)从’Mk而不是高斯白噪声开始反向过程，通过k次迭代去噪步骤(文森特2011 ; Song and Ermon 2019 ; Ho , Jain和Abbeel 2020)完成该过程。此外，我们训练一个边界预测网络来定位这个交点，并自适应地确定k。浅层扩散机制提供了比高斯白噪声更好的起始点，减轻了反向过程的负担，提高了合成音频的质量，加速了推断。</p>
+<p>最后，由于SVS的流水线类似于文语转换(Textto-Speech，TTS)任务，我们还从DiffSinger中调整生成了DiffSpeech用于泛化。在中文歌唱数据集上的评估证明了Diff Singer (与最先进的SVS声学模型相比, 0.11 MOS增益( Wu and滦2020 )) )的优越性，以及我们提出的新机制(采用浅扩散机制, MOS增益为0.14 , CMOS增益为0.5 ,加速比为45.1 %)的有效性。DiffSpeech在TTS任务上的扩展实验分别证明了本文方法(与Fast Spec 2相比, MOS增益为0.24 &#x2F; 0.23 (Ren et al 2021)和Glow - TTS (Kim等2020)的泛化性)。本工作的贡献可以总结为以下几个方面：</p>
+<h2 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h2><ul>
+<li><p>我们提出了DiffSinger，这是第一个基于扩散概率模型的SVS声学模型。DiffSinger解决了以往工作中存在的过平滑和训练不稳定的问题；</p>
+</li>
+<li><p>我们提出了一种浅层扩散机制来进一步提高语音质量，并加速推理；</p>
+</li>
+<li><p>在TTS任务(DiffSpeech)上的扩展实验证明了我们方法的泛化性。</p>
+</li>
+</ul>
+<h1 id="2-Diffusion-Model-扩散模型"><a href="#2-Diffusion-Model-扩散模型" class="headerlink" title="2 Diffusion Model,扩散模型"></a>2 Diffusion Model,扩散模型</h1><p>在这一部分，我们介绍了扩散概率模型( Sohl-迪克施泰因et al 2015 ; Ho , Jain , and Abbeel 2020)的相关理论。充分的证明可以在以前的工作( Ho , Jain和Abbeel 2020 ;孔祥智等2021 ; Song , Meng , and Ermon 2021)中找到。扩散概率模型通过一个扩散过程将原始数据逐步转化为高斯分布，然后学习反向过程，从高斯白噪声( Sohl -迪克施泰因等2015)中恢复数据。这些过程如图1所示。</p>
+<p><img src="/2023-01-29-11-%E3%80%90%E8%AE%BA%E6%96%87%E5%88%86%E4%BA%AB%E3%80%91DiffSinger%EF%BC%9A%E9%80%9A%E8%BF%87%E6%B5%85%E5%B1%82%E6%89%A9%E6%95%A3%E6%9C%BA%E5%88%B6%E8%BF%9B%E8%A1%8C%E6%AD%8C%E5%A3%B0%E5%90%88%E6%88%90/Figure1.png" alt="png"></p>
+<h2 id="Diffusion-Process"><a href="#Diffusion-Process" class="headerlink" title="Diffusion Process"></a>Diffusion Process</h2><h2 id="Reverse-Process"><a href="#Reverse-Process" class="headerlink" title="Reverse Process"></a>Reverse Process</h2><h2 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h2><p><img src="/2023-01-29-11-%E3%80%90%E8%AE%BA%E6%96%87%E5%88%86%E4%BA%AB%E3%80%91DiffSinger%EF%BC%9A%E9%80%9A%E8%BF%87%E6%B5%85%E5%B1%82%E6%89%A9%E6%95%A3%E6%9C%BA%E5%88%B6%E8%BF%9B%E8%A1%8C%E6%AD%8C%E5%A3%B0%E5%90%88%E6%88%90/Figure2.png" alt="png"></p>
+<h2 id="Sampling"><a href="#Sampling" class="headerlink" title="Sampling"></a>Sampling</h2><h1 id="3-DiffSinger"><a href="#3-DiffSinger" class="headerlink" title="3 DiffSinger"></a>3 DiffSinger</h1><p>如图2所示，DiffSinger建立在扩散模型上。由于SVS任务对条件分布p θ ( M0 | x )进行建模，其中M为梅尔频谱图，x为M对应的音乐得分，因此在反向过程中，我们将x作为条件添加到扩散去噪器中。在本节中，我们首先描述了DiffSinger的一个朴素版本( 3.1节)；然后我们引入一种新的浅层扩散机制来提高模型的性能和效率( 3.2节)；最后，我们描述了边界预测网络，该网络能够自适应地找到浅层扩散机制中所需要的交集边界( 3.3节)。</p>
+<h2 id="3-1-Diffsinger的朴素版本"><a href="#3-1-Diffsinger的朴素版本" class="headerlink" title="3.1 Diffsinger的朴素版本"></a>3.1 Diffsinger的朴素版本</h2><p>在原始版本的DiffSinger (图2中无虚线框)中：在训练过程(如图2a所示)中，DiffSinger在扩散过程中的第t步Mt取梅尔谱图，并预测式中的随机噪声θ ( · )。( 6 )，以t和乐谱x为条件。推理过程(如图2b所示)从N个( 0 , I)采样的高斯白噪声开始，就像以前的扩散模型( Ho , Jain和Abbeel 2020 ;孔祥智等2021)一样。然后该过程迭代T次，对中间样本重复去噪两步：1 )使用去噪器预测θ ( · )；2 )利用预测的θ ( · )由Mt得到Mt - 1。( 2 )和( 2 )式。( 5 ) Mt-1 &#x3D; 1√αt ( Mt-1-αt√1- ~ αtθ ( Mt , x , t )) ) + σtz，其中，当t &gt; 1时，z⋅N ( 0 , I)，当t &#x3D; 1时，z &#x3D; 0。最后，可以生成对应于x的Mel谱图M。</p>
+<h2 id="3-2-浅层扩散机制"><a href="#3-2-浅层扩散机制" class="headerlink" title="3.2 浅层扩散机制"></a>3.2 浅层扩散机制</h2><p>虽然先前通过简单损失训练的声学模型存在难以克服的缺陷，但它仍然生成了与地面-真值数据分布有较强联系的样本4，可以为DiffSinger提供丰富的先验知识。为了探索这种联系，并找到一种更好地利用先验知识的方法，我们利用扩散过程(如图3所示)进行了实证观察：1 )当t &#x3D; 0时，M在相邻谐波之间具有丰富的细节，这会影响合成歌声的自然度，但正如我们在第1节中介绍的，” M “是过度平滑的；2 )随着t的增加，样本的两个过程变得不可区分。我们在图4中说明了这一观察：当扩散步长足够大时，’ M流形到高斯噪声流形的轨迹和M到高斯噪声流形的轨迹相交。受此启发，我们提出了浅层扩散机制：反向过程不是从高斯白噪声开始，而是从图4所示的两条轨迹的交点开始。因此逆转过程的负担可以明显减轻5 .具体来说，在推理阶段我们1 )利用一个辅助解码器生成” M “，” M “是基于乐谱编码器输出的L1条件进行训练的，如图2a中虚线框所示；2 )通过扩散过程在较浅的步长k生成中间样本，如图2b中虚线框所示。( 1 )：’ Mk( ‘ M ,) &#x3D;√αk ‘ M +√1 - α k。</p>
+<h2 id="3-3-边界预测"><a href="#3-3-边界预测" class="headerlink" title="3.3 边界预测"></a>3.3 边界预测</h2><h2 id="3-4-模型结构"><a href="#3-4-模型结构" class="headerlink" title="3.4 模型结构"></a>3.4 模型结构</h2><p><em><strong>Encoder</strong></em> 编码器将乐谱编码为条件序列，条件序列由1 )一个歌词编码器将音素ID映射为嵌入序列，一系列Transformer块( Vaswani等2017)将该序列转换为语言隐藏序列；2 )长度调节器，根据持续时间信息将语言隐藏序列扩展到梅尔谱图的长度；3 )俯仰编码器，将俯仰ID映射为俯仰嵌入序列。最后，编码器在( Ren等2020)之后加入语言序列和音高序列共同作为音乐条件序列Em。</p>
+]]></content>
+      <categories>
+        <category>转载</category>
+      </categories>
+      <tags>
+        <tag>论文分享</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【转载】About Computer Science</title>
+    <url>/2023-03-06-13-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91About%20Computer%20Science/</url>
+    <content><![CDATA[<p>授权转载自<a href="https://chasing1020.github.io/post/about-computer-science/">chasing学长的博客</a>。</p>
+<p>要知道写一份像这样的经验分享东西，而且是关于学科专业生活学习各个方面的博客，是很花费精力和心血的。在此对学长表示感谢。文中涉及了计算机科学相关的问题：什么是计算机科学与工程？我们为什么要学习它？我们所处的环境怎样？未来的形势会如何？专业的日常生活是什么样？我们该以何种方法途径去学习？</p>
+<hr>
+<p>It is a yearly “divide major” season, and now I am looking back at the series of computer science <a href="https://www.zhihu.com/question/326615493/answer/711051528">questions</a> and answers I have browsed in Zhihu during my freshman year, and I feel a lot of emotions. I have been thinking about it for a long time, and this is the first time I have seen such numerous questions and discussions about computer science, hence I write about this post. If you find any bugs or grammar issues, please don’t hesitate to contact me to fix them. Anyway, thanks again for accepting my poor English.</p>
+<h1 id="0-Preface"><a href="#0-Preface" class="headerlink" title="0. Preface"></a>0. Preface</h1><blockquote>
+<p>What is computer science? Why does our country need students majoring in it? What is the future of this major? Will computer science be popular in the future?</p>
+</blockquote>
+<p>Two years later, when I introduced this major to my younger brother and sister who study at our university as a “past person”, it was too difficult for me to write the answer because I was worried about my lack of ability and short-sightedness, which brought all kinds of misguidance to them; secondly, the choice of major at the undergraduate level will probably affect a person’s life and mislead others. The third is that the choice of major at the undergraduate level may affect one’s life and mislead the future of others.</p>
+<p>Therefore, in this article, I will try my best to talk about my experience and thoughts in computer science over the past two years, and hope readers can gain something worthwhile. The content I share is only my opinion and does not represent any absolute theory. </p>
+<h1 id="1-Our-Environment"><a href="#1-Our-Environment" class="headerlink" title="1. Our Environment"></a>1. Our Environment</h1><blockquote>
+<p>This is an era of prosperity and crisis: Owing to the COVID-19, our world is experiencing changes never seen in a century.</p>
+</blockquote>
+<p>The annually spring and autumn recruitment is the barometer of the development of the computer industry, from last year, Tencent paid 40w high salary in the hot search, and then some time ago, due to the epidemic of the re-emergence of the side of layoffs while also locking the head count. Until today President Liu Kiping of Tencent issued an article: “Internal manpower investment will be adjusted from the edge of the business to the core business, in the industry to occur fundamental changes in the industry when actively embracing change”.</p>
+<p>In the general environment, today’s Internet is far less than what it was 10 years ago, the so-called “Although it is a pig, it can wind and waves.”, which Howard’s comment is: “Now the Internet from the era of incremental into the era of stock. Everyone has no way to make the cake bigger, so they can only grab each other’s cake”.</p>
+<p><a href="https://en.wikipedia.org/wiki/The_Mythical_Man-Month">The Mythical Man-Month</a> which is the bible of software engineering points out that more people can not shorten the software development progress, and it is dangerous to use “man-month” to measure the size of the work. Because <code>the number of people != efficiency</code>, the way to adjust the organizational structure of the current major manufacturers is also very straightforward - leaving the most valuable programmers. In this environment, with only a small pool of talent to dig, the Internet starting salary also seems very high.</p>
+<p>If only to high salary or good employment and blindly choose computer science major, it can only be said to have entered the survivorship bias. An objective fact is that the average salary of students graduating from our school is far below the average level of Zhihu or Maimai. The best students can collect offers from all the big companies, but the students who usually waste their time, even though they choose this major, often end up not as good as they expect. The salary distribution of this industry is not normal but power-law distribution, only a small group of the best people can share the most cake, the variance of the future development of the same industry will be very large. If you will choose to enter the industry in the future, please try to become the front group of people.</p>
+<p>In this regard, I think the reason for choosing this major should be “you love computer science enough”, not “this major is hot”. If you like the process of building a whole world of order through a process control (auto-state machine) and have some interest in this major, you may want to read on below.</p>
+<h1 id="2-About-CES"><a href="#2-About-CES" class="headerlink" title="2. About CES"></a>2. About CES</h1><blockquote>
+<p>What is the Computer Engineering and Science?</p>
+</blockquote>
+<p>The School of Computer Engineering and Science (CES) offers four majors: Computer Science and Technology, Intelligent Science and Technology, Cyberspace Security, and Artificial Intelligence.</p>
+<p>The gap between these majors, as reflected in the professional courses taken at the undergraduate level, will not be so big, at least most of the basic courses such as data structures, principles of computer composition, operating systems, computer networks (i.e., the 408 in the Master’s degree examination) are treated equally. Corresponding professional courses will focus on the study content, specific details refer to Shanghai University undergraduate professional training program in <a href="https://www.jwc.shu.edu.cn/content.jsp?urltype=news.NewsContentUrl&wbtreeid=1192&wbnewsid=31263">2019</a> and <a href="https://www.jwc.shu.edu.cn/content.jsp?urltype=news.NewsContentUrl&wbtreeid=1192&wbnewsid=32552">2020</a>. And all majors’ rankings are represented by the following table:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>2021 Plan</th>
+<th>2021 Rank</th>
+<th>2020 Plan</th>
+<th>2020 Rank</th>
+<th>2019 Plan</th>
+<th>2019 Rank</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Computer Science and Technology</td>
+<td>110</td>
+<td>289&#x2F;1573</td>
+<td>135</td>
+<td>560&#x2F;2029</td>
+<td>150</td>
+<td>582&#x2F;2090</td>
+</tr>
+<tr>
+<td>Intelligent Science and Technology</td>
+<td>26</td>
+<td>375&#x2F;1573</td>
+<td>45</td>
+<td>486&#x2F;2029</td>
+<td>60</td>
+<td>281&#x2F;2090</td>
+</tr>
+<tr>
+<td>Cyberspace Security</td>
+<td>20</td>
+<td>396&#x2F;1573</td>
+<td>25</td>
+<td>495&#x2F;2029</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Artificial Intelligence</td>
+<td>21</td>
+<td>366&#x2F;1573</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p>In most cases, there will not be a significant gap in the daily academic communication of interdisciplinary students, because the skills you will use in your future work may not be as closely related to your current chosen major. What teachers teach you will not determine what you will learn about. For example, if you choose computer science and technology, you can still study artificial intelligence, and if you choose AI, you can study cybersecurity-related content. But in detail:</p>
+<ul>
+<li>Computer science and technology: can be understood as the computer industry, the Polytechnic University class, belongs to the computer in the basic disciplines, both soft and hard, optional development direction range is very wide, and the specific direction of research depends entirely on your interest.</li>
+<li>Intelligent science and technology: need to learn some signal processing, matrix algebra, brain cognition, and operations research-related courses, across a wide range.</li>
+<li>Cyberspace security: a new major in my year, the scope of the study is not limited to the so-called “cyber security”, but also distinguishes penetration, reverse, cryptography and so on.</li>
+<li>Artificial intelligence: the research direction and professional course arrangement are also close to the wisdom of science, including mathematical logic, data mining, brain cognition, etc.,<br>it is recommended that students with good mathematics choose, need very good linear algebra and probability theory foundation, but also this is the Department of Mathematics “to grab a job” one of the directions.</li>
+</ul>
+<p>There is no absolute answer to the question of whether a specific major is better or worse. From a personal point of view, the teaching program of the new major still needs time to settle down, 10 weeks of short semesters are compressed together, and even if you take grade 4.0 does not mean that you learned the course well.</p>
+<p>Remember <code>what the school teaches != what I need to learn</code>, you need to be clear about where your future competitiveness in the industry lies. Nowadays, more than 90% of the interview contents of large Internet companies are not what the teachers can teach you, but the fact that the teacher did not teach is not a reason why you don’t know that.</p>
+<h1 id="3-The-future"><a href="#3-The-future" class="headerlink" title="3. The future"></a>3. The future</h1><blockquote>
+<p>What I will do in the future?</p>
+</blockquote>
+<p>In fact, each road is divided and the choice will be different.</p>
+<p><code>For work</code>: If you do not have the intention to study what, it is not recommended to go in the direction of algorithms, the main directions include front-end, client, back-end, testing, operations and maintenance, security, etc. Before the junior year, make sure to finish the professional courses, and do not leave too many courses for the senior year. As early as possible to determine the technology stack used in the interview, looking for online classes (preferably open courses in foreign famous universities, books, blogs, and <a href="https://github.com/sindresorhus/awesome">awesome list</a>; job search in the early efforts to do <a href="https://leetcode.com/problemset/all/">leetcode</a>, the summer of the junior year (or the end of the second year of winter) as early as possible to go to the Internet companies for internship, more accumulated internship experience project experience.</p>
+<ul>
+<li>Internship: it is best to find the schoolmates or online internal push, more understanding of the department’s working environment, overtime status, etc. The primary purpose of the internship is to enrich the resume, it is not recommended to care too much about the salary more or less, the key is you will learn what.</li>
+<li>When you are looking for a job with your internship experience, the name of your internship company only exists for the interviewer to have heard of&#x2F;not heard of two situations. If the goal is to work for a big company, it is not particularly recommended to go to outsourcing companies and traditional industry companies (i.e. companies whose old business is not the Internet) or if you want to take “private jobs” from teachers and make sure to identify the good and bad projects, refer to <a href="https://survivesjtu.gitbook.io/survivesjtumanual/fang-tan-ji/xiao-xin-xiang-mu-de-xian-jing">Shanghai Jiao Tong University Survives Guide</a>.</li>
+</ul>
+<p><code>Taking part in the civil servant exam</code>: Mainly depends on the province, city, unit, and tier, the specific details are unknown.</p>
+<p><code>Push avoid</code>: The specific policy will change every year, refer to The Implementation plan for the work of recommending fresh outstanding undergraduate graduates to be exempted from studying for a master’s degree in <a href="https://cs.shu.edu.cn/info/1198/20176.htm">2022</a> and <a href="https://cs.shu.edu.cn/info/1198/19884.htm">2021</a> School of Computer Science of Shanghai University. The details of the policy will change every year, but it is important to be clear about where you need to get extra points.</p>
+<ul>
+<li>Note that “the scientific research achievements and competition awards of students who cooperate with their immediate family members or those with significantly higher education, titles and positions than themselves are only for reference and are not included in the calculation system of the comprehensive evaluation results.”, means that the route of publishing papers in cooperation with supervisors, finding joint competitions for graduate Ph.D. will not work.</li>
+<li>On the other hand, <code>Shanghai University has a lot of ACM experts == Shanghai University ACM is powerful != you will be powerful definitely when you come to ACM</code>, same for CTF, ASC, etc. Some competitions will cost a lot of time investment if you find it is not suitable also please give up the sunk cost in time, spend time to do leetcode than waste time in the competition.</li>
+</ul>
+<p><code>Taking part in the postgraduate entrance exams</code>: The students with low GPAs who want to fulfill their dreams of a famous domestic school is also the choice of most students who do not want to work for the time being. The preparation time for the exam begins in the second semester of the junior year, choice is greater than effort. The process of preparing for the exam, choosing a school, etc., depends on the individual situation, so I won’t go into detail here.</p>
+<p><code>Study abroad</code>: The first thing you need to do is to make sure that you are ready to go to the country you want to go to, whether you need to take IELTS or TOEFL, and whether you want to take GRE. In addition, striving to participate in internationally renowned competitions or publish some academic results but also trying to accumulate some foreign company internship experience, in the application are very plus points. As for whether to stay or return to your home country at the end of your graduate studies abroad, it ultimately depends on your situation.</p>
+<h1 id="4-Daily-life"><a href="#4-Daily-life" class="headerlink" title="4. Daily life"></a>4. Daily life</h1><blockquote>
+<p>What is life like in the college?</p>
+</blockquote>
+<ol>
+<li>Grade 2019 and 2020 dormitories are arranged in the New Century, subsequent accommodation is unknown, depending on the school arrangements.</li>
+<li>Some classes have been deleted from the seminar, but there are still a lot of reports, and some teachers have a lot of requirements.</li>
+<li>College study materials, textbooks, etc., in the major group chat, can also be seen, you can also refer to <a href="https://chasing1020.github.io/post/ces-materials/">CES Materials</a> and you may find it helpful to browse the <a href="https://github.com/shuosc/libshu">libshu</a> which includes the material collected by the Open Source Community.</li>
+<li>Many of the final exams are far less detailed than the freshman year, most of them are less incomplete, and you will need some preparation skills.</li>
+<li>In class, most of the girls sit in the front row more, and whether or not you can get rid of the single depends on your ability.</li>
+<li>About class activities, because our courses are self-selected, everyone’s daily life trajectory is more scattered or gathered in their small circle, I think the class cohesion is not so strong to some extent.</li>
+<li>Most of the courses, including laboratory classes, will be on the East Side, or relatively far, winter morning on eight East Side is very painful, so it is recommended to learn a bicycle for convenience.</li>
+<li>ACM and Cyberspace security labs are located on the 7th and 6th floors of the computer building, which are currently open to specific students. For teamwork competitions, it is important to find like-minded partners who are willing to devote their time and have strong abilities (not reflected in their GPAs).</li>
+<li>Students who major in AI should try to contact their supervisors as early as possible to try to borrow a GPU server, and those who are strong can also try to contact their supervisors in advance to join their graduate groups.</li>
+</ol>
+<h1 id="5-On-the-way"><a href="#5-On-the-way" class="headerlink" title="5. On the way"></a>5. On the way</h1><blockquote>
+<p>If you have decided to major in the Computer Science and Technology, here are some suggestions for studying in advance.</p>
+</blockquote>
+<ol>
+<li><p>English counts! English counts! English counts!</p>
+<ul>
+<li>Learn to use Google and learn to read English materials. Never use Baidu to find answers. (It is highly recommended to add <code>127.0.0.1 www.baidu.com</code> in your <a href="https://man7.org/linux/man-pages/man5/hosts.5.html">&#x2F;etc&#x2F;hosts</a> file, which will promise that you will not able to use it.)</li>
+<li>Learn more on <a href="https://github.com/">Github</a>, <a href="https://stackoverflow.com/">Stackoverflow</a> and less on CSDN or Cnblogs.</li>
+<li>Learn to fix bugs by <a href="https://en.wikipedia.org/wiki/STFW">STFW</a> and <a href="https://en.wikipedia.org/wiki/RTFM">RTFM</a>, which is the most important skill for a programmer.</li>
+<li>Learn <a href="http://www.catb.org/~esr/faqs/smart-questions.html">how to ask questions the smart way</a>.</li>
+</ul>
+</li>
+<li><p>Create a GitHub account, and build a personal blog on it, you can use <a href="https://gohugo.io/">hugo</a>, <a href="https://hexo.io/">hexo</a> and other frameworks, the whole specific process follows Google and official documentation, the process you will learn a lot, including Git, read documents, write configuration files and other operations.</p>
+</li>
+<li><p>Specific learning direction, learning a new language and related technologies, learning process to take notes.</p>
+<ul>
+<li>Back-end: Java, Golang, C++, Rust, etc., and Web frameworks such as Springboot, and Gin, capable students can learn about DBMS, Redis, MQ, ES and other technologies in advance.</li>
+<li>Front-end&#x2F;client: JavaScript, TypeScript, Dart, Kotlin, Swift and so on, frameworks including Vue, React, Angular, etc., learning Node.js, as well as agents, caches, gateways, tunnels, etc.</li>
+<li>AI can start to learn Python, Matlab and so on, as well as the common TensorFlow or PyTorch, efforts to improve the level of English and start trying to improve the ability to find literature&#x2F;reading literature.</li>
+</ul>
+</li>
+<li><p>Learn Linux including <a href="https://docs.microsoft.com/en-us/windows/wsl/install">WSL</a> and <a href="https://www.docker.com/">Docker</a>, it is highly recommended to learn Docker to save the time to build the environment.</p>
+</li>
+<li><p>Learn the professional course knowledge in advance, refer to the <a href="https://csdiy.wiki/">CS Self-Study Guide</a>, it is suggested to learn computer science by doing the labs.</p>
+</li>
+<li><p>When you finish the above, you should have a general direction of what to study in the future, you can also read <a href="https://chasing1020.github.io/post/my-cs-learning-route/">My Computer Study Route</a>.</p>
+</li>
+</ol>
+<h1 id="6-Ending"><a href="#6-Ending" class="headerlink" title="6. Ending"></a>6. Ending</h1><p>This article is only expressing my personal opinion, I hope students will not change their opinion towards this major because of the shortcomings of the profession I mentioned, or blindly decide because of the so-called high salary. On the way of choosing a major, often a decision will greatly affect the future trajectory of your life.</p>
+<p>The fact that you have the grades to get into a computer science college also means that you have the right to choose almost any major, so please choose your major carefully. After all, the final choice of major is still yours, so please make sure to make a decision based on your interests, family environment, future development and all kinds of factors, and remember that at this point, anyone, including your teachers, family and classmates, can only just provide advice at all.</p>
+<p>Four years of college life is neither too long nor too short. While enjoying the comfortable campus life, you have become a frog in warm water without realizing it.</p>
+<p>We need to break away from the inertia of student thinking under the score measurement system, “Please be sure to remember: four years of college life gives you is just a kind of the undergo of your life, when you graduate, the string of pale scores has been invalidated.”.</p>
+<h1 id="7-Remarks"><a href="#7-Remarks" class="headerlink" title="7. Remarks"></a>7. Remarks</h1><p>Here are some links related to this post.</p>
+<ol>
+<li><p><a href="https://lemon-412.github.io/2020/07/17/%E4%B8%8A%E5%A4%A7%E8%AE%A1%E9%99%A2%E6%8A%A5%E8%80%83%E6%8C%87%E5%8C%97/">Guide of Choice SHU CES</a></p>
+</li>
+<li><p><a href="https://luminolt.cn/post/a-guide-for-newbies-in-cs/">A Guide for newbies in Cyberspace Security</a></p>
+</li>
+</ol>
+<p>Thank you for reading here, after you have finished your blog, you can comment on this post below to contact me to add your link. Anyway, you are free to ask any questions about this post. If there is anything inappropriate, please comment&#x2F;contact me and I will change it as soon as possible.</p>
+]]></content>
+      <categories>
+        <category>转载</category>
+      </categories>
+      <tags>
+        <tag>Career</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自学吉他记录</title>
+    <url>/2023-03-07-24-%E8%87%AA%E5%AD%A6%E5%90%89%E4%BB%96%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>系统学习吉他是很必要的，作为心智成熟的人来说，自学吉他是完全可以做到的事情。下面我来记录和分享自学吉他的所思和一个经历。</p>
+<blockquote>
+<p>对于自学吉他的人来说，要做的无非两件事：不停地锻炼手指机能，以及弹自己喜欢的歌。</p>
+</blockquote>
+<p>完成这个目标需要的精力并不多。每天20min足以练习机能，至于多的时间效率是相对较低的，根据个人情况再去投入。</p>
+<h1 id="经历分享与记录"><a href="#经历分享与记录" class="headerlink" title="经历分享与记录"></a>经历分享与记录</h1><p>从高考结束后开始接触吉他。<br>一开始的吉他弦距很高，几乎没有进步，磨手指。一把音准好、弦距适中的吉他对新手是很有必要的，弦距太高的话会弹不响琴，这是很多新手的噩梦。<br>在参看了网上的测评后，我大概花了1000的钱入手了把布鲁克的v12。从此算正式开始学吉他的道路。</p>
+<blockquote>
+<p>一把能过得去的吉他真的很重要！！！想要入手的话不妨最少花个1000左右的钱去入手一把能入门的练习琴！！价格再往下的话，质量真的不好保证。</p>
+</blockquote>
+<p>从九月拿到了新吉他之后开始正式练。但在11月前断断续续的。</p>
+<p>11月开始不系统的随意练习和弦。爬过最简单的保留指后，开始<a href="https://www.bilibili.com/video/BV1Uo4y1f7Np">练歌</a>。</p>
+<p><strong>23年2月初</strong>开始跟随<a href="https://zhuanlan.zhihu.com/p/37687890">网上教程</a>练习五声音阶。目前练习了将近一个月之后，准备开始击拉勾揉等等技巧。</p>
+<p><strong>3月3日</strong>的时候想尝试练习指弹的基本功，感觉那天在网上找到的资料练习难度梯度太大了。</p>
+<p>现在是<strong>3月9日</strong>。<br>在思考之后要练习的内容，击拉勾揉还没寻找到好的教程。目前就是每天正常地练机能。<code>保留指爬格子、五声音阶、和弦转换</code>，稍微地感觉无聊了。</p>
+<p><strong>3月11日</strong>：<br>尝试学习扫弦。</p>
+<p><strong>3月13号更新</strong>：<br>还是日常练机能，已经可以很流畅的衔接和弦了！！可以系统性的把各种各样的三和弦在吉他上复现出来了！好兴奋。很多和弦比如七和弦九和弦十一和弦之类的也可以弹了，不过目前还不能衔接上！<br>先准备好好的先学习好扫弦。但是有点不知道要如何开始练习，网上找了一些开始练却还是有些摸不着头脑。</p>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+      <tags>
+        <tag>Guitar</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>杂谈：临开学观warma随笔</title>
+    <url>/2023-01-29-08-%E6%9D%82%E8%B0%88%EF%BC%9A%E4%B8%B4%E5%BC%80%E5%AD%A6%E8%A7%82warma%E9%9A%8F%E7%AC%94/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="c90b09b43e79a01116e7ef5071659ee771b8197492238ed24da6459629a987eb">b27f805cf50d234bb240de1ee419755c0ce058388104f0b8b7bb0b5c91790c90db6abcbb939ddfc60bc38eb55cf6ae06994b6ea2213f5367d2282da78e3a6e3ed8f7e3a7a02a9fddcafbfbe8696cf9979a712d465073313a7a24b36311c60c3cb33bee875346e27e52a318c0c43a64aba1de68594f4177393f885c25328b527546f7fe5750901d69cc285fd26ed1d8002fe86dcef4680ba8a7e040e1825fc894339afc6aaae34d61404b6caa6401390cb4b862cc5710a65a4d04f2c7115652272eaea90cdb180ff4b4fe0cf86298b4160e78e4bc5bad3039f9b797006ca837df04d008ab0ef9b976808b13fa1fba569c26dce40764591f14d1452ea5cb1111ba362365bbaae22f44e1eea9bc5b924f02a830143222071da881993c6ad6831ea4bd437890cf392d6afd8f1d5c85eb4fede190fdfb90ab099d604e136293df5e9732709f4f9741ad5fe735788241d72d3e93db634d4f74acc1e4f8a0b3ecfe6b665194394fc8f0b9a348bae2ea49789d4cc3c33953ffcd8bdbcc54829809f83e12dc87729e9ff3d0d6b2e05beff60b6c5cf8f1c3c5428bf2638cc285967e06f46990be039109ce5640367de270c9a24c27fa1b7f969738d2ff298fd629fc6103a0a07381965c01228ff0c38bd7b5fa49fd7ee00d7747d625ba60a9b3dc8b3a990ff3bc89af34a625835b61eb005c139c9ff84b922b5b939084eb9c6a81b28cf77e3246d01ba1ac938d87d4268b2bf29210a2be4d260ad725b61ea0def720b3e38bf03f488e4683f56e8aeae4f52a73ab86d787e77fd3e9d1ff0a91a31e501664be98ad8096ef2e89baee4f4a0ce587925a59b18d9092025996e9da42690af80b50852828f56cc29f841ece183ba58a3359e4593182afb096c86a2284839bc82dd973367eddfcf53874ac6ccfd34aa5da56641789358f16b7e51bd3749a61859ff8d6766fdc4da215818490f69af4f486af139395a93439b1130df05f7d7871cec5e1d3fdc5cace1b13195c130abe27df4d39614b8a5bc128ac14df7e03f5c9aa2cb630dbe39d3763c3d5317e536ad426fd46e70e416edb08dc41bf2f434218425f5a8443e3afed5581434455459d6bc7f0b74b87476a461065c467a2049b219be154dfd2ed71c8b7b72367438dd8849ad59844e9b139dd2631971520e5afbf2b23fa194dd231f606d3312c17f2d0e432036ab0a0abe6dc7d1b870960ac3fb92a6df8356e5ddacdaf5fe3c6d432959a26bf031ec9bfa23f2898886c41e597a5a55a48dc568ff2586fd2d51c25a5c148d82ab0b0bb7514e5db63a8c518c488205e1b6efbdc3fe46070eac3a7acf1a41b307548d8228287157bf2abb3e1f714b3647166b09a5ae65baacbfb93b5c792a2dc3a10a2854a0a34fbf9c435d91ff243c586e8253cbd321c81dc972fc0b61f61a37280c2552a8c5ed5b4395d12b4cff0a61948b0520f06ccf732f756fb64d434f33e01ba9adab7053f7b364d0527e17546dada3cb50d041c14cf3c6184ff2447e832f704b72bd6ebb07c4af560b52ba4a7b77744e5f41617dbb7d193696b5dfde796e935987cff05d5d7451b07d7802885a57026558a91c7486e69532d96c0617e306e62847e3a69fda116e0f4688789446b95761cc712681e90d362dbcda4278b2b75494bcc540a027252465d04aac601904db28f4f965bb105a80bd064ea37b3beee197df8e94042b8541967409b2579baef2312e4ce8fe1b2db8230b65babfbfad4f3a022f812ae90320d282f303760a90b239a60804130bedb842c6194e20ee32b5c8fbf99bf888bdfe18c7c11db4a6e02faa1c602929710807ae7ae212aaa829bf51c6e265ca8ab5faf142b22ab97d18e722dd5da4baf7fc4236f90c40f672d8c5b71f0bb17fbfd2e685e8ae6d4ea4ef3ffc63c3f6bba45af2ce92978e117e6195336723d93f4332ab098febb2752c40568a0145f47923e8cbc26b1a18be9f446c9bf47441b674ca1552b3a11f64c49c92396e64b1404a7fa3b1b447e983724e5640747dfc433eb283cd1dbc8f4729ee0733ca313de26c94c6e4c0c19d382d03fcc95747451db79ab2bae6285f47f1d865087c6d5f75747f527deeb2736afd79e7897f100d3ad7bf9ca5e9736d3d013d3a4d1ebe28510efad86c38d162af2ae140465a773fe84859e8e66c7dc7a495ad63e11a8a742777e5bd4a3c87380dddce4ed380babf6308c29a548b9b140ee64229355708f2420445c4ede9d378124a739771eca1eb9765bcd1b5872d6c47faf980941a9cd1ddc4808ba6f9b7cb3ad0e0d887f8b3aa2ffab3f12cf7575331a016244f3f67384da62b177f2718da06c86897c31c8a31f9057793bbc33a4dd257e6c21b162991b535430337a0b8279eb398386c393ba8ca7ce9cfd8de0c81c3df78529ee8f7dafa90c4684eb9955b452f4b65cc5099d76c37e288f25ba829687641274e5cf586b9b11010a54404ef6d0919ebbbd72682b7ec4bc16fa968af71d1142c59252746ea1108ff63cebb1e1cab6b02fe47c9a5395b29bf95bc6c189ba08994d9fc18d2331cb4cc8a16e9052fd20d2fae436c86d45ce05eb4b0475e0fbdebd1d2ad3612f635e8b06be2cf16ec5886f471edad701bfb5a42379fe28d1d72357d28a71ad25dcad3e2193573527f6dfbf8a6429615e3568c3128679de041a65666fd8c44ea283ce90348290b59412b94b1c13cec6d5b084f99c5050dd904b22fdec8734aa4312a862c928e713205f070d18b3df229f473e605a842bbb0cad43c5f861040f0a1378a0ab0145f8b4f25a39c072b964cca9458662009655728b34ed48a2b1b7806c5bd0d84ff647d9cfd17ceb79997ebdada11267b92cbbbdc2119abcb19ef06e4b5d1e2f37b1509e484afa43f6d70aa5b789a1ad198f34f13edef867e81240551eecac0a26c322dc60b2293b79ce7045868337389cf298c83178d59a1bc3a2560f615a81638b5e2a99ae801eccf55c41eb3c17e00762a9d3dfff925de2ed7d51dba8d30d6bc8efd2eed6feb627be1270ee6d5e41408e5f988c0013fdb1b910c652f6a278bb1215854731f1316b834fc5db6db5db36fbade588b3731dab11078806620677dc2c47f857729981d6e269d441b548b6d076695b4f245441777e005b8de88ce5eb69f5d3cb64defb55541aa85a5361211f371c83380d20e99cb2d7067ea0570dfcc58c8059c1c2039fb2602f6585bdc1e174b44880a86e874a88a97ed0613478e3dc3d991f0e0646f5970cfd68933e8fc3ccbf9ae0e734f34b7d575bb0e14326a785902e32f9bc4dc3b31c64ca197efd576ff33a19bc38bf7c81da7bbaa34136a3a3e5cc4af96802dd4aaac97648473336b829a77b3afd5fca4db3b012e7560d824fdf8ecc41b4f4506e86120b02043b5d6923cf2f7ec0144862d8b532773b003b25b5a466fc6115e70197fd770dea2bd74d3171ac1bd9bf38460f0c6fbd73352edc50799a073ebf9ce26c6a2b765d7f8f7d6fadca24dabe41a8bee0e970398026f511413678732be05b79a08dedccf05bc633fdcc7ac3c1d18bf618d30a8bc83aa331682b59e4dda5464fc57f043b2e5e119fafd7f63c3af52283bfc6c767e3059a0b4c7a657e633c72e3149eed9743d9953182110731b72a20816b380895e1b65b50cc0ba033a38d007701e20ea06739784f39d6ab7ca5bbc8e2b64278f8e63bc8c87425159cef6aeeda2d69f82bdf1fc81636032320eeffd24b36d85450d5a649767ffc5c0d8599a4422e1d47771898eb8db55c7e9094fb78b13e50e87375edcb3f5ebdbb68f539c560771d3b8655c017626e62bd439f6b0124a648cc9b229a704c320519e8bfac39189a71b26ce7c3f88f795b95475955699dc8c1032702327c3b78ea9f7c4d63a1be70d37f2d674d22088fdb4766ff433ed904ca870b5be024e83db2190924b3aaa636d8d4ebef2b5547ffc4f9b7ad0d5caf7023b50e19c8d67bf2c70c126a8dfc0870a5978903871aeeb8398fcd32627009dd7ee92e734b239cf3b3e00fba6e3a387ceae71f6477c31db1581125ea4b730544c1a4332111b1af31494cec2c1ead0ce542b5856fa8a58947b8851402e040d8e70e24f966e3ec9df087e48f294afb9151167179ae986aff39c261a0833d0442bd879f1d9f96405039197e8449e552020e7a18661bc9a699d49abba8a52e32193d873a22620785af69ea7764869710e753682bb99cf7396a8bde5eaa816c6882687d9e621d3342815cd1742e75b1f274c4bec9f0adbe1b3357956c90514b385c7a763dd489e62b9b74d1d2130a9e4e55d2bbb601b03df43524f9f100d31bd08aa2735bcfc76181eb60b8a853a4edb375e49d91e53fe16f733a073ee070cb539bd2f9f3fe50e95836b99eb17faf34381efe4b6df3f61b08284b7e14fd74164687489feb7a04540e48984f0642c7f6ff89d490f087e90941cac5b64c69f592ed7bd536a6c9ce2260527fa78855a53dc69f087a76229dc166e97bcecf9edfee10faee4a229399bc58009f15ab5a88d029d855929e31b54d98312fdc5f53027440e5935710290feebf9513decd1bd8534f64f27acc9594797f9564a2b5787d3ffec6ed1e7ddbc0bd050ab2b02c563b00b7a4697c7c980d8e5bc7f1b1c2a9001c6cc722ee4383a3e6115e865817131b1976049a122ecda3bc86d25812203a36a7f508ee32d08fefc44d2e516f71eef9d14d5251d255cfd00951414d4189018fdab2ae5de683bcd649e2445918585da13ef3971eea018580d34b114c9ccf04859302305a401cc205d07e2125a24f5450860afd0bdd247c5ffbdfeabc3f1313b02a8394e72dd7ad11cd6967502b3742b8417a435d926f0af3a36eee5d18364501e37f6717d3fc7229db0865064eceb5f4268b739e55df01daceaafbbb740951806bd77e6593750148a681520fb19e449222862829e33fe8ba8e245b820a9fdda0904b03eb1eeb342b33d2fa77dd52377eee571652038846c4f8b41745a6783d13b8c9526d0a57dfd3ca08bb20d3134d438f5c461805634c8d843f44946284fd48d4a0f620899d88c1bf970aabe42c582e033ba053bd0c5d840952bd9930caf002633438d4a62f646ff77f49411872296fd8f96607802b95c3db80e0e42db5c945278533d23107785bac7d1ab888005487133018429aa0690d5b4394f73dd28d0411ca3efa35a49c6c0ccfc08aa40a1006bd1b973a6b5146db8b1faaf53d9501d8fec08cc7dcc78e74adc4f78f2934384703232f2a45207b7e39be3aa72e8793aef9a96e489bb81adc025b803948204506a8b22313f620233cfe1f75c04d24ebd5b4d54e78b1a6f9247905422cd8b12e774288162a4612cab4279d4ac71489445a2f504a39c77e5806e1f1e1d7af87f16e5bb54cc4047213ad1ac6ca9a8cf68cc6ed48ced3c077f24f4919241b1f712bb612df25cd8f3a18b9c7b3b59440c176d11b7525696c4522f89a0cdbffb5bd10a28e3980f21c258215c9b1b8d0a19ed8c057ac2405412ff147faa846eaacaf76563a2cb199cbb35d741f796c3a35a769fdc19cdf6defa2c3e433b7b7d7e1ba8f9eff98b655e330a935dd19f90fd61875d2c3aee372ef5b7c71baae892592d84ac15cba10c2c86792e70764256e2ca8e108c6fb45012f4eb286366a405c97fdf8c787bae053842c56a0f73e11dae93a30f7a1c5119d97b0a6ed8f9cef5a375c6a7af475350b75c87b34cce59fcfe46848dff0155679596ee6b38056905c053d068d0ed1a925d83ca681d7d70bea73559a19f469c0e385d3ebbf103d2174439987d9cc73b3dd745adcbbe970e891883637b05e16da6b6320facbf1bb082bd055795096be39e279ee0efc6412ff467a9b9141c01bd9aeb00a1b40bf3b5041a5b1</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">FORBIDDEN</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>杂文</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【转载】精力有限说</title>
+    <url>/2023-03-06-12-%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%B2%BE%E5%8A%9B%E6%9C%89%E9%99%90%E8%AF%B4/</url>
+    <content><![CDATA[<p>转载自<a href="https://www.zhihu.com/question/22592222/answer/21899523" title="一个不得不学习思考的东西">人的精力是有限的吗? - 君不见的回答 - 知乎</a>。<br><a href="https://www.douban.com/note/315061439">原帖</a>.</p>
+<hr>
+<h1 id="你必须承认，一个人的精力是有限的。"><a href="#你必须承认，一个人的精力是有限的。" class="headerlink" title="你必须承认，一个人的精力是有限的。"></a>你必须承认，<strong>一个人的精力是有限的</strong>。</h1><p>人的精力是颇为有限的。付出的过程比获取要长很多。做任何有益于自己的，成长性的事情都需要付出精力，这也要求人们有节制的使用这一无形资本——我认为这些显而易见的道理，越早想明白越好。</p>
+<p>曾经有很长的一段时间我不明白为什么每当我参加一些人数众多，气氛热闹，互动频繁的活动时就会情绪低落，即使是参加大型同学聚会，面对大家欢快的讨论，我也多少有些拘谨。直到很久以后，我才明白这种性格特质叫：内向。而内向意味着个体在独处或面对有限的对象时精力充沛，而却对超出自我界限的对象则感到茫然无助，乃至疲惫不堪。</p>
+<p>从那以后，我开始细心观察我身体中流淌着的无形力量：精力。进而不断的总结出关于精力的种种理论，并运用在生活中。一个很重要的前提即是，人们需要迫切的了解到他们适合做什么，不适合做什么，做什么精力耗费的极快，做什么有助于恢复精力。一旦了解到了这一点并合理分配调控，生活中的一些问题就可以得到解决。</p>
+<p>有很多人喜欢抱怨“无聊”，我认为，“无聊”其实就是精力不济的一种标志。在这种状态下，你几乎不可能做任何“有意义”的事情——比如高效率的工作、学习。你只能做一些娱乐性较高看似放松的事情，比如吃零食，上网，看肥皂剧，玩游戏，等等。但在这一过程中，你内心的斗志实质上是被逐渐消磨的。随着时间逐渐拉长，你的精力愈发的懈怠，往往会坠入更深的无聊之中。</p>
+<p>当然，现在你已经知道了，下次当你在一个百无聊赖的周末醒来，你不应该再用这些事情来帮助自己“放松”，从而在无聊的恶性循环中打转。但要根本性的了解该怎么做，你需要从头开始。</p>
+<h2 id="适合做什么，不适合做什么"><a href="#适合做什么，不适合做什么" class="headerlink" title="适合做什么，不适合做什么"></a>适合做什么，不适合做什么</h2><p>我有一个朋友，对她而言，阅读就是呼吸一般的存在，她在一切可能的时间都在看书（这个例子我已经举过好几次了，看过我别的文章的人都知道）。与此同时，与人闲聊、打发时间却是一件对她来说比较困难的事情。如果一段时间我和她的聊天都毫无主题，四处飞散，她就会不由自主的开始看书，上网，读文章……而且她也不太喜欢和人保持太过紧密的日常联系。很显然，对她而言，阅读是一件毫不费力的事情，甚至在每天长达数小时的专注阅读中，她的精力还在缓慢的增长。但与人日常交际上她就不是很热衷了，如果去到一个纯交际的场所，她还会觉得很烦躁。</p>
+<p>强求本能中的自己进行改变是一件吃力不讨好的事情。比如你明明是一个内向的人，非要强求自己去当大众的开心果；明明你是一个耿直的人，非要强求自己去说言不由衷的话；明明你有一个不错的爱好，却因为听闻别的爱好更“好”而去盲从——这些事情会极大的耗费你的精力，使得你的每一天在应付这些事情时就已疲惫不堪，怎么可能还有空闲去做别的事呢？所以，认清自己、阅读自己是做好这一切的第一步。</p>
+<h2 id="训练自己的精力"><a href="#训练自己的精力" class="headerlink" title="训练自己的精力"></a>训练自己的精力</h2><p>很显然，在那些让我们感到精力充沛和身心愉快的事情中，有一部分是颇为有建设性的，有些单纯只是为了娱乐。而在我们所能接受的范围以内，还存在着一些对自己颇为有益的事情。这个时候，需要的就是对自己的精力进行训练，以使得自己能在有意义的事情上保持更长的时间。</p>
+<p>比如，我可以坚持连续严肃阅读——这件颇为有意义的事情——一个小时，而当一个小时之后，我就需要休息一小会儿或看些轻松的东西。而在一天的时间里，我的阅读上限在三个小时左右，当一天我将这么长的时间全部投入到阅读中时，再看什么我都脑中一片混沌，理解和记忆能力大为下降。很显然，虽然阅读这件事并不会明显耗费我的精力，但精力值中的确只有不多的一部分可以用在阅读这件事上。怎么办呢？这个时候就需要训练，不必训练到那位书痴读书如呼吸饮水般的程度，但要将这一上限大大提高，高到自己预料之外的程度。</p>
+<p>任何事情都需要训练，运动员要训练肌肉记忆，做学问的要训练神经突触，蓄养精力也是同样的道理。将做有意义的事情时的精力上限提高并不仅仅意味着下次再做这件事情的时候能坚持的时间更长，而是意味着即使你只做一定的时间，你的效率也会大为增强。那些书痴们的阅读效率和速度将远高于我们，这一结论是毫无疑问的。更为重要的是，随着精力的逐步增强，你在做一件事情时将会变得更为得心应手，并从中获取之前从未有过的愉悦感。（当你一次可以跑二十公里时，随意跑上个三公里只是在享受，而锻炼的效果却已经达到了）</p>
+<p>在逐步的训练中，做某件事的精力值逐步提高了，而因为其趣味性也不断增强，你做其他相较之“不重要”的事情的时间也就缩短了。你的生活将变得更有意义，更加充实，对自我的成长帮助也越大。可能会有人觉得这种认识和方法太过功利化，为什么我们的生活不能惬意一点呢？我认为，在这个竞争极其激烈，每个人的综合素质已经变得越来越重要的时代，对自我的提高已经成了每天的必修课，这使得我们有必要为之调整我们的状态，并付出努力。同时，既然在坚持一段时间之后那些更有意义的事情也能带给我们快乐，又何乐而不为呢？</p>
+<h2 id="分配你的精力"><a href="#分配你的精力" class="headerlink" title="分配你的精力"></a>分配你的精力</h2><p>人的精力终归是有限的，或者说，一天的时间终归是有限的，所以精力在不同的事情上必然要有所分配。于此同时，不管我们如何努力，生活中必然还是有一些事情让我们感到为难，违背了自己的本性，或者难以被训练，但却仍然需要做，还有一些事情我们明知道很损耗精力，但还是很愿意做。这时候分配就是一件重要的事情。</p>
+<p>如果你一大早就抢着把乐意做的事情做完了，而把最难完成的事情留到最后，那每天回到家时，你必然感到很疲惫，很倦怠。加之很多人又次错误的方法“放松”自己，再延长上床的时间，周而复始，很多人的生活呈现的实际上是一个下滑的曲线。而不幸的是，大多数人进入的实际上就是这样一种状态。</p>
+<p>很显然，为了做那些我们需要耗费很大精力去完成的事情——比如工作——我们需要做充足的准备，留出足够的空档，并在其后对自己进行恢复。生活中总有很多事情让人感到崩溃，错误的策略将使这些事情演变为对自己的惩罚。</p>
+<p>对于那些我必须要做但又让我感到痛苦的事情，我在做之前首先要鼓足自己的勇气。我会写一篇日记或什么其他让自己感到满足的文字（比如这篇），做一种很有规律很遵从规则能让自己从重复性中获得满足的练习（比如摹字），或者完成一件让我高兴的事情（比如看一集纪录片）。（注意，你需要做的所有事情都要让自己集中，而不是涣散。所以做娱乐性较强的事情是不行的。）在这些事情做完之后，我就开始埋头完成自己之前的计划，在这其中穿插进行着一些不影响我做事的小动作，比如听音乐，或看一篇文章，等等。待我完成时，我会感到疲惫，于是我会进而做一些让自己轻松但又不会让自己懈怠的事情。事实上，这一切都是轻而易举的完成的，不是刻意完成的。当一个过程为自己所熟悉的时候，一切就变成自然而然的事情了。</p>
+<p>再强调一遍，人与人之间是不同的。与其耗尽精力强迫自己，不如想点办法。有的人是工作狂，有的人——比如我——对工作往往燃不起热情。但工作是必须的，所以应对工作，我不断的寻找新的解决办法。直到我能够随时恢复自己的精力，或感觉工作不再是那么的痛苦。</p>
+<p>在除了学习和工作以外的其他时间，分配同样重要。如果你决定每天晚上回家的时间是自己的充电时间——看书，看电影，写作——那你就不可以让自己回家的时候已经感到难受和疲惫。你可以将事情挪到其他时间去做，可以在下班后先做一些让自己兴奋的事情，可以通过训练让自己在某些事情上如鱼得水……不管怎样，你总要找到办法让自己每天的生活更加均衡，而不是完成中间的某一个部分之后就做不了别的事情了。</p>
+<h2 id="精力与体力的关系"><a href="#精力与体力的关系" class="headerlink" title="精力与体力的关系"></a>精力与体力的关系</h2><p>我之所以将体力插进这里讲是因为体力是一个非常重要的存在，它可以说是精力存在的保证，乃至来源。一个病人——体力水平低于正常人的人——必然没有足够的精力来做任何事情。一个身体孱弱坐公交都会晕车的人，自然也没有足够的体力来保证自己发挥精力的作用。体力是一个人健康程度的象征，如果不够健康的话，自然会常受各种因素影响，没有办法把注意力集中到做有益的事情上去。当然，体力的重要性还不限于此。体力与精力是两种有弹性的魔力，如果能正确的运用这两者的力量，将会带来事半功倍的效果。</p>
+<p>体力和精力都是一种可快速恢复的，弹性十足且通过训练可以显著提高的能量，尤其对于那些已经进行过训练的人而言。而当人因体育锻炼而精神焕发的时候，他的精力也随之反弹，而且这一过程经常性并不随着体力值的降低而呈正相关。你是不是有过这样一种体验：有时候你经过一天的奔波，体力运动，你反而感到精力旺盛，异常兴奋，甚至不能快速睡着。也许这种特例并不能说明体力值降低时人们的精力甚至能随之增长，但它也说明了运动的重要性。</p>
+<p>显而易见的是，如果你一整天甚至更长的时间都待在家里，那你恐怕根本没法保持精力旺盛。</p>
+<h2 id="保护精力不受损害"><a href="#保护精力不受损害" class="headerlink" title="保护精力不受损害"></a>保护精力不受损害</h2><p>既然精力是如此重要并容易流失的一项无形资产，那么保护它则显而易见是一件重要的事情。现代社会节奏更快，强度更高，各种各样的事物和信息散落在各处，处处都在损害着精力。现在还没有太好的办法能归纳所有规避的方法，但我想以下的几点是显而易见的：</p>
+<ul>
+<li>1、避免关注于己无关 &#x2F;没有意义的事情。</li>
+</ul>
+<p>有太多的人每天把注意力放在与自己完全无关的事情上，以此消磨自己的意志、精力和时间，原因只是因为他们很“无聊”。我不得不说这是一种恶劣的恶性循环。“无聊”是因为精力不济，而消磨时光的方式则带来自己更大层面上的损失：精力更加衰弱，精神懈怠，时间消耗。最后呢？他们真的能获得什么快乐吗？事实上是没有的。而且随着关注没有意义的新闻和事件带来的后续效应则经常性更加能伤害人。争论、怒气、不切实际的想法……除了这些以外，我很难看到这种关注带来的良性后果。如果有一部分人实在觉得每天关注些杂文段子能让自己感到娱乐，那如同我上文说到的那样，请注意良好的分配。</p>
+<ul>
+<li>2、避免情绪的波动。</li>
+</ul>
+<p>在我所知道的所有事情中，没有什么比强烈的情绪更能直接损耗一个人的精力。如果是强烈的快乐和兴奋还好，但如果是强烈的负面情绪，则会直接让一个人的精力陷入瘫痪。对于有些悲伤、痛苦和焦虑来说，避免是一件不可能的事情，但对于其他的部分，则考验着一个人的应对能力。有些类似的情绪还来源于自己，如果事实如此，那我们就需要好好考虑自己生活的策略了。</p>
+<ul>
+<li>3、保持生活的平衡。</li>
+</ul>
+<p>保持生活的平衡包括两部分，身体的平衡和心理的平衡。身体的平衡要求人们对自己的摄入、睡眠、运动保持掌控，对需要身体的任何情况应对自如。心理平衡则是同理，它是在“避免情绪波动”之上的一个范畴。这是一个很玄乎的状态，很难用文字表达出来。但当你处于这种状态时，则会时常感觉到平和、富足，而如果这种状态鲜有出现，则应该努力往这个方向靠拢。</p>
+<ul>
+<li>4、不要在精力充沛的时候做一些损害精力的事情。</li>
+</ul>
+<p>感到自己现在精力充沛，状态良好？这是一个好开头，但也可能仍然指向一个不佳的结尾。也许你没必要强迫自己非得立即做出什么了不起的事情来，但至少应该抓住这个好机会更进一步。记住，错误的放松方式是一种恶性循环，你会在不知不觉之中毁掉自己良好的状态和之前的努力。</p>
+<h2 id="获取精力"><a href="#获取精力" class="headerlink" title="获取精力"></a>获取精力</h2><p>获取精力其实是和保护精力不受损害对应的概念，但它更侧重于我们要去做什么，而不是不去做什么。我认为以下几点是通过实践表明非常有效且值得分享的：</p>
+<ul>
+<li>1、保持规律而充足的睡眠：</li>
+</ul>
+<p>保持规律而充足的睡眠是如此的重要，重要到那些即使在生活其他方面一团糟的人经过睡眠的修复，也能快速的恢复到一个不错的状态。我有一位友人每天晚上都比前一天睡的晚一点，直至早晨睡觉晚上起床，再到中午睡觉午夜起床，最后又在一段很短的时间里变成了晚上睡觉早上起床……我一直认为她的作息是根本无药可救的，这一糟糕透顶的生活方式也给她带来了很大的伤害。譬如她糟糕的健康状况，美丽的妆容下晦暗的皮肤，暴躁的情绪和无穷无尽的纠结。即使她每天保持正常的状态比普通人要少很多，但经过一个漫长而深度的睡眠，她还是能很快的恢复到正常的状态下，并在那种状态下做一些自己喜欢做的事情，由此充分可见睡眠的重要作用。你应该也有在痛苦的夜晚睡去，经过长时间睡眠之后感觉好多了的经历。所以，请保持足够的、规律的睡眠，并不要找任何理由。虽然总有特殊情况，但可以肯定的是，大多数人晚睡的原因都不是什么正经的事儿，尤其是长期作息不规律的往往更是如此。将注意力集中在没有必要的事情上让人疲惫，睡前刷新网页，玩手机更是会直接损害睡眠质量……何必呢？看看书，保持沉静，安稳睡去，你的七到八个小时睡眠时间绝对不会在白天辜负你。</p>
+<p>至于睡眠时间，最好的一种莫过于每天早晨在一个准确的时间起床，并长期坚持，方法在这里：<br><a href="https://www.douban.com/group/topic/10838192/" title="早起的秘诀">如何成为一个早起者</a></p>
+<ul>
+<li>2、培养正确的爱好：</li>
+</ul>
+<p>很遗憾，即使完全不想摆出一副“政治正确”的模样，但是事实就是如此：有些爱好就是比其他爱好要更好，比如阅读、观影、写作、摄影、画画，等等。这些爱好会让你感到开心，愉悦，幸福，满足，起到一些其他爱好无法满足的作用。人生出来的时候绝大多数都是大俗人，除了真正的天才，没有人天生就喜欢这些事情，很多是后天熏陶成的，甚至逼成的。当大众都知道这类爱好更好且更有意义的时候，我想需要的就是努力靠近，努力学习。有很多人在懈怠下来的时候第一想要去做的就是一种事实上没有多大真正趣味也不会带来多好结果的事情，与其做这些带来不那么好的结果，不如培养自己去喜爱更有价值的爱好。</p>
+<p>当然，这个里面有一点是需要强调的，有些看起来并不怎么有意义的爱好会因人而异产生完全不同的效果。如果你做了而使自己获得了真正的放松——比如狂欢之后感到情绪被宣泄（换到我只会感觉到空虚）——那你当然可以那么做。这一点归根结底还是要弄清自己真正适合做的是什么。</p>
+<ul>
+<li>3、保持活动。</li>
+</ul>
+<p>我已经在体力和精力这一节谈到了这一点，但我在这里要进一步的强调。也许你真的找到了一百条不去专门做锻炼的理由（像我一样），那至少保持运动，不要让自己待在同一个地方。我每天上下班时一共要在路上走一个小时，经常外出参加活动或自己跑去什么地方转转，如果正好穿着运动鞋，我偶尔也随便跑一跑。虽然和那些动辄万米的资深跑友无法相比，但我的确也因此获取了更多做事的精力。谨记：生命是一种流动中的形式，一个不动的人是很难有活力的。即使以坐着写作为生的作家，也普遍都有外出散步的习惯。呆在一间小屋子里人能产生什么精神呢？除了独自徒生闷气以外。</p>
+<p>曾经我也在我所描述的那种恶性循环中度过一天又一天，在各种毫无意义的事情上虚度光阴，浪费青春年华中的好时光而找找不到出路。直到我细心观察自己生活中的细节并从其中找出规律找出方法并在漫长的时间里坚持实践，才逐渐把握了生活的节奏。随着工作节奏的不断加快，各种新情况的出现，自我要求的迅速提高，我不断修正之前想法的错误，提出新理论以解决现实困难。正是在这种思索当中，思维得以飞越，理念得以宽广，意志得以坚恒。降低重心，集中意念，生活才可以简单而富足，无论你最终向往的是哪一层面的成功，这一领域的修行都能引你走到更远。</p>
+<p>要知道，我们所有人都会老去，而我们中的几乎所有人都会比自己想像之中更早的老去，而老去时最常见的语言莫过于“精力有限”，“心有余而力不足”。等到这一能量无可救药离我们远去的时候，我们应该有让自己骄傲的珍惜。到时候你才不会后悔的说，当我在还有机会发挥潜能的时候，却让财富从我的生命中偷偷流走。</p>
+]]></content>
+      <categories>
+        <category>转载</category>
+      </categories>
+      <tags>
+        <tag>经验</tag>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+</search>
