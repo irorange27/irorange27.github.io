@@ -85,19 +85,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker入门</title>
-    <url>/2023-07-28-21-Docker%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[<p>Updating…</p>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
-      <tags>
-        <tag>项目开发</tag>
-        <tag>跨平台</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ASC超算竞赛</title>
     <url>/2023-08-11-40-ASC%E8%B6%85%E7%AE%97%E7%AB%9E%E8%B5%9B/</url>
     <content><![CDATA[<p>我负责硬件方面，找些资料。</p>
@@ -119,8 +106,21 @@
       </categories>
       <tags>
         <tag>计算机</tag>
-        <tag>ASC</tag>
         <tag>自学</tag>
+        <tag>ASC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker入门</title>
+    <url>/2023-07-28-21-Docker%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<p>Updating…</p>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+      <tags>
+        <tag>项目开发</tag>
+        <tag>跨平台</tag>
       </tags>
   </entry>
   <entry>
@@ -133,6 +133,50 @@
       </categories>
       <tags>
         <tag>经验</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HPC Design</title>
+    <url>/2023-08-11-01-HPC-Design/</url>
+    <content><![CDATA[<h1 id="构建HPC计算系统"><a href="#构建HPC计算系统" class="headerlink" title="构建HPC计算系统"></a>构建HPC计算系统</h1><p>HPC并非基于标准技术的组件的简单连接。这样构建的HPC系统通常被人们看作是一个松散的部件集合，这样即使可以工作，但不可能工作的很好，更不足以完成对于技术的全部承诺，而这是打比赛需要的。</p>
+<p>HPC的使用场景是构建的出发点。其预期支持的应用要求、用户数量、数据存储和处理要求、数据中心的大小、功率、冷却和重量限制都将决定HPC的大小。而ASC初赛的要求中只有直接规定功率限制，其他款项并没有要求，这样我们可以根据其题目灵活进行硬件的设计。</p>
+<p>HPC系统的架构设计同时需要考虑到软件环境，使得系统管理员和用户能够加速其工作负载。</p>
+<h1 id="硬件结构"><a href="#硬件结构" class="headerlink" title="硬件结构"></a>硬件结构</h1><h2 id="基础设施群"><a href="#基础设施群" class="headerlink" title="基础设施群"></a>基础设施群</h2><p>为HPC提供管理功能的服务器属于基础设施服务器，包括集群主节点、登陆节点和编译器节点。</p>
+<p>主节点管理集群的软件镜像，处理集群的部署、管理和监控。它还运行集群的资源调度程序和作业管理程序。主节点可在高可用性模式下主动或被动地与服务器配对运行，可以最大限度地减少停机时间。</p>
+<p>登陆节点为用户登录请求提供服务，编译器节点则为应用程序够减换届而设置。根据集群地规模，这些角色可以组合在一台服务器上，也可以分布在多台服务器上。</p>
+<p>基础设施服务器还可设置为以高可用性模式运行，为这些关键角色提供额外地弹性。基础架构服务器是保持HPC正常运行并供用户访问地关键。</p>
+<h2 id="计算单元"><a href="#计算单元" class="headerlink" title="计算单元"></a>计算单元</h2><p>HPC的计算单元是主要的计算工具，它包括CPU、GPU或FPGA，以及其他任何提供计算能力的单元。计算单元的大小，即计算节点的数量，取决于HPC的用例、预期性能、预算、空间和数据中心要求。决定因素包括计算服务器的类型或型号以及计算服务器本身的配置。</p>
+<p>在HPC中，计算和网络必须一起设计，因为计算单元的构建将由计算节点之间互联的交换机弧度决定。如，使用48端口交换机的结构时，每个交换机有24个计算节点。</p>
+<h2 id="存储单元"><a href="#存储单元" class="headerlink" title="存储单元"></a>存储单元</h2><p>存储组件可存储用户主目录、应用数据和结构，提供快速抓取空间，并可包括归档和备份。根据使用情况和HPC的规模，存储单元可以从主节点上导出到计算单元的磁盘，到用户数据、应用数据的独立文件系统、并行文件系统、快速从头备份恢复和磁带归档。</p>
+<p>其中的技术包括SAS&#x2F;SATA磁盘、SSD、NvMe以及任意组合，存储解决方案的选择取决于性能、容量和成本。</p>
+<h2 id="Networking-Options"><a href="#Networking-Options" class="headerlink" title="Networking Options"></a>Networking Options</h2><p>大多数HPC系统至少有两个网络结构。一个用于行政和管理，另一个用于进程间通信(IPC)和存储流量。根据使用情况，也可以为管理和存储浏览配置单独的网络。</p>
+<p>网络的选择范围从以太网（1GbE、10GbE、25GbE、40GbE、100GbE）到infiniBand和基于Omni-path架构（OPA）等。</p>
+<p>根据服务器适配器和交换机的选择，该网络可以使用光缆或铜线。典型的HPC系统在机架内使用铜缆布线，在机架间使用光缆，从而在电缆管理的便利性和成本之间取得平衡。</p>
+<p>需要注意的是，对于更大的集群或更复杂的网络，可根据具体使用情况设计定制网络拓扑结构。</p>
+<h1 id="软件组件"><a href="#软件组件" class="headerlink" title="软件组件"></a>软件组件</h1><p>与硬件一致，软件也是以模块化的方式组装的。单个组件（如资源管理器、MPI、编译器等）有多种选择，并支持基于硬件选择的驱动程序。</p>
+<h2 id="集群软件栈"><a href="#集群软件栈" class="headerlink" title="集群软件栈"></a>集群软件栈</h2><p>HPC集群软件是一套工具包，可轻松部署、管理和维护高性能计算系统。</p>
+<h2 id="系统管理软件"><a href="#系统管理软件" class="headerlink" title="系统管理软件"></a>系统管理软件</h2><h2 id="应用性能"><a href="#应用性能" class="headerlink" title="应用性能"></a>应用性能</h2><h1 id="数据中心注意事项"><a href="#数据中心注意事项" class="headerlink" title="数据中心注意事项"></a>数据中心注意事项</h1><p>HPC系统的最终配置是一系列权衡的结果。现有的数据中心有诸多限制——空间的物理限制以及每个机架的功率、冷却和重量限制。</p>
+<h2 id="电源"><a href="#电源" class="headerlink" title="电源"></a>电源</h2><p>高密度服务器的一个权衡因素是每个机架的输入功率要求。随服务器平台密度的增加，以及每个平台支持更丰富、更耗电的配置，驱动单个机架所需的输入功率大幅增加。</p>
+<p>有关配电装置容量的详细信息，请咨询配电设备供应商。</p>
+<h2 id="机架冷却"><a href="#机架冷却" class="headerlink" title="机架冷却"></a>机架冷却</h2><p>为机架提供充足的电力，使其在不节流的情况下发挥最大性能，是确定基础设施密度的一个因素，但另一个因素则是散去产生的热量，以便在所需的环境温度限制内继续运行。</p>
+<p>首先从服务器本身来看，平台的硬件配置决定了服务器对环境温度的需求。机箱背板、磁盘数量、CPU瓦数、附加控制器、铜质或光纤网络电缆的选择决定了产生的热量。并影响平台的其六，从而影响平台安全有效运行所需的最高环境温度。</p>
+<p>在服务器中，可以选择（仅）风冷或液冷混合方案，大约30%~40%的服务器热量需要某种风冷设备解决方案。在讨论液冷之前，应首先讨论风冷方案，最先应该考虑更具成本效益和灵活性的解决方案。</p>
+<p>冷却方式：架空地板冷却系统、排式冷却、后门热交换器、液体冷却、冷板冷却</p>
+<h2 id="机架重量"><a href="#机架重量" class="headerlink" title="机架重量"></a>机架重量</h2><p>一台拥有72台服务器和5个机架顶部加环己的计算机架重约800kg，耗电量高达43kw。</p>
+<h2 id="机架布线"><a href="#机架布线" class="headerlink" title="机架布线"></a>机架布线</h2><p>现在已经清楚，密集型HPC系统包含多个PDU、网络交换机、电源电缆、网络结构和额外的液体冷却歧管，因此仅组装机架就会非常麻烦。安装好机架式关键，但可管理性（如拆卸服务器进行维护）、故障排除（更换故障电缆）甚至性能（粗大的电缆束会使平台受阻）也同样重要。</p>
+<h1 id="扩大设计规模"><a href="#扩大设计规模" class="headerlink" title="扩大设计规模"></a>扩大设计规模</h1><p>根据定义，HPC系统使可扩展的。随需求的增长，可使用更多的CPU、GPU等增加算力，也可以使用更多的存储阵列来增加存储容量或吞吐量。因此，网络必须支持这种扩展。在理想情况下，系统架构应在设计阶段就满足这种扩展需求。</p>
+<p>![png][figure9.png]</p>
+<p>虽然这种设计适用于大多数不同规模的高性能计算系统，但根据独特的使用案例或数据重心的需求，总有定制架构的需要。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>介绍了HPC设计的原则。HPC系统的配置包括硬件、软件、应用性能、数据中心、电源和冷却等几个方面。HPC的完整图景包括系统所在的环境，数据中心分析，包括电力、冷却和空间需求等方面。</p>
+]]></content>
+      <categories>
+        <category>竞赛</category>
+      </categories>
+      <tags>
+        <tag>计算机</tag>
+        <tag>自学</tag>
+        <tag>ASC</tag>
+        <tag>设计</tag>
       </tags>
   </entry>
   <entry>
@@ -281,50 +325,6 @@
         <tag>计算机</tag>
         <tag>项目开发</tag>
         <tag>跨平台</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HPC Design</title>
-    <url>/2023-08-11-01-HPC-Design/</url>
-    <content><![CDATA[<h1 id="构建HPC计算系统"><a href="#构建HPC计算系统" class="headerlink" title="构建HPC计算系统"></a>构建HPC计算系统</h1><p>HPC并非基于标准技术的组件的简单连接。这样构建的HPC系统通常被人们看作是一个松散的部件集合，这样即使可以工作，但不可能工作的很好，更不足以完成对于技术的全部承诺，而这是打比赛需要的。</p>
-<p>HPC的使用场景是构建的出发点。其预期支持的应用要求、用户数量、数据存储和处理要求、数据中心的大小、功率、冷却和重量限制都将决定HPC的大小。而ASC初赛的要求中只有直接规定功率限制，其他款项并没有要求，这样我们可以根据其题目灵活进行硬件的设计。</p>
-<p>HPC系统的架构设计同时需要考虑到软件环境，使得系统管理员和用户能够加速其工作负载。</p>
-<h1 id="硬件结构"><a href="#硬件结构" class="headerlink" title="硬件结构"></a>硬件结构</h1><h2 id="基础设施群"><a href="#基础设施群" class="headerlink" title="基础设施群"></a>基础设施群</h2><p>为HPC提供管理功能的服务器属于基础设施服务器，包括集群主节点、登陆节点和编译器节点。</p>
-<p>主节点管理集群的软件镜像，处理集群的部署、管理和监控。它还运行集群的资源调度程序和作业管理程序。主节点可在高可用性模式下主动或被动地与服务器配对运行，可以最大限度地减少停机时间。</p>
-<p>登陆节点为用户登录请求提供服务，编译器节点则为应用程序够减换届而设置。根据集群地规模，这些角色可以组合在一台服务器上，也可以分布在多台服务器上。</p>
-<p>基础设施服务器还可设置为以高可用性模式运行，为这些关键角色提供额外地弹性。基础架构服务器是保持HPC正常运行并供用户访问地关键。</p>
-<h2 id="计算单元"><a href="#计算单元" class="headerlink" title="计算单元"></a>计算单元</h2><p>HPC的计算单元是主要的计算工具，它包括CPU、GPU或FPGA，以及其他任何提供计算能力的单元。计算单元的大小，即计算节点的数量，取决于HPC的用例、预期性能、预算、空间和数据中心要求。决定因素包括计算服务器的类型或型号以及计算服务器本身的配置。</p>
-<p>在HPC中，计算和网络必须一起设计，因为计算单元的构建将由计算节点之间互联的交换机弧度决定。如，使用48端口交换机的结构时，每个交换机有24个计算节点。</p>
-<h2 id="存储单元"><a href="#存储单元" class="headerlink" title="存储单元"></a>存储单元</h2><p>存储组件可存储用户主目录、应用数据和结构，提供快速抓取空间，并可包括归档和备份。根据使用情况和HPC的规模，存储单元可以从主节点上导出到计算单元的磁盘，到用户数据、应用数据的独立文件系统、并行文件系统、快速从头备份恢复和磁带归档。</p>
-<p>其中的技术包括SAS&#x2F;SATA磁盘、SSD、NvMe以及任意组合，存储解决方案的选择取决于性能、容量和成本。</p>
-<h2 id="Networking-Options"><a href="#Networking-Options" class="headerlink" title="Networking Options"></a>Networking Options</h2><p>大多数HPC系统至少有两个网络结构。一个用于行政和管理，另一个用于进程间通信(IPC)和存储流量。根据使用情况，也可以为管理和存储浏览配置单独的网络。</p>
-<p>网络的选择范围从以太网（1GbE、10GbE、25GbE、40GbE、100GbE）到infiniBand和基于Omni-path架构（OPA）等。</p>
-<p>根据服务器适配器和交换机的选择，该网络可以使用光缆或铜线。典型的HPC系统在机架内使用铜缆布线，在机架间使用光缆，从而在电缆管理的便利性和成本之间取得平衡。</p>
-<p>需要注意的是，对于更大的集群或更复杂的网络，可根据具体使用情况设计定制网络拓扑结构。</p>
-<h1 id="软件组件"><a href="#软件组件" class="headerlink" title="软件组件"></a>软件组件</h1><p>与硬件一致，软件也是以模块化的方式组装的。单个组件（如资源管理器、MPI、编译器等）有多种选择，并支持基于硬件选择的驱动程序。</p>
-<h2 id="集群软件栈"><a href="#集群软件栈" class="headerlink" title="集群软件栈"></a>集群软件栈</h2><p>HPC集群软件是一套工具包，可轻松部署、管理和维护高性能计算系统。</p>
-<h2 id="系统管理软件"><a href="#系统管理软件" class="headerlink" title="系统管理软件"></a>系统管理软件</h2><h2 id="应用性能"><a href="#应用性能" class="headerlink" title="应用性能"></a>应用性能</h2><h1 id="数据中心注意事项"><a href="#数据中心注意事项" class="headerlink" title="数据中心注意事项"></a>数据中心注意事项</h1><p>HPC系统的最终配置是一系列权衡的结果。现有的数据中心有诸多限制——空间的物理限制以及每个机架的功率、冷却和重量限制。</p>
-<h2 id="电源"><a href="#电源" class="headerlink" title="电源"></a>电源</h2><p>高密度服务器的一个权衡因素是每个机架的输入功率要求。随服务器平台密度的增加，以及每个平台支持更丰富、更耗电的配置，驱动单个机架所需的输入功率大幅增加。</p>
-<p>有关配电装置容量的详细信息，请咨询配电设备供应商。</p>
-<h2 id="机架冷却"><a href="#机架冷却" class="headerlink" title="机架冷却"></a>机架冷却</h2><p>为机架提供充足的电力，使其在不节流的情况下发挥最大性能，是确定基础设施密度的一个因素，但另一个因素则是散去产生的热量，以便在所需的环境温度限制内继续运行。</p>
-<p>首先从服务器本身来看，平台的硬件配置决定了服务器对环境温度的需求。机箱背板、磁盘数量、CPU瓦数、附加控制器、铜质或光纤网络电缆的选择决定了产生的热量。并影响平台的其六，从而影响平台安全有效运行所需的最高环境温度。</p>
-<p>在服务器中，可以选择（仅）风冷或液冷混合方案，大约30%~40%的服务器热量需要某种风冷设备解决方案。在讨论液冷之前，应首先讨论风冷方案，最先应该考虑更具成本效益和灵活性的解决方案。</p>
-<p>冷却方式：架空地板冷却系统、排式冷却、后门热交换器、液体冷却、冷板冷却</p>
-<h2 id="机架重量"><a href="#机架重量" class="headerlink" title="机架重量"></a>机架重量</h2><p>一台拥有72台服务器和5个机架顶部加环己的计算机架重约800kg，耗电量高达43kw。</p>
-<h2 id="机架布线"><a href="#机架布线" class="headerlink" title="机架布线"></a>机架布线</h2><p>现在已经清楚，密集型HPC系统包含多个PDU、网络交换机、电源电缆、网络结构和额外的液体冷却歧管，因此仅组装机架就会非常麻烦。安装好机架式关键，但可管理性（如拆卸服务器进行维护）、故障排除（更换故障电缆）甚至性能（粗大的电缆束会使平台受阻）也同样重要。</p>
-<h1 id="扩大设计规模"><a href="#扩大设计规模" class="headerlink" title="扩大设计规模"></a>扩大设计规模</h1><p>根据定义，HPC系统使可扩展的。随需求的增长，可使用更多的CPU、GPU等增加算力，也可以使用更多的存储阵列来增加存储容量或吞吐量。因此，网络必须支持这种扩展。在理想情况下，系统架构应在设计阶段就满足这种扩展需求。</p>
-<p>![png][figure9.png]</p>
-<p>虽然这种设计适用于大多数不同规模的高性能计算系统，但根据独特的使用案例或数据重心的需求，总有定制架构的需要。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>介绍了HPC设计的原则。HPC系统的配置包括硬件、软件、应用性能、数据中心、电源和冷却等几个方面。HPC的完整图景包括系统所在的环境，数据中心分析，包括电力、冷却和空间需求等方面。</p>
-]]></content>
-      <categories>
-        <category>竞赛</category>
-      </categories>
-      <tags>
-        <tag>计算机</tag>
-        <tag>ASC</tag>
-        <tag>自学</tag>
-        <tag>设计</tag>
       </tags>
   </entry>
   <entry>
@@ -897,10 +897,10 @@ Name: label, Length: 42000, dtype: int64
       </categories>
       <tags>
         <tag>计算机</tag>
-        <tag>ASC</tag>
         <tag>自学</tag>
-        <tag>设计</tag>
         <tag>C/C++</tag>
+        <tag>ASC</tag>
+        <tag>设计</tag>
       </tags>
   </entry>
   <entry>
@@ -923,9 +923,9 @@ Name: label, Length: 42000, dtype: int64
         <category>Learning</category>
       </categories>
       <tags>
+        <tag>应用</tag>
         <tag>项目开发</tag>
         <tag>服务器</tag>
-        <tag>应用</tag>
       </tags>
   </entry>
   <entry>
@@ -954,9 +954,9 @@ Name: label, Length: 42000, dtype: int64
         <category>Learning</category>
       </categories>
       <tags>
-        <tag>自学</tag>
         <tag>经验</tag>
         <tag>应用</tag>
+        <tag>自学</tag>
       </tags>
   </entry>
   <entry>
@@ -1007,36 +1007,6 @@ Name: label, Length: 42000, dtype: int64
 <blockquote>
 <p>如果有什么疑问的话，请在评论区留言。我会不断改进产出的内容。</p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>SHU机组体实验——WSL+Docker实现</title>
-    <url>/2023-11-25-09-SHU%E6%9C%BA%E7%BB%84%E4%BD%93%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94WSL-Docker%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<blockquote>
-<p>在Windows11上以Docker部署CentOS容器作为虚拟机进行试验。</p>
-</blockquote>
-<p>前置：安装好WSL和Docker Desktop。</p>
-<h1 id="虚拟容器的创建"><a href="#虚拟容器的创建" class="headerlink" title="虚拟容器的创建"></a>虚拟容器的创建</h1><p>通过Docker创建的虚拟容器是自定义的，可以根据需求进行安排。因此可以快速轻量的完成部署，且避免了传统虚拟机的性能损耗。通过我的Dockerfile创建的CentOS，无需配置网卡，开箱即用。</p>
-<p>Docker相关的概念不做多余介绍。</p>
-<p>其他的就不做多余描述，请参考网络上相关的教程即可。<br>下面是Dockerfile。</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/home/dockerfile</span></span><br><span class="line"><span class="comment"># Based CentOS7 image</span></span><br><span class="line"><span class="keyword">FROM</span> centos:centos7</span><br><span class="line"><span class="keyword">MAINTAINER</span> niina</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /home</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y update; yum clean all</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y install openssh-server openssh-clients passwd</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y install net-tools vim</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set password = password.</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">echo</span> <span class="string">&#x27;root:password&#x27;</span> | chpasswd</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># port 22 to make ssh work</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">22</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">&quot;/usr/sbin/sshd&quot;</span>, <span class="string">&quot;-D&quot;</span>]</span></span><br></pre></td></tr></table></figure>
-
-<p>从dockerfile创建镜像。此时指令目录为dockerfile所在目录。<br><code>docker build -t mycentos:dev .</code></p>
-<p>构建好镜像后创建并启动容器。注意将容器的80端口映射到主机的45678端口(此端口不指定，大于1200即可)，以便后续SSH连接。指令如下。请查阅<code>docker --help</code>查看相关参数含义。<br>&#96;docker run -p 45678:22 -it -d –name&#x3D;my_centos_1 mycentos:dev</p>
-<p>以bash进入容器。<br><code>docker exec -it my_centos_1 /bin/bash</code></p>
-<p>以上是基本操作，根据实验内容创建第二个容器也是相似的操作。</p>
-<h1 id="宿主机与虚拟机通信"><a href="#宿主机与虚拟机通信" class="headerlink" title="宿主机与虚拟机通信"></a>宿主机与虚拟机通信</h1><h2 id="WSL与CentOS容器以SSH相互通信"><a href="#WSL与CentOS容器以SSH相互通信" class="headerlink" title="WSL与CentOS容器以SSH相互通信"></a>WSL与CentOS容器以SSH相互通信</h2><p>首先介绍在任意的WSL实例中进行通行。<br>！我并未测试过多个WSL实例会出现什么情况，读者可以进行实验，希望得到反馈！</p>
-<h3 id="WSL登录CentOS容器"><a href="#WSL登录CentOS容器" class="headerlink" title="WSL登录CentOS容器"></a>WSL登录CentOS容器</h3><p>在容器中，查找到IP。<br>切换到WSL，以SSH连接。举例如下。<br><code>ssh root@172.17.0.2</code><br>输入设置的密码即可。</p>
-<h3 id="从CentOS容器登录到WSL"><a href="#从CentOS容器登录到WSL" class="headerlink" title="从CentOS容器登录到WSL"></a>从CentOS容器登录到WSL</h3><p>在WSL中通过指令查看IP。<br>切换到容器。命令如下。<br><code>ssh &lt;用户名&gt;@192.168.158.4</code></p>
-<h2 id="PWSh与CentOS容器以SSH相互通信"><a href="#PWSh与CentOS容器以SSH相互通信" class="headerlink" title="PWSh与CentOS容器以SSH相互通信"></a>PWSh与CentOS容器以SSH相互通信</h2><h3 id="从容器或WSL登录宿主机"><a href="#从容器或WSL登录宿主机" class="headerlink" title="从容器或WSL登录宿主机"></a>从容器或WSL登录宿主机</h3><p>首先在WSL中查看主机的IP。<br><code>cat /etc/resolv.conf</code><br>后通过SSH连接即可。在WSL和CentOS容器中都是相同的操作。这样可以登录到宿主机上。</p>
-<h3 id="从宿主机登录到WSL"><a href="#从宿主机登录到WSL" class="headerlink" title="从宿主机登录到WSL"></a>从宿主机登录到WSL</h3><p>在WSL查看IP。<br>后在Windows输入以下命令即可。<br><code>ssh &lt;user&gt;@&lt;your_IP&gt;</code></p>
-<h3 id="从宿主机或WSL登录到容器"><a href="#从宿主机或WSL登录到容器" class="headerlink" title="从宿主机或WSL登录到容器"></a>从宿主机或WSL登录到容器</h3><p>SSH需要开放22端口，如果没有在一开始设置好22端口的话，将无法使用SSH。<br>如果从WSL进行登录的话，IP可以是localhost，也可以是Docker分配到的IP，但都必须加入端口映射。<br>如果从Windows进行登录的话，IP只能是localhost。</p>
-<h3 id="容器间相互通信"><a href="#容器间相互通信" class="headerlink" title="容器间相互通信"></a>容器间相互通信</h3><p>我构建的镜像默认的网络设置就是桥接(所有的容器连接到Docker虚拟机上的网卡，再连接到WSL，WSL以默认NAT的方式设置)。因此可以直接通过SSH在各容器间相互通信。</p>
-<p>自此，通信内容全部打通。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>SSH默认的监听端口是22。在宿主机上做端口映射是将容器的端口映射到主机上的端口，如果在容器中SSH监听的端口和所映射的端口不一致的话，SSH无法正常工作。<br>WSL和Docker采用的虚拟化技术十分先进，建议使用。</p>
 ]]></content>
       <categories>
         <category>Learning</category>
@@ -1286,10 +1256,40 @@ Name: label, Length: 42000, dtype: int64
         <category>Learning</category>
       </categories>
       <tags>
-        <tag>计算机</tag>
         <tag>应用</tag>
+        <tag>计算机</tag>
         <tag>windows</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>SHU机组体实验——WSL+Docker实现</title>
+    <url>/2023-11-25-09-SHU%E6%9C%BA%E7%BB%84%E4%BD%93%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94WSL-Docker%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<blockquote>
+<p>在Windows11上以Docker部署CentOS容器作为虚拟机进行试验。</p>
+</blockquote>
+<p>前置：安装好WSL和Docker Desktop。</p>
+<h1 id="虚拟容器的创建"><a href="#虚拟容器的创建" class="headerlink" title="虚拟容器的创建"></a>虚拟容器的创建</h1><p>通过Docker创建的虚拟容器是自定义的，可以根据需求进行安排。因此可以快速轻量的完成部署，且避免了传统虚拟机的性能损耗。通过我的Dockerfile创建的CentOS，无需配置网卡，开箱即用。</p>
+<p>Docker相关的概念不做多余介绍。</p>
+<p>其他的就不做多余描述，请参考网络上相关的教程即可。<br>下面是Dockerfile。</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/home/dockerfile</span></span><br><span class="line"><span class="comment"># Based CentOS7 image</span></span><br><span class="line"><span class="keyword">FROM</span> centos:centos7</span><br><span class="line"><span class="keyword">MAINTAINER</span> niina</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /home</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y update; yum clean all</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y install openssh-server openssh-clients passwd</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y install net-tools vim</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set password = password.</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">echo</span> <span class="string">&#x27;root:password&#x27;</span> | chpasswd</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># port 22 to make ssh work</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">22</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">&quot;/usr/sbin/sshd&quot;</span>, <span class="string">&quot;-D&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>从dockerfile创建镜像。此时指令目录为dockerfile所在目录。<br><code>docker build -t mycentos:dev .</code></p>
+<p>构建好镜像后创建并启动容器。注意将容器的80端口映射到主机的45678端口(此端口不指定，大于1200即可)，以便后续SSH连接。指令如下。请查阅<code>docker --help</code>查看相关参数含义。<br>&#96;docker run -p 45678:22 -it -d –name&#x3D;my_centos_1 mycentos:dev</p>
+<p>以bash进入容器。<br><code>docker exec -it my_centos_1 /bin/bash</code></p>
+<p>以上是基本操作，根据实验内容创建第二个容器也是相似的操作。</p>
+<h1 id="宿主机与虚拟机通信"><a href="#宿主机与虚拟机通信" class="headerlink" title="宿主机与虚拟机通信"></a>宿主机与虚拟机通信</h1><h2 id="WSL与CentOS容器以SSH相互通信"><a href="#WSL与CentOS容器以SSH相互通信" class="headerlink" title="WSL与CentOS容器以SSH相互通信"></a>WSL与CentOS容器以SSH相互通信</h2><p>首先介绍在任意的WSL实例中进行通行。<br>！我并未测试过多个WSL实例会出现什么情况，读者可以进行实验，希望得到反馈！</p>
+<h3 id="WSL登录CentOS容器"><a href="#WSL登录CentOS容器" class="headerlink" title="WSL登录CentOS容器"></a>WSL登录CentOS容器</h3><p>在容器中，查找到IP。<br>切换到WSL，以SSH连接。举例如下。<br><code>ssh root@172.17.0.2</code><br>输入设置的密码即可。</p>
+<h3 id="从CentOS容器登录到WSL"><a href="#从CentOS容器登录到WSL" class="headerlink" title="从CentOS容器登录到WSL"></a>从CentOS容器登录到WSL</h3><p>在WSL中通过指令查看IP。<br>切换到容器。命令如下。<br><code>ssh &lt;用户名&gt;@192.168.158.4</code></p>
+<h2 id="PWSh与CentOS容器以SSH相互通信"><a href="#PWSh与CentOS容器以SSH相互通信" class="headerlink" title="PWSh与CentOS容器以SSH相互通信"></a>PWSh与CentOS容器以SSH相互通信</h2><h3 id="从容器或WSL登录宿主机"><a href="#从容器或WSL登录宿主机" class="headerlink" title="从容器或WSL登录宿主机"></a>从容器或WSL登录宿主机</h3><p>首先在WSL中查看主机的IP。<br><code>cat /etc/resolv.conf</code><br>后通过SSH连接即可。在WSL和CentOS容器中都是相同的操作。这样可以登录到宿主机上。</p>
+<h3 id="从宿主机登录到WSL"><a href="#从宿主机登录到WSL" class="headerlink" title="从宿主机登录到WSL"></a>从宿主机登录到WSL</h3><p>在WSL查看IP。<br>后在Windows输入以下命令即可。<br><code>ssh &lt;user&gt;@&lt;your_IP&gt;</code></p>
+<h3 id="从宿主机或WSL登录到容器"><a href="#从宿主机或WSL登录到容器" class="headerlink" title="从宿主机或WSL登录到容器"></a>从宿主机或WSL登录到容器</h3><p>SSH需要开放22端口，如果没有在一开始设置好22端口的话，将无法使用SSH。<br>如果从WSL进行登录的话，IP可以是localhost，也可以是Docker分配到的IP，但都必须加入端口映射。<br>如果从Windows进行登录的话，IP只能是localhost。</p>
+<h3 id="容器间相互通信"><a href="#容器间相互通信" class="headerlink" title="容器间相互通信"></a>容器间相互通信</h3><p>我构建的镜像默认的网络设置就是桥接(所有的容器连接到Docker虚拟机上的网卡，再连接到WSL，WSL以默认NAT的方式设置)。因此可以直接通过SSH在各容器间相互通信。</p>
+<p>自此，通信内容全部打通。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>SSH默认的监听端口是22。在宿主机上做端口映射是将容器的端口映射到主机上的端口，如果在容器中SSH监听的端口和所映射的端口不一致的话，SSH无法正常工作。<br>WSL和Docker采用的虚拟化技术十分先进，建议使用。</p>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
   </entry>
   <entry>
     <title>cmake学习使用</title>
@@ -1299,8 +1299,8 @@ Name: label, Length: 42000, dtype: int64
         <category>Learning</category>
       </categories>
       <tags>
-        <tag>项目开发</tag>
         <tag>C/C++</tag>
+        <tag>项目开发</tag>
       </tags>
   </entry>
   <entry>
@@ -1344,9 +1344,9 @@ Name: label, Length: 42000, dtype: int64
         <category>Learning</category>
       </categories>
       <tags>
+        <tag>深度学习</tag>
         <tag>项目开发</tag>
         <tag>跨平台</tag>
-        <tag>深度学习</tag>
         <tag>数据分析</tag>
       </tags>
   </entry>
@@ -1999,9 +1999,9 @@ Name: label, Length: 42000, dtype: int64
         <category>Learning</category>
       </categories>
       <tags>
+        <tag>装机</tag>
         <tag>计算机</tag>
         <tag>windows</tag>
-        <tag>装机</tag>
       </tags>
   </entry>
   <entry>
@@ -2038,35 +2038,6 @@ Name: label, Length: 42000, dtype: int64
       </categories>
   </entry>
   <entry>
-    <title>计算机组成与设计【软硬件接口】</title>
-    <url>/2023-08-11-45-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E4%B8%8E%E8%AE%BE%E8%AE%A1%E3%80%90%E8%BD%AF%E7%A1%AC%E4%BB%B6%E6%8E%A5%E5%8F%A3%E3%80%91/</url>
-    <content><![CDATA[<h1 id="Updating…"><a href="#Updating…" class="headerlink" title="Updating…"></a>Updating…</h1><h1 id="第一章-计算机基础概念"><a href="#第一章-计算机基础概念" class="headerlink" title="第一章 计算机基础概念"></a>第一章 计算机基础概念</h1><p>第一章科普。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">我们很荣幸有机会为你解释这些知识， 阐述机箱覆盖之下的计算机内部软硬件是如何工作 的。 当你读完本书之后，我们相信， 你将能够理解下面的问题：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<p>计算机组成层次：<br>数据层次</p>
-<p>存储器层次<br>体系架构层次</p>
-<h2 id="并行与指令：同步"><a href="#并行与指令：同步" class="headerlink" title="并行与指令：同步"></a>并行与指令：同步</h2><p>当任务相互之间独立时，并行是容易的。但往往任务需要协作，某些任务的输出就是其他任务的输入。需要输入的一方需要等待另一方完成写的操作才能安全地返回需要读取的值。任务之间需要明确什么时候做完了什么事，任务之间需要同步，否则可能data race。</p>
-<p>在计算中，同步机制要依赖硬件提供的同步指令。</p>
-<h1 id="第四章-处理器"><a href="#第四章-处理器" class="headerlink" title="第四章 处理器"></a>第四章 处理器</h1><p>第一章明白计算机性能的关键决定因素：指令数目、时钟周期长度和每条指令所需始终周期数(CPI)。第二章理清了编译器和指令集决定了一个程序所需的指令数目，处理器的实现方式则决定了时钟周期长度和CPI。在本章，将为MIPS指令集的两种不同实现方式分别建立数据通路和控制单元。</p>
-<h2 id="基本的MIPS实现"><a href="#基本的MIPS实现" class="headerlink" title="基本的MIPS实现"></a>基本的MIPS实现</h2><p>MIPS的核心子集：</p>
-<ul>
-<li>存储器访问指令：取字lw和存字sw</li>
-<li>算术逻辑指令：加法add、减法sub、AND、OR和小于则设置slt</li>
-<li>分支指令：相等则分支beq和跳转j</li>
-</ul>
-<h1 id="逻辑设计基础"><a href="#逻辑设计基础" class="headerlink" title="逻辑设计基础"></a>逻辑设计基础</h1><p>根据是否包含存储器件，逻辑电路被分为两大类，不包含的成为<em><strong>组合逻辑</strong></em>，组合逻辑的输出只取决于当前的输入。而包含存储期间的电路，输出不仅与当前的输入有关，而且与存储器件中存储的值有关，存储器件中存储器的值被称为<strong>逻辑电路的状态</strong>。</p>
-<h2 id="真值表"><a href="#真值表" class="headerlink" title="真值表"></a>真值表</h2><h2 id="布尔代数"><a href="#布尔代数" class="headerlink" title="布尔代数"></a>布尔代数</h2><p>布尔代数是环。满足交换律、结合律和分配律。<br>代数系统：群、环、域。</p>
-]]></content>
-      <categories>
-        <category>竞赛</category>
-      </categories>
-      <tags>
-        <tag>计算机</tag>
-        <tag>ASC</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>磁盘管理，改变你电脑磁盘的大小吧！</title>
     <url>/2023-09-07-32-%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86%EF%BC%8C%E6%94%B9%E5%8F%98%E4%BD%A0%E7%94%B5%E8%84%91%E7%A3%81%E7%9B%98%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%90%A7%EF%BC%81/</url>
     <content><![CDATA[<p>电脑磁盘空间不够用了是正常的。<br>我分区的时候C盘留的空间太少了，重装系统还没满三天就用完了。加紧更新这篇博客。</p>
@@ -2095,6 +2066,35 @@ Name: label, Length: 42000, dtype: int64
       </categories>
       <tags>
         <tag>计算机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机组成与设计【软硬件接口】</title>
+    <url>/2023-08-11-45-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E4%B8%8E%E8%AE%BE%E8%AE%A1%E3%80%90%E8%BD%AF%E7%A1%AC%E4%BB%B6%E6%8E%A5%E5%8F%A3%E3%80%91/</url>
+    <content><![CDATA[<h1 id="Updating…"><a href="#Updating…" class="headerlink" title="Updating…"></a>Updating…</h1><h1 id="第一章-计算机基础概念"><a href="#第一章-计算机基础概念" class="headerlink" title="第一章 计算机基础概念"></a>第一章 计算机基础概念</h1><p>第一章科普。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">我们很荣幸有机会为你解释这些知识， 阐述机箱覆盖之下的计算机内部软硬件是如何工作 的。 当你读完本书之后，我们相信， 你将能够理解下面的问题：</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<p>计算机组成层次：<br>数据层次</p>
+<p>存储器层次<br>体系架构层次</p>
+<h2 id="并行与指令：同步"><a href="#并行与指令：同步" class="headerlink" title="并行与指令：同步"></a>并行与指令：同步</h2><p>当任务相互之间独立时，并行是容易的。但往往任务需要协作，某些任务的输出就是其他任务的输入。需要输入的一方需要等待另一方完成写的操作才能安全地返回需要读取的值。任务之间需要明确什么时候做完了什么事，任务之间需要同步，否则可能data race。</p>
+<p>在计算中，同步机制要依赖硬件提供的同步指令。</p>
+<h1 id="第四章-处理器"><a href="#第四章-处理器" class="headerlink" title="第四章 处理器"></a>第四章 处理器</h1><p>第一章明白计算机性能的关键决定因素：指令数目、时钟周期长度和每条指令所需始终周期数(CPI)。第二章理清了编译器和指令集决定了一个程序所需的指令数目，处理器的实现方式则决定了时钟周期长度和CPI。在本章，将为MIPS指令集的两种不同实现方式分别建立数据通路和控制单元。</p>
+<h2 id="基本的MIPS实现"><a href="#基本的MIPS实现" class="headerlink" title="基本的MIPS实现"></a>基本的MIPS实现</h2><p>MIPS的核心子集：</p>
+<ul>
+<li>存储器访问指令：取字lw和存字sw</li>
+<li>算术逻辑指令：加法add、减法sub、AND、OR和小于则设置slt</li>
+<li>分支指令：相等则分支beq和跳转j</li>
+</ul>
+<h1 id="逻辑设计基础"><a href="#逻辑设计基础" class="headerlink" title="逻辑设计基础"></a>逻辑设计基础</h1><p>根据是否包含存储器件，逻辑电路被分为两大类，不包含的成为<em><strong>组合逻辑</strong></em>，组合逻辑的输出只取决于当前的输入。而包含存储期间的电路，输出不仅与当前的输入有关，而且与存储器件中存储的值有关，存储器件中存储器的值被称为<strong>逻辑电路的状态</strong>。</p>
+<h2 id="真值表"><a href="#真值表" class="headerlink" title="真值表"></a>真值表</h2><h2 id="布尔代数"><a href="#布尔代数" class="headerlink" title="布尔代数"></a>布尔代数</h2><p>布尔代数是环。满足交换律、结合律和分配律。<br>代数系统：群、环、域。</p>
+]]></content>
+      <categories>
+        <category>竞赛</category>
+      </categories>
+      <tags>
+        <tag>计算机</tag>
+        <tag>ASC</tag>
       </tags>
   </entry>
 </search>
