@@ -328,54 +328,6 @@
       </tags>
   </entry>
   <entry>
-    <title>NJU PA2022</title>
-    <url>/2023-08-12-23-NJU-PA2022/</url>
-    <content><![CDATA[<p>学长推荐把计算机体系结构量化研究方法、计算机组成与设计软硬件接口 两本书看懂后去做NJU的PA捏。我看了第一章发现内容非常眼熟，跳着看看感觉懂了又好像没懂的样子，直接来上PA！</p>
-<h1 id="PA0"><a href="#PA0" class="headerlink" title="PA0"></a>PA0</h1><p>硬核捏。</p>
-<h2 id="真机实装ubuntu22-04"><a href="#真机实装ubuntu22-04" class="headerlink" title="真机实装ubuntu22.04"></a>真机实装ubuntu22.04</h2><p>之后弄个专门的映像U盘然后来装系统，现在先用WSL糊弄一下。<br>下载PA用到的软件包，我出现了错误，但暂时不管。<br>熟悉基本的linux操作</p>
-<h2 id="编辑器之神vim"><a href="#编辑器之神vim" class="headerlink" title="编辑器之神vim"></a>编辑器之神vim</h2><p>够硬核，要不是提前接触过，真要费时间。<br>从下载到自主学习使用（by vimtutor），还用vim炫技，被它装到了。</p>
-<h3 id="vim-configuration"><a href="#vim-configuration" class="headerlink" title="vim configuration"></a>vim configuration</h3><p>下面是对vim进行配置，照抄了。之前摸索过，但是还是用的很原生，索性这里用他列出来的。<br>下面是我的配置 欢迎照抄捏。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot; All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by</span><br><span class="line">&quot; the call to :runtime you can find below.  If you wish to change any of those</span><br><span class="line">&quot; settings, you should do it in this file (/etc/vim/vimrc), since debian.vim</span><br><span class="line">&quot; will be overwritten everytime an upgrade of the vim packages is performed.</span><br><span class="line">&quot; It is recommended to make changes after sourcing debian.vim since it alters</span><br><span class="line">&quot; the value of the &#x27;compatible&#x27; option.</span><br><span class="line"></span><br><span class="line">runtime! debian.vim</span><br><span class="line"></span><br><span class="line">&quot; Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.</span><br><span class="line">&quot; This happens after /etc/vim/vimrc(.local) are loaded, so it will override</span><br><span class="line">&quot; any settings in these files.</span><br><span class="line">&quot; If you don&#x27;t want that to happen, uncomment the below line to prevent</span><br><span class="line">&quot; defaults.vim from being loaded.</span><br><span class="line">&quot; let g:skip_defaults_vim = 1</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the next line to make Vim more Vi-compatible</span><br><span class="line">&quot; NOTE: debian.vim sets &#x27;nocompatible&#x27;.  Setting &#x27;compatible&#x27; changes numerous</span><br><span class="line">&quot; options, so any other options should be set AFTER setting &#x27;compatible&#x27;.</span><br><span class="line">&quot;set compatible</span><br><span class="line"></span><br><span class="line">&quot; Vim5 and later versions support syntax highlighting. Uncommenting the next</span><br><span class="line">&quot; line enables syntax highlighting by default.</span><br><span class="line">if has(&quot;syntax&quot;)</span><br><span class="line">  syntax on</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; If using a dark background within the editing area and syntax highlighting</span><br><span class="line">&quot; turn on this option as well</span><br><span class="line">set background=dark</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the following to have Vim jump to the last position when</span><br><span class="line">&quot; reopening a file</span><br><span class="line">&quot;au BufReadPost * if line(&quot;&#x27;\&quot;&quot;) &gt; 1 &amp;&amp; line(&quot;&#x27;\&quot;&quot;) &lt;= line(&quot;$&quot;) | exe &quot;normal! g&#x27;\&quot;&quot; | endif</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the following to have Vim load indentation rules and plugins</span><br><span class="line">&quot; according to the detected filetype.</span><br><span class="line">filetype plugin indent on</span><br><span class="line"></span><br><span class="line">&quot; The following are commented out as they cause vim to behave a lot</span><br><span class="line">&quot; differently from regular Vi. They are highly recommended though.</span><br><span class="line">&quot;set showcmd		&quot; Show (partial) command in status line.</span><br><span class="line">set showmatch		&quot; Show matching brackets.</span><br><span class="line">set ignorecase		&quot; Do case insensitive matching</span><br><span class="line">set smartcase		&quot; Do smart case matching</span><br><span class="line">set incsearch		&quot; Incremental search</span><br><span class="line">&quot;set autowrite		&quot; Automatically save before commands like :next and :make</span><br><span class="line">set hidden		&quot; Hide buffers when they are abandoned</span><br><span class="line">&quot;set mouse=a		&quot; Enable mouse usage (all modes)</span><br><span class="line"></span><br><span class="line">&quot; PAs vim cong</span><br><span class="line">setlocal noswapfile &quot; 不要生成swap文件</span><br><span class="line">&quot;set bufhidden = hide &quot; 当buffer被丢弃的时候隐藏它</span><br><span class="line">&quot;colorscheme evening &quot; 设定配色方案</span><br><span class="line">set number &quot; 显示行号</span><br><span class="line">set cursorline &quot; 突出显示当前行</span><br><span class="line">set ruler &quot; 打开状态栏标尺</span><br><span class="line">set shiftwidth=2 &quot; 设定 &lt;&lt; 和 &gt;&gt; 命令移动时的宽度为 2</span><br><span class="line">set softtabstop=2 &quot; 使得按退格键时可以一次删掉 2 个空格</span><br><span class="line">set tabstop=4 &quot; 设定 tab 长度为 2</span><br><span class="line">set nobackup &quot; 覆盖文件时不备份</span><br><span class="line">set autochdir &quot; 自动切换当前目录为当前文件所在的目录</span><br><span class="line">set backupcopy=yes &quot; 设置备份时的行为为覆盖</span><br><span class="line">set hlsearch &quot; 搜索时高亮显示被找到的文本</span><br><span class="line">set noerrorbells &quot; 关闭错误信息响铃</span><br><span class="line">set novisualbell &quot; 关闭使用可视响铃代替呼叫</span><br><span class="line">set t_vb= &quot; 置空错误铃声的终端代码</span><br><span class="line">set matchtime=2 &quot; 短暂跳转到匹配括号的时间</span><br><span class="line">set magic &quot; 设置魔术</span><br><span class="line">set smartindent &quot; 开启新行时使用智能自动缩进</span><br><span class="line">set backspace=indent,eol,start &quot; 不设定在插入状态无法用退格键和 Delete 键删除回车符</span><br><span class="line">set cmdheight=1 &quot; 设定命令行的行数为 1</span><br><span class="line">set laststatus=2 &quot; 显示状态栏 (默认值为 1, 无法显示状态栏)</span><br><span class="line">set statusline=\ %&lt;%F[%1*%M%*%n%R%H]%=\ %y\ %0(%&#123;&amp;fileformat&#125;\ %&#123;&amp;encoding&#125;\ Ln\ %l,\ Col\ %c/%L%) &quot; 设置在状态行显示的信息</span><br><span class="line">set foldenable &quot; 开始折叠</span><br><span class="line">set foldmethod=syntax &quot; 设置语法折叠</span><br><span class="line">set foldcolumn=0 &quot; 设置折叠区域的宽度</span><br><span class="line">setlocal foldlevel=1 &quot; 设置折叠层数为 1</span><br><span class="line">nnoremap &lt;space&gt; @=((foldclosed(line(&#x27;.&#x27;)) &lt; 0) ? &#x27;zc&#x27; : &#x27;zo&#x27;)&lt;CR&gt; &quot; 用空格键来开关折叠</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot; Source a global configuration file if available</span><br><span class="line">if filereadable(&quot;/etc/vim/vimrc.local&quot;)</span><br><span class="line">  source /etc/vim/vimrc.local</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
-<p>这和记事本一点区别也没有，继续学习使用vim吧。vscode是IDE，可以插入vim插件。</p>
-<h2 id="学习使用基本工具"><a href="#学习使用基本工具" class="headerlink" title="学习使用基本工具"></a>学习使用基本工具</h2><h3 id="man"><a href="#man" class="headerlink" title="man"></a>man</h3><p>RTFM的神器呀。</p>
-<h3 id="Hello，world"><a href="#Hello，world" class="headerlink" title="Hello，world"></a>Hello，world</h3><p>无非vim编辑完，gcc编译一下完事。<br>还让我写一个makefile，简单的。<br>这个小东西就要求要学两个小玩意儿了。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">TARGET = hello </span><br><span class="line">OBJ = hello.c</span><br><span class="line">CC = gcc</span><br><span class="line"></span><br><span class="line">$(TARGET) : $(OBJ)</span><br><span class="line">	$(CC) $(OBJ) -o $(TARGET)</span><br></pre></td></tr></table></figure>
-<h3 id="GDB"><a href="#GDB" class="headerlink" title="GDB"></a>GDB</h3><p>调试捏，自学捏。</p>
-<h3 id="TMux"><a href="#TMux" class="headerlink" title="TMux"></a>TMux</h3><p>终端复用器，开多个窗口捏，让你配置好三个键映射就放养了。<br>同时又再次强调了提问的智慧。</p>
-<p>最后推荐了The missing semester of  your CS Education。只能说太经典了，前置代码课程是CS61aSICP，我只能感慨不愧是top3，这不是顶级缝合怪？</p>
-<p>我开始尝试学习TMux，装上之后发现C-a&#x2F;C-b都使用不了，尝试google，尝试StackOverflow，失败。我用的windows11+WSL2，窗口管理就是win再开一个bash，用不上Tmux，开摆！不学了，之后再说。</p>
-<h2 id="获取课程源码"><a href="#获取课程源码" class="headerlink" title="获取课程源码"></a>获取课程源码</h2><p>顺带交了git的使用，很全欸，基本包含了开发的所有场合了。</p>
-<p>但是用PA自带的sh脚本clone项目源码出现了问题，看了看脚本，没太看懂。<br>错误日志是这样的。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br><span class="line">Cloning into &#x27;am-kernels&#x27;...</span><br><span class="line">kex_exchange_identification: Connection closed by remote host</span><br><span class="line">Connection closed by UNKNOWN port 65535</span><br><span class="line">fatal: Could not read from remote repository.</span><br></pre></td></tr></table></figure>
-
-<p>PA0 End.</p>
-<h1 id="PA1"><a href="#PA1" class="headerlink" title="PA1"></a>PA1</h1><h1 id="开始愉快的作战吧！"><a href="#开始愉快的作战吧！" class="headerlink" title="开始愉快的作战吧！"></a>开始愉快的作战吧！</h1><p>如果没有寄存器, 计算机还可以工作吗? 如果可以, 这会对硬件提供的编程模型有什么影响呢?</p>
-<p>我觉得可以的。寄存器不是必须的。CPU可以连接到外部的存储器再进行数据的读取，只不过会降低运行效率罢了。</p>
-<blockquote>
-<p><em><strong>概念</strong></em><br>编程模型：模型是对事物共性的抽象，<strong>编程模型</strong>就是对编程的共性的抽象。<br><strong>什么是编程的共性呢？</strong><br><strong>最重要的共性</strong>就是：程序设计时，<strong>代码的抽象方式、组织方式或复用方式</strong>。编程模型主要是方法与思想。编程模型处于方法或思想性的层面，在很多情况下，也可称为编程方法、编程方式、编程模式或编程技术、编程范式。在这里就当做同一种说法。<br>当面对一个新问题时，通常的想法是通过分析，不断的转化和转换，得到本质相同的熟悉的、或抽象的、简单的一个问题，这就是<strong>化归思想</strong>。把初始的问题或对象称为原型，把化归后的相对定型的模拟化或理想化的对象称为<strong>模型</strong>。<br><strong>编程模型，简单地可以理解它就是模板</strong>，遇到相似问题就可以方便依模板解决,这样就简化了编程问题。不同的编程环境和不同的应用对象有不同的编程模型。</p>
-</blockquote>
-<p>啥是编程模型： <a href="https://zhuanlan.zhihu.com/p/419254235">https://zhuanlan.zhihu.com/p/419254235</a></p>
-<p>![[20230813145605.png]]<br>哈哈，被嘲讽了。</p>
-<p>PA1正式开始，非常懵逼。</p>
-<p>第一步make没成功，提示我的仓库不是NEMU的仓库，我返回PA0重新下载资料。</p>
-<p>脑抽删了ssh密钥，重新配置。</p>
-<p>跟着最后一节走。<br>![[20230813162607.png]]<br>令人振奋的菜单出现了。<br>![[20230813162756.png]]</p>
-<p>工具链安装好，查了一堆，用上了apt-cache policy，终于编译好了。<br>![[20230813172406.png]]<br>![[20230813172559.png]]<br>好耶！继续继续，可以开始PA1了。</p>
-<p>PA1一来就是逆天语录，<em><strong>给了目录树之后，你就可以开始阅读代码了，至于从哪里开始，就不用多费口舌了吧。</strong></em></p>
-<p>请回忆，一个程序是从哪里开始执行的呢？这个问题很难啊，C语言被编译器编译再经过连接之后得到可执行文件。可执行文件是缝合起来的，它由哪些组成呢？</p>
-<p>记得学汇编的时候，提到一个程序头，段什么什么的来着，来用来接入DOS和返回DOS。程序应该是从那段代码开始顺序读取指令，按指令执行的。</p>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
-      <tags>
-        <tag>计算机</tag>
-        <tag>ASC</tag>
-        <tag>自学</tag>
-        <tag>设计</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MNIST-数字识别</title>
     <url>/2023-01-22-16-MNIST-%E6%95%B0%E5%AD%97%E8%AF%86%E5%88%AB/</url>
     <content><![CDATA[<p>分享两种方法，一种是在tensorflow集成好的NN models，一种是自己写一个NN类。<br>来源kaggle的数字识别源码学习。</p>
@@ -903,6 +855,54 @@ Name: label, Length: 42000, dtype: int64
       </tags>
   </entry>
   <entry>
+    <title>NJU PA2022</title>
+    <url>/2023-08-12-23-NJU-PA2022/</url>
+    <content><![CDATA[<p>学长推荐把计算机体系结构量化研究方法、计算机组成与设计软硬件接口 两本书看懂后去做NJU的PA捏。我看了第一章发现内容非常眼熟，跳着看看感觉懂了又好像没懂的样子，直接来上PA！</p>
+<h1 id="PA0"><a href="#PA0" class="headerlink" title="PA0"></a>PA0</h1><p>硬核捏。</p>
+<h2 id="真机实装ubuntu22-04"><a href="#真机实装ubuntu22-04" class="headerlink" title="真机实装ubuntu22.04"></a>真机实装ubuntu22.04</h2><p>之后弄个专门的映像U盘然后来装系统，现在先用WSL糊弄一下。<br>下载PA用到的软件包，我出现了错误，但暂时不管。<br>熟悉基本的linux操作</p>
+<h2 id="编辑器之神vim"><a href="#编辑器之神vim" class="headerlink" title="编辑器之神vim"></a>编辑器之神vim</h2><p>够硬核，要不是提前接触过，真要费时间。<br>从下载到自主学习使用（by vimtutor），还用vim炫技，被它装到了。</p>
+<h3 id="vim-configuration"><a href="#vim-configuration" class="headerlink" title="vim configuration"></a>vim configuration</h3><p>下面是对vim进行配置，照抄了。之前摸索过，但是还是用的很原生，索性这里用他列出来的。<br>下面是我的配置 欢迎照抄捏。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot; All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by</span><br><span class="line">&quot; the call to :runtime you can find below.  If you wish to change any of those</span><br><span class="line">&quot; settings, you should do it in this file (/etc/vim/vimrc), since debian.vim</span><br><span class="line">&quot; will be overwritten everytime an upgrade of the vim packages is performed.</span><br><span class="line">&quot; It is recommended to make changes after sourcing debian.vim since it alters</span><br><span class="line">&quot; the value of the &#x27;compatible&#x27; option.</span><br><span class="line"></span><br><span class="line">runtime! debian.vim</span><br><span class="line"></span><br><span class="line">&quot; Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.</span><br><span class="line">&quot; This happens after /etc/vim/vimrc(.local) are loaded, so it will override</span><br><span class="line">&quot; any settings in these files.</span><br><span class="line">&quot; If you don&#x27;t want that to happen, uncomment the below line to prevent</span><br><span class="line">&quot; defaults.vim from being loaded.</span><br><span class="line">&quot; let g:skip_defaults_vim = 1</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the next line to make Vim more Vi-compatible</span><br><span class="line">&quot; NOTE: debian.vim sets &#x27;nocompatible&#x27;.  Setting &#x27;compatible&#x27; changes numerous</span><br><span class="line">&quot; options, so any other options should be set AFTER setting &#x27;compatible&#x27;.</span><br><span class="line">&quot;set compatible</span><br><span class="line"></span><br><span class="line">&quot; Vim5 and later versions support syntax highlighting. Uncommenting the next</span><br><span class="line">&quot; line enables syntax highlighting by default.</span><br><span class="line">if has(&quot;syntax&quot;)</span><br><span class="line">  syntax on</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; If using a dark background within the editing area and syntax highlighting</span><br><span class="line">&quot; turn on this option as well</span><br><span class="line">set background=dark</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the following to have Vim jump to the last position when</span><br><span class="line">&quot; reopening a file</span><br><span class="line">&quot;au BufReadPost * if line(&quot;&#x27;\&quot;&quot;) &gt; 1 &amp;&amp; line(&quot;&#x27;\&quot;&quot;) &lt;= line(&quot;$&quot;) | exe &quot;normal! g&#x27;\&quot;&quot; | endif</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the following to have Vim load indentation rules and plugins</span><br><span class="line">&quot; according to the detected filetype.</span><br><span class="line">filetype plugin indent on</span><br><span class="line"></span><br><span class="line">&quot; The following are commented out as they cause vim to behave a lot</span><br><span class="line">&quot; differently from regular Vi. They are highly recommended though.</span><br><span class="line">&quot;set showcmd		&quot; Show (partial) command in status line.</span><br><span class="line">set showmatch		&quot; Show matching brackets.</span><br><span class="line">set ignorecase		&quot; Do case insensitive matching</span><br><span class="line">set smartcase		&quot; Do smart case matching</span><br><span class="line">set incsearch		&quot; Incremental search</span><br><span class="line">&quot;set autowrite		&quot; Automatically save before commands like :next and :make</span><br><span class="line">set hidden		&quot; Hide buffers when they are abandoned</span><br><span class="line">&quot;set mouse=a		&quot; Enable mouse usage (all modes)</span><br><span class="line"></span><br><span class="line">&quot; PAs vim cong</span><br><span class="line">setlocal noswapfile &quot; 不要生成swap文件</span><br><span class="line">&quot;set bufhidden = hide &quot; 当buffer被丢弃的时候隐藏它</span><br><span class="line">&quot;colorscheme evening &quot; 设定配色方案</span><br><span class="line">set number &quot; 显示行号</span><br><span class="line">set cursorline &quot; 突出显示当前行</span><br><span class="line">set ruler &quot; 打开状态栏标尺</span><br><span class="line">set shiftwidth=2 &quot; 设定 &lt;&lt; 和 &gt;&gt; 命令移动时的宽度为 2</span><br><span class="line">set softtabstop=2 &quot; 使得按退格键时可以一次删掉 2 个空格</span><br><span class="line">set tabstop=4 &quot; 设定 tab 长度为 2</span><br><span class="line">set nobackup &quot; 覆盖文件时不备份</span><br><span class="line">set autochdir &quot; 自动切换当前目录为当前文件所在的目录</span><br><span class="line">set backupcopy=yes &quot; 设置备份时的行为为覆盖</span><br><span class="line">set hlsearch &quot; 搜索时高亮显示被找到的文本</span><br><span class="line">set noerrorbells &quot; 关闭错误信息响铃</span><br><span class="line">set novisualbell &quot; 关闭使用可视响铃代替呼叫</span><br><span class="line">set t_vb= &quot; 置空错误铃声的终端代码</span><br><span class="line">set matchtime=2 &quot; 短暂跳转到匹配括号的时间</span><br><span class="line">set magic &quot; 设置魔术</span><br><span class="line">set smartindent &quot; 开启新行时使用智能自动缩进</span><br><span class="line">set backspace=indent,eol,start &quot; 不设定在插入状态无法用退格键和 Delete 键删除回车符</span><br><span class="line">set cmdheight=1 &quot; 设定命令行的行数为 1</span><br><span class="line">set laststatus=2 &quot; 显示状态栏 (默认值为 1, 无法显示状态栏)</span><br><span class="line">set statusline=\ %&lt;%F[%1*%M%*%n%R%H]%=\ %y\ %0(%&#123;&amp;fileformat&#125;\ %&#123;&amp;encoding&#125;\ Ln\ %l,\ Col\ %c/%L%) &quot; 设置在状态行显示的信息</span><br><span class="line">set foldenable &quot; 开始折叠</span><br><span class="line">set foldmethod=syntax &quot; 设置语法折叠</span><br><span class="line">set foldcolumn=0 &quot; 设置折叠区域的宽度</span><br><span class="line">setlocal foldlevel=1 &quot; 设置折叠层数为 1</span><br><span class="line">nnoremap &lt;space&gt; @=((foldclosed(line(&#x27;.&#x27;)) &lt; 0) ? &#x27;zc&#x27; : &#x27;zo&#x27;)&lt;CR&gt; &quot; 用空格键来开关折叠</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot; Source a global configuration file if available</span><br><span class="line">if filereadable(&quot;/etc/vim/vimrc.local&quot;)</span><br><span class="line">  source /etc/vim/vimrc.local</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
+<p>这和记事本一点区别也没有，继续学习使用vim吧。vscode是IDE，可以插入vim插件。</p>
+<h2 id="学习使用基本工具"><a href="#学习使用基本工具" class="headerlink" title="学习使用基本工具"></a>学习使用基本工具</h2><h3 id="man"><a href="#man" class="headerlink" title="man"></a>man</h3><p>RTFM的神器呀。</p>
+<h3 id="Hello，world"><a href="#Hello，world" class="headerlink" title="Hello，world"></a>Hello，world</h3><p>无非vim编辑完，gcc编译一下完事。<br>还让我写一个makefile，简单的。<br>这个小东西就要求要学两个小玩意儿了。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">TARGET = hello </span><br><span class="line">OBJ = hello.c</span><br><span class="line">CC = gcc</span><br><span class="line"></span><br><span class="line">$(TARGET) : $(OBJ)</span><br><span class="line">	$(CC) $(OBJ) -o $(TARGET)</span><br></pre></td></tr></table></figure>
+<h3 id="GDB"><a href="#GDB" class="headerlink" title="GDB"></a>GDB</h3><p>调试捏，自学捏。</p>
+<h3 id="TMux"><a href="#TMux" class="headerlink" title="TMux"></a>TMux</h3><p>终端复用器，开多个窗口捏，让你配置好三个键映射就放养了。<br>同时又再次强调了提问的智慧。</p>
+<p>最后推荐了The missing semester of  your CS Education。只能说太经典了，前置代码课程是CS61aSICP，我只能感慨不愧是top3，这不是顶级缝合怪？</p>
+<p>我开始尝试学习TMux，装上之后发现C-a&#x2F;C-b都使用不了，尝试google，尝试StackOverflow，失败。我用的windows11+WSL2，窗口管理就是win再开一个bash，用不上Tmux，开摆！不学了，之后再说。</p>
+<h2 id="获取课程源码"><a href="#获取课程源码" class="headerlink" title="获取课程源码"></a>获取课程源码</h2><p>顺带交了git的使用，很全欸，基本包含了开发的所有场合了。</p>
+<p>但是用PA自带的sh脚本clone项目源码出现了问题，看了看脚本，没太看懂。<br>错误日志是这样的。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br><span class="line">Cloning into &#x27;am-kernels&#x27;...</span><br><span class="line">kex_exchange_identification: Connection closed by remote host</span><br><span class="line">Connection closed by UNKNOWN port 65535</span><br><span class="line">fatal: Could not read from remote repository.</span><br></pre></td></tr></table></figure>
+
+<p>PA0 End.</p>
+<h1 id="PA1"><a href="#PA1" class="headerlink" title="PA1"></a>PA1</h1><h1 id="开始愉快的作战吧！"><a href="#开始愉快的作战吧！" class="headerlink" title="开始愉快的作战吧！"></a>开始愉快的作战吧！</h1><p>如果没有寄存器, 计算机还可以工作吗? 如果可以, 这会对硬件提供的编程模型有什么影响呢?</p>
+<p>我觉得可以的。寄存器不是必须的。CPU可以连接到外部的存储器再进行数据的读取，只不过会降低运行效率罢了。</p>
+<blockquote>
+<p><em><strong>概念</strong></em><br>编程模型：模型是对事物共性的抽象，<strong>编程模型</strong>就是对编程的共性的抽象。<br><strong>什么是编程的共性呢？</strong><br><strong>最重要的共性</strong>就是：程序设计时，<strong>代码的抽象方式、组织方式或复用方式</strong>。编程模型主要是方法与思想。编程模型处于方法或思想性的层面，在很多情况下，也可称为编程方法、编程方式、编程模式或编程技术、编程范式。在这里就当做同一种说法。<br>当面对一个新问题时，通常的想法是通过分析，不断的转化和转换，得到本质相同的熟悉的、或抽象的、简单的一个问题，这就是<strong>化归思想</strong>。把初始的问题或对象称为原型，把化归后的相对定型的模拟化或理想化的对象称为<strong>模型</strong>。<br><strong>编程模型，简单地可以理解它就是模板</strong>，遇到相似问题就可以方便依模板解决,这样就简化了编程问题。不同的编程环境和不同的应用对象有不同的编程模型。</p>
+</blockquote>
+<p>啥是编程模型： <a href="https://zhuanlan.zhihu.com/p/419254235">https://zhuanlan.zhihu.com/p/419254235</a></p>
+<p>![[20230813145605.png]]<br>哈哈，被嘲讽了。</p>
+<p>PA1正式开始，非常懵逼。</p>
+<p>第一步make没成功，提示我的仓库不是NEMU的仓库，我返回PA0重新下载资料。</p>
+<p>脑抽删了ssh密钥，重新配置。</p>
+<p>跟着最后一节走。<br>![[20230813162607.png]]<br>令人振奋的菜单出现了。<br>![[20230813162756.png]]</p>
+<p>工具链安装好，查了一堆，用上了apt-cache policy，终于编译好了。<br>![[20230813172406.png]]<br>![[20230813172559.png]]<br>好耶！继续继续，可以开始PA1了。</p>
+<p>PA1一来就是逆天语录，<em><strong>给了目录树之后，你就可以开始阅读代码了，至于从哪里开始，就不用多费口舌了吧。</strong></em></p>
+<p>请回忆，一个程序是从哪里开始执行的呢？这个问题很难啊，C语言被编译器编译再经过连接之后得到可执行文件。可执行文件是缝合起来的，它由哪些组成呢？</p>
+<p>记得学汇编的时候，提到一个程序头，段什么什么的来着，来用来接入DOS和返回DOS。程序应该是从那段代码开始顺序读取指令，按指令执行的。</p>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+      <tags>
+        <tag>计算机</tag>
+        <tag>ASC</tag>
+        <tag>自学</tag>
+        <tag>设计</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Orangepi zero3个人服务器开发</title>
     <url>/2023-09-10-50-Orangepi-zero3%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%8F%91/</url>
     <content><![CDATA[<h1 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h1><p>首先选择自己开发环境。</p>
@@ -1006,6 +1006,36 @@ Name: label, Length: 42000, dtype: int64
 <blockquote>
 <p>如果有什么疑问的话，请在评论区留言。我会不断改进产出的内容。</p>
 </blockquote>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>SHU机组体实验——WSL+Docker实现</title>
+    <url>/2023-11-25-09-SHU%E6%9C%BA%E7%BB%84%E4%BD%93%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94WSL-Docker%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<blockquote>
+<p>在Windows11上以Docker部署CentOS容器作为虚拟机进行试验。</p>
+</blockquote>
+<p>前置：安装好WSL和Docker Desktop。</p>
+<h1 id="虚拟容器的创建"><a href="#虚拟容器的创建" class="headerlink" title="虚拟容器的创建"></a>虚拟容器的创建</h1><p>通过Docker创建的虚拟容器是自定义的，可以根据需求进行安排。因此可以快速轻量的完成部署，且避免了传统虚拟机的性能损耗。通过我的Dockerfile创建的CentOS，无需配置网卡，开箱即用。</p>
+<p>Docker相关的概念不做多余介绍。</p>
+<p>其他的就不做多余描述，请参考网络上相关的教程即可。<br>下面是Dockerfile。</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/home/dockerfile</span></span><br><span class="line"><span class="comment"># Based CentOS7 image</span></span><br><span class="line"><span class="keyword">FROM</span> centos:centos7</span><br><span class="line"><span class="keyword">MAINTAINER</span> niina</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /home</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y update; yum clean all</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y install openssh-server openssh-clients passwd</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y install net-tools vim</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set password = password.</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">echo</span> <span class="string">&#x27;root:password&#x27;</span> | chpasswd</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># port 22 to make ssh work</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">22</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">&quot;/usr/sbin/sshd&quot;</span>, <span class="string">&quot;-D&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>从dockerfile创建镜像。此时指令目录为dockerfile所在目录。<br><code>docker build -t mycentos:dev .</code></p>
+<p>构建好镜像后创建并启动容器。注意将容器的80端口映射到主机的45678端口(此端口不指定，大于1200即可)，以便后续SSH连接。指令如下。请查阅<code>docker --help</code>查看相关参数含义。<br>&#96;docker run -p 45678:22 -it -d –name&#x3D;my_centos_1 mycentos:dev</p>
+<p>以bash进入容器。<br><code>docker exec -it my_centos_1 /bin/bash</code></p>
+<p>以上是基本操作，根据实验内容创建第二个容器也是相似的操作。</p>
+<h1 id="宿主机与虚拟机通信"><a href="#宿主机与虚拟机通信" class="headerlink" title="宿主机与虚拟机通信"></a>宿主机与虚拟机通信</h1><h2 id="WSL与CentOS容器以SSH相互通信"><a href="#WSL与CentOS容器以SSH相互通信" class="headerlink" title="WSL与CentOS容器以SSH相互通信"></a>WSL与CentOS容器以SSH相互通信</h2><p>首先介绍在任意的WSL实例中进行通行。<br>！我并未测试过多个WSL实例会出现什么情况，读者可以进行实验，希望得到反馈！</p>
+<h3 id="WSL登录CentOS容器"><a href="#WSL登录CentOS容器" class="headerlink" title="WSL登录CentOS容器"></a>WSL登录CentOS容器</h3><p>在容器中，查找到IP。<br>切换到WSL，以SSH连接。举例如下。<br><code>ssh root@172.17.0.2</code><br>输入设置的密码即可。</p>
+<h3 id="从CentOS容器登录到WSL"><a href="#从CentOS容器登录到WSL" class="headerlink" title="从CentOS容器登录到WSL"></a>从CentOS容器登录到WSL</h3><p>在WSL中通过指令查看IP。<br>切换到容器。命令如下。<br><code>ssh &lt;用户名&gt;@192.168.158.4</code></p>
+<h2 id="PWSh与CentOS容器以SSH相互通信"><a href="#PWSh与CentOS容器以SSH相互通信" class="headerlink" title="PWSh与CentOS容器以SSH相互通信"></a>PWSh与CentOS容器以SSH相互通信</h2><h3 id="从容器或WSL登录宿主机"><a href="#从容器或WSL登录宿主机" class="headerlink" title="从容器或WSL登录宿主机"></a>从容器或WSL登录宿主机</h3><p>首先在WSL中查看主机的IP。<br><code>cat /etc/resolv.conf</code><br>后通过SSH连接即可。在WSL和CentOS容器中都是相同的操作。这样可以登录到宿主机上。</p>
+<h3 id="从宿主机登录到WSL"><a href="#从宿主机登录到WSL" class="headerlink" title="从宿主机登录到WSL"></a>从宿主机登录到WSL</h3><p>在WSL查看IP。<br>后在Windows输入以下命令即可。<br><code>ssh &lt;user&gt;@&lt;your_IP&gt;</code></p>
+<h3 id="从宿主机或WSL登录到容器"><a href="#从宿主机或WSL登录到容器" class="headerlink" title="从宿主机或WSL登录到容器"></a>从宿主机或WSL登录到容器</h3><p>SSH需要开放22端口，如果没有在一开始设置好22端口的话，将无法使用SSH。<br>如果从WSL进行登录的话，IP可以是localhost，也可以是Docker分配到的IP，但都必须加入端口映射。<br>如果从Windows进行登录的话，IP只能是localhost。</p>
+<h3 id="容器间相互通信"><a href="#容器间相互通信" class="headerlink" title="容器间相互通信"></a>容器间相互通信</h3><p>我构建的镜像默认的网络设置就是桥接(所有的容器连接到Docker虚拟机上的网卡，再连接到WSL，WSL以默认NAT的方式设置)。因此可以直接通过SSH在各容器间相互通信。</p>
+<p>自此，通信内容全部打通。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>SSH默认的监听端口是22。在宿主机上做端口映射是将容器的端口映射到主机上的端口，如果在容器中SSH监听的端口和所映射的端口不一致的话，SSH无法正常工作。<br>WSL和Docker采用的虚拟化技术十分先进，建议使用。</p>
 ]]></content>
       <categories>
         <category>Learning</category>
@@ -1261,36 +1291,6 @@ Name: label, Length: 42000, dtype: int64
       </tags>
   </entry>
   <entry>
-    <title>SHU机组体实验——WSL+Docker实现</title>
-    <url>/2023-11-25-09-SHU%E6%9C%BA%E7%BB%84%E4%BD%93%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94WSL-Docker%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<blockquote>
-<p>在Windows11上以Docker部署CentOS容器作为虚拟机进行试验。</p>
-</blockquote>
-<p>前置：安装好WSL和Docker Desktop。</p>
-<h1 id="虚拟容器的创建"><a href="#虚拟容器的创建" class="headerlink" title="虚拟容器的创建"></a>虚拟容器的创建</h1><p>通过Docker创建的虚拟容器是自定义的，可以根据需求进行安排。因此可以快速轻量的完成部署，且避免了传统虚拟机的性能损耗。通过我的Dockerfile创建的CentOS，无需配置网卡，开箱即用。</p>
-<p>Docker相关的概念不做多余介绍。</p>
-<p>其他的就不做多余描述，请参考网络上相关的教程即可。<br>下面是Dockerfile。</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/home/dockerfile</span></span><br><span class="line"><span class="comment"># Based CentOS7 image</span></span><br><span class="line"><span class="keyword">FROM</span> centos:centos7</span><br><span class="line"><span class="keyword">MAINTAINER</span> niina</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /home</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y update; yum clean all</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y install openssh-server openssh-clients passwd</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y install net-tools vim</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set password = password.</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">echo</span> <span class="string">&#x27;root:password&#x27;</span> | chpasswd</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># port 22 to make ssh work</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">22</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">&quot;/usr/sbin/sshd&quot;</span>, <span class="string">&quot;-D&quot;</span>]</span></span><br></pre></td></tr></table></figure>
-
-<p>从dockerfile创建镜像。此时指令目录为dockerfile所在目录。<br><code>docker build -t mycentos:dev .</code></p>
-<p>构建好镜像后创建并启动容器。注意将容器的80端口映射到主机的45678端口(此端口不指定，大于1200即可)，以便后续SSH连接。指令如下。请查阅<code>docker --help</code>查看相关参数含义。<br>&#96;docker run -p 45678:22 -it -d –name&#x3D;my_centos_1 mycentos:dev</p>
-<p>以bash进入容器。<br><code>docker exec -it my_centos_1 /bin/bash</code></p>
-<p>以上是基本操作，根据实验内容创建第二个容器也是相似的操作。</p>
-<h1 id="宿主机与虚拟机通信"><a href="#宿主机与虚拟机通信" class="headerlink" title="宿主机与虚拟机通信"></a>宿主机与虚拟机通信</h1><h2 id="WSL与CentOS容器以SSH相互通信"><a href="#WSL与CentOS容器以SSH相互通信" class="headerlink" title="WSL与CentOS容器以SSH相互通信"></a>WSL与CentOS容器以SSH相互通信</h2><p>首先介绍在任意的WSL实例中进行通行。<br>！我并未测试过多个WSL实例会出现什么情况，读者可以进行实验，希望得到反馈！</p>
-<h3 id="WSL登录CentOS容器"><a href="#WSL登录CentOS容器" class="headerlink" title="WSL登录CentOS容器"></a>WSL登录CentOS容器</h3><p>在容器中，查找到IP。<br>切换到WSL，以SSH连接。举例如下。<br><code>ssh root@172.17.0.2</code><br>输入设置的密码即可。</p>
-<h3 id="从CentOS容器登录到WSL"><a href="#从CentOS容器登录到WSL" class="headerlink" title="从CentOS容器登录到WSL"></a>从CentOS容器登录到WSL</h3><p>在WSL中通过指令查看IP。<br>切换到容器。命令如下。<br><code>ssh &lt;用户名&gt;@192.168.158.4</code></p>
-<h2 id="PWSh与CentOS容器以SSH相互通信"><a href="#PWSh与CentOS容器以SSH相互通信" class="headerlink" title="PWSh与CentOS容器以SSH相互通信"></a>PWSh与CentOS容器以SSH相互通信</h2><h3 id="从容器或WSL登录宿主机"><a href="#从容器或WSL登录宿主机" class="headerlink" title="从容器或WSL登录宿主机"></a>从容器或WSL登录宿主机</h3><p>首先在WSL中查看主机的IP。<br><code>cat /etc/resolv.conf</code><br>后通过SSH连接即可。在WSL和CentOS容器中都是相同的操作。这样可以登录到宿主机上。</p>
-<h3 id="从宿主机登录到WSL"><a href="#从宿主机登录到WSL" class="headerlink" title="从宿主机登录到WSL"></a>从宿主机登录到WSL</h3><p>在WSL查看IP。<br>后在Windows输入以下命令即可。<br><code>ssh &lt;user&gt;@&lt;your_IP&gt;</code></p>
-<h3 id="从宿主机或WSL登录到容器"><a href="#从宿主机或WSL登录到容器" class="headerlink" title="从宿主机或WSL登录到容器"></a>从宿主机或WSL登录到容器</h3><p>SSH需要开放22端口，如果没有在一开始设置好22端口的话，将无法使用SSH。<br>如果从WSL进行登录的话，IP可以是localhost，也可以是Docker分配到的IP，但都必须加入端口映射。<br>如果从Windows进行登录的话，IP只能是localhost。</p>
-<h3 id="容器间相互通信"><a href="#容器间相互通信" class="headerlink" title="容器间相互通信"></a>容器间相互通信</h3><p>我构建的镜像默认的网络设置就是桥接(所有的容器连接到Docker虚拟机上的网卡，再连接到WSL，WSL以默认NAT的方式设置)。因此可以直接通过SSH在各容器间相互通信。</p>
-<p>自此，通信内容全部打通。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>SSH默认的监听端口是22。在宿主机上做端口映射是将容器的端口映射到主机上的端口，如果在容器中SSH监听的端口和所映射的端口不一致的话，SSH无法正常工作。<br>WSL和Docker采用的虚拟化技术十分先进，建议使用。</p>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
-  </entry>
-  <entry>
     <title>cmake学习使用</title>
     <url>/2023-09-06-46-cmake%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h1 id="Updating…"><a href="#Updating…" class="headerlink" title="Updating…"></a>Updating…</h1>]]></content>
@@ -1408,6 +1408,46 @@ Name: label, Length: 42000, dtype: int64
       </categories>
   </entry>
   <entry>
+    <title>【winget】如何使用包管理器管理windows系统——高效日常操作</title>
+    <url>/2023-07-28-04-%E3%80%90winget%E3%80%91%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%A1%E7%90%86windows%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E9%AB%98%E6%95%88%E6%97%A5%E5%B8%B8%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>在尝试了linux包管理器、python包管理器后，这种高效而帅气的下载方式吸引了我。</p>
+<p>本篇博客就让大家实现高效的类似于linux的命令行操作体验。</p>
+<p>各种各样的应用以及开发，很难避开shell的使用，而包管理器的存在可以很大程度提高生产效率，pip、conda、npm，应该是非常有名的了，在各个操作系统都很常见。</p>
+<p>“windows上也有类似的包管理器吗？”带着这样的想法，搜索引擎给了我两个答案。一个是chocolatey，另一个便是本次的主角——winget。chocolatey我之前尝试不深，不做深入的评论，但是我身边有学长用choco做包管理出现了bug的，后果还是蛮严重的（猜测）。</p>
+<h1 id="下载之前的准备"><a href="#下载之前的准备" class="headerlink" title="下载之前的准备"></a>下载之前的准备</h1><h2 id="为powershell配置alias"><a href="#为powershell配置alias" class="headerlink" title="为powershell配置alias"></a>为powershell配置alias</h2><p>查找powershell自启时的配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $PROFILE</span><br></pre></td></tr></table></figure>
+<p>若有，则可以开始修改；若无，则在相应位置创建一个新的，位置自行查找。</p>
+<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><p>格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function alias &#123; command &#125;</span><br></pre></td></tr></table></figure>
+<p>首先复刻的命令是大名鼎鼎的sudo(superuser do)，用于提升权限。因为右键以管理员打开并不是时时刻刻都可以做到。</p>
+<p>步骤：</p>
+<ol>
+<li>win+x，选择打开计算机管理。</li>
+<li>进入本地用户和组</li>
+<li>设置Adiministrator的密码。</li>
+<li>修改并保存profile文件。</li>
+</ol>
+<p>可以做参考。（不想搞了，发现始终很难还原效果，直奔主题吧）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function sudo &#123; runas /profile /user:administrator &#125;</span><br><span class="line"></span><br><span class="line">function SwitchUser-Do &#123;</span><br><span class="line">    if($args.Length -lt 1) &#123;</span><br><span class="line">        Write-Warning(&quot;program must be provided!&quot;)</span><br><span class="line">        Write-Output(&quot;Usage: sudo program [args...]&quot;)</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    $program = $args[0]</span><br><span class="line">    $prog_args = $args[1..($args.Count-1)]</span><br><span class="line">    Write-Output(&quot;Program: &quot; + $program)</span><br><span class="line">    if ($args.Length -le 1) &#123;</span><br><span class="line">        Start-Process -FilePath $program -Verb RunAs</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        Write-Output(&quot;Arguments: &quot; + $prog_args)</span><br><span class="line">        Start-Process -FilePath $program -Verb RunAs -ArgumentList $prog_args</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Set-Alias sudo SwitchUser-Do</span><br><span class="line"></span><br><span class="line">function _su &#123;Start-Process -verb runas &quot;C:\Windows\System32\WindowsPowerShell\v1.0\Powershell.exe&quot;&#125;</span><br><span class="line">Set-alias su _su</span><br></pre></td></tr></table></figure>
+
+<h2 id="下载安装！"><a href="#下载安装！" class="headerlink" title="下载安装！"></a>下载安装！</h2><p><a href="https://www.bilibili.com/video/BV1DY4y1N7BM">winget | 简单、好用的 windows 包管理工具 | winget 安装_哔哩哔哩_bilibili</a></p>
+<p>prerequisites还挺麻烦，我的不齐全，下好了之后还得去补。</p>
+<p>直接去官网补，按manual上写的来。</p>
+<p><a href="https://github.com/microsoft/winget-cli">microsoft&#x2F;winget-cli: WinGet is the Windows Package Manage</a><br><a href="https://learn.microsoft.com/zh-CN/windows/package-manager/winget/">使用 winget 工具安装和管理应用程序 | Microsoft Learn</a></p>
+<p>挺无聊的RTFM。</p>
+<p>微软演示的shell配的还挺好看，花里胡哨的。那天可以看看也弄一个。</p>
+<p>选好位置后，git clone一下winget-cli库。</p>
+<p>跟着github上的README走。</p>
+<p>注意配置一下环境变量。</p>
+<p>命令行里输入winget反应成功后下一步吧！</p>
+<p>好像别的也没有什么了。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>使用winget安装可能会破坏自己手动设置的环境变量，因此尽量对自己的环境变量进行备份，或者对自己的环境变量足够熟悉——破坏了之后还可以手动修复回来。</p>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+  </entry>
+  <entry>
     <title>【个人总结】关于课外扩展和兴趣自学的方法步骤及注意事项</title>
     <url>/2023-01-31-45-%E3%80%90%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93%E3%80%91%E5%85%B3%E4%BA%8E%E8%AF%BE%E5%A4%96%E6%89%A9%E5%B1%95%E5%92%8C%E5%85%B4%E8%B6%A3%E8%87%AA%E5%AD%A6%E7%9A%84%E6%96%B9%E6%B3%95%E6%AD%A5%E9%AA%A4%E5%8F%8A%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
     <content><![CDATA[<p>关于基于课内内容扩展学习和自学其他无关领域的方法步骤和应当避免的错误弯路。PS：写的简陋了，抱歉。</p>
@@ -1497,46 +1537,6 @@ Name: label, Length: 42000, dtype: int64
 </blockquote>
 <p><a href="https://www.bilibili.com/video/BV1pT411v7Ej/?spm_id_from=333.880.my_history.page.click">从低维如何看高维_哔哩哔哩_bilibili</a></p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>【winget】如何使用包管理器管理windows系统——高效日常操作</title>
-    <url>/2023-07-28-04-%E3%80%90winget%E3%80%91%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%A1%E7%90%86windows%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E9%AB%98%E6%95%88%E6%97%A5%E5%B8%B8%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>在尝试了linux包管理器、python包管理器后，这种高效而帅气的下载方式吸引了我。</p>
-<p>本篇博客就让大家实现高效的类似于linux的命令行操作体验。</p>
-<p>各种各样的应用以及开发，很难避开shell的使用，而包管理器的存在可以很大程度提高生产效率，pip、conda、npm，应该是非常有名的了，在各个操作系统都很常见。</p>
-<p>“windows上也有类似的包管理器吗？”带着这样的想法，搜索引擎给了我两个答案。一个是chocolatey，另一个便是本次的主角——winget。chocolatey我之前尝试不深，不做深入的评论，但是我身边有学长用choco做包管理出现了bug的，后果还是蛮严重的（猜测）。</p>
-<h1 id="下载之前的准备"><a href="#下载之前的准备" class="headerlink" title="下载之前的准备"></a>下载之前的准备</h1><h2 id="为powershell配置alias"><a href="#为powershell配置alias" class="headerlink" title="为powershell配置alias"></a>为powershell配置alias</h2><p>查找powershell自启时的配置文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $PROFILE</span><br></pre></td></tr></table></figure>
-<p>若有，则可以开始修改；若无，则在相应位置创建一个新的，位置自行查找。</p>
-<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><p>格式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function alias &#123; command &#125;</span><br></pre></td></tr></table></figure>
-<p>首先复刻的命令是大名鼎鼎的sudo(superuser do)，用于提升权限。因为右键以管理员打开并不是时时刻刻都可以做到。</p>
-<p>步骤：</p>
-<ol>
-<li>win+x，选择打开计算机管理。</li>
-<li>进入本地用户和组</li>
-<li>设置Adiministrator的密码。</li>
-<li>修改并保存profile文件。</li>
-</ol>
-<p>可以做参考。（不想搞了，发现始终很难还原效果，直奔主题吧）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function sudo &#123; runas /profile /user:administrator &#125;</span><br><span class="line"></span><br><span class="line">function SwitchUser-Do &#123;</span><br><span class="line">    if($args.Length -lt 1) &#123;</span><br><span class="line">        Write-Warning(&quot;program must be provided!&quot;)</span><br><span class="line">        Write-Output(&quot;Usage: sudo program [args...]&quot;)</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    $program = $args[0]</span><br><span class="line">    $prog_args = $args[1..($args.Count-1)]</span><br><span class="line">    Write-Output(&quot;Program: &quot; + $program)</span><br><span class="line">    if ($args.Length -le 1) &#123;</span><br><span class="line">        Start-Process -FilePath $program -Verb RunAs</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        Write-Output(&quot;Arguments: &quot; + $prog_args)</span><br><span class="line">        Start-Process -FilePath $program -Verb RunAs -ArgumentList $prog_args</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Set-Alias sudo SwitchUser-Do</span><br><span class="line"></span><br><span class="line">function _su &#123;Start-Process -verb runas &quot;C:\Windows\System32\WindowsPowerShell\v1.0\Powershell.exe&quot;&#125;</span><br><span class="line">Set-alias su _su</span><br></pre></td></tr></table></figure>
-
-<h2 id="下载安装！"><a href="#下载安装！" class="headerlink" title="下载安装！"></a>下载安装！</h2><p><a href="https://www.bilibili.com/video/BV1DY4y1N7BM">winget | 简单、好用的 windows 包管理工具 | winget 安装_哔哩哔哩_bilibili</a></p>
-<p>prerequisites还挺麻烦，我的不齐全，下好了之后还得去补。</p>
-<p>直接去官网补，按manual上写的来。</p>
-<p><a href="https://github.com/microsoft/winget-cli">microsoft&#x2F;winget-cli: WinGet is the Windows Package Manage</a><br><a href="https://learn.microsoft.com/zh-CN/windows/package-manager/winget/">使用 winget 工具安装和管理应用程序 | Microsoft Learn</a></p>
-<p>挺无聊的RTFM。</p>
-<p>微软演示的shell配的还挺好看，花里胡哨的。那天可以看看也弄一个。</p>
-<p>选好位置后，git clone一下winget-cli库。</p>
-<p>跟着github上的README走。</p>
-<p>注意配置一下环境变量。</p>
-<p>命令行里输入winget反应成功后下一步吧！</p>
-<p>好像别的也没有什么了。</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>使用winget安装可能会破坏自己手动设置的环境变量，因此尽量对自己的环境变量进行备份，或者对自己的环境变量足够熟悉——破坏了之后还可以手动修复回来。</p>
 ]]></content>
       <categories>
         <category>Learning</category>
@@ -1732,39 +1732,6 @@ Name: label, Length: 42000, dtype: int64
 ]]></content>
       <categories>
         <category>转载</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>深度学习服务器环境配置</title>
-    <url>/2023-10-17-26-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>开启TMux。</p>
-<ol>
-<li>更新源。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt update ; apt upgrade</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>可以熟悉下系统数据。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt install neofetch tree lscpu less</span><br><span class="line">neofetch</span><br><span class="line">tree -L 2</span><br><span class="line">lscpu | less</span><br></pre></td></tr></table></figure>
-
-<p>换上自己的配置。<br>Gitee仓库地址：<a href="https://gitee.com/irorange27/MyConfiguration.git">https://gitee.com/irorange27/MyConfiguration.git</a><br>Github仓库地址：<a href="https://github.com/irorange27/MyConfiguration.git">https://github.com/irorange27/MyConfiguration.git</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://gitee.com/irorange27/MyConfiguration.git</span><br><span class="line">git clone https://github.com/irorange27/MyConfiguration.git</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<ol start="2">
-<li><p>Download rust language</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl --proto &#x27;=https&#x27; --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Download FISH.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://github.com/fish-shell/fish-shell/releases/download/3.6.1/fish-3.6.1.tar.xz</span><br><span class="line"></span><br><span class="line">lscpu | less</span><br><span class="line"></span><br><span class="line">cmake .; make -j&lt;cpu_num&gt;; sudo make install</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">chsh -s $(which fish); export SHELL=`which fish`; [ -z &quot;$FISH_VERSION&quot; ] &amp;&amp; exec &quot;$SHELL&quot; -l|</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>Download git lfs. <a href="https://packagecloud.io/github/git-lfs/install">https://packagecloud.io/github/git-lfs/install</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Git pull repository</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git lfs install</span><br><span class="line">git clone https://huggingface.co/gpt2</span><br></pre></td></tr></table></figure></li>
-</ol>
-]]></content>
-      <categories>
-        <category>Learning</category>
       </categories>
   </entry>
   <entry>
@@ -2034,6 +2001,39 @@ Name: label, Length: 42000, dtype: int64
         <tag>windows</tag>
         <tag>装机</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>深度学习服务器环境配置</title>
+    <url>/2023-10-17-26-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>开启TMux。</p>
+<ol>
+<li>更新源。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt update ; apt upgrade</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>可以熟悉下系统数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt install neofetch tree lscpu less</span><br><span class="line">neofetch</span><br><span class="line">tree -L 2</span><br><span class="line">lscpu | less</span><br></pre></td></tr></table></figure>
+
+<p>换上自己的配置。<br>Gitee仓库地址：<a href="https://gitee.com/irorange27/MyConfiguration.git">https://gitee.com/irorange27/MyConfiguration.git</a><br>Github仓库地址：<a href="https://github.com/irorange27/MyConfiguration.git">https://github.com/irorange27/MyConfiguration.git</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://gitee.com/irorange27/MyConfiguration.git</span><br><span class="line">git clone https://github.com/irorange27/MyConfiguration.git</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<ol start="2">
+<li><p>Download rust language</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl --proto &#x27;=https&#x27; --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Download FISH.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://github.com/fish-shell/fish-shell/releases/download/3.6.1/fish-3.6.1.tar.xz</span><br><span class="line"></span><br><span class="line">lscpu | less</span><br><span class="line"></span><br><span class="line">cmake .; make -j&lt;cpu_num&gt;; sudo make install</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">chsh -s $(which fish); export SHELL=`which fish`; [ -z &quot;$FISH_VERSION&quot; ] &amp;&amp; exec &quot;$SHELL&quot; -l|</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>Download git lfs. <a href="https://packagecloud.io/github/git-lfs/install">https://packagecloud.io/github/git-lfs/install</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Git pull repository</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git lfs install</span><br><span class="line">git clone https://huggingface.co/gpt2</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
   </entry>
   <entry>
     <title>磁盘管理，改变你电脑磁盘的大小吧！</title>
