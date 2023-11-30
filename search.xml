@@ -106,8 +106,8 @@
       </categories>
       <tags>
         <tag>计算机</tag>
-        <tag>自学</tag>
         <tag>ASC</tag>
+        <tag>自学</tag>
       </tags>
   </entry>
   <entry>
@@ -133,50 +133,6 @@
       </categories>
       <tags>
         <tag>经验</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HPC Design</title>
-    <url>/2023-08-11-01-HPC-Design/</url>
-    <content><![CDATA[<h1 id="构建HPC计算系统"><a href="#构建HPC计算系统" class="headerlink" title="构建HPC计算系统"></a>构建HPC计算系统</h1><p>HPC并非基于标准技术的组件的简单连接。这样构建的HPC系统通常被人们看作是一个松散的部件集合，这样即使可以工作，但不可能工作的很好，更不足以完成对于技术的全部承诺，而这是打比赛需要的。</p>
-<p>HPC的使用场景是构建的出发点。其预期支持的应用要求、用户数量、数据存储和处理要求、数据中心的大小、功率、冷却和重量限制都将决定HPC的大小。而ASC初赛的要求中只有直接规定功率限制，其他款项并没有要求，这样我们可以根据其题目灵活进行硬件的设计。</p>
-<p>HPC系统的架构设计同时需要考虑到软件环境，使得系统管理员和用户能够加速其工作负载。</p>
-<h1 id="硬件结构"><a href="#硬件结构" class="headerlink" title="硬件结构"></a>硬件结构</h1><h2 id="基础设施群"><a href="#基础设施群" class="headerlink" title="基础设施群"></a>基础设施群</h2><p>为HPC提供管理功能的服务器属于基础设施服务器，包括集群主节点、登陆节点和编译器节点。</p>
-<p>主节点管理集群的软件镜像，处理集群的部署、管理和监控。它还运行集群的资源调度程序和作业管理程序。主节点可在高可用性模式下主动或被动地与服务器配对运行，可以最大限度地减少停机时间。</p>
-<p>登陆节点为用户登录请求提供服务，编译器节点则为应用程序够减换届而设置。根据集群地规模，这些角色可以组合在一台服务器上，也可以分布在多台服务器上。</p>
-<p>基础设施服务器还可设置为以高可用性模式运行，为这些关键角色提供额外地弹性。基础架构服务器是保持HPC正常运行并供用户访问地关键。</p>
-<h2 id="计算单元"><a href="#计算单元" class="headerlink" title="计算单元"></a>计算单元</h2><p>HPC的计算单元是主要的计算工具，它包括CPU、GPU或FPGA，以及其他任何提供计算能力的单元。计算单元的大小，即计算节点的数量，取决于HPC的用例、预期性能、预算、空间和数据中心要求。决定因素包括计算服务器的类型或型号以及计算服务器本身的配置。</p>
-<p>在HPC中，计算和网络必须一起设计，因为计算单元的构建将由计算节点之间互联的交换机弧度决定。如，使用48端口交换机的结构时，每个交换机有24个计算节点。</p>
-<h2 id="存储单元"><a href="#存储单元" class="headerlink" title="存储单元"></a>存储单元</h2><p>存储组件可存储用户主目录、应用数据和结构，提供快速抓取空间，并可包括归档和备份。根据使用情况和HPC的规模，存储单元可以从主节点上导出到计算单元的磁盘，到用户数据、应用数据的独立文件系统、并行文件系统、快速从头备份恢复和磁带归档。</p>
-<p>其中的技术包括SAS&#x2F;SATA磁盘、SSD、NvMe以及任意组合，存储解决方案的选择取决于性能、容量和成本。</p>
-<h2 id="Networking-Options"><a href="#Networking-Options" class="headerlink" title="Networking Options"></a>Networking Options</h2><p>大多数HPC系统至少有两个网络结构。一个用于行政和管理，另一个用于进程间通信(IPC)和存储流量。根据使用情况，也可以为管理和存储浏览配置单独的网络。</p>
-<p>网络的选择范围从以太网（1GbE、10GbE、25GbE、40GbE、100GbE）到infiniBand和基于Omni-path架构（OPA）等。</p>
-<p>根据服务器适配器和交换机的选择，该网络可以使用光缆或铜线。典型的HPC系统在机架内使用铜缆布线，在机架间使用光缆，从而在电缆管理的便利性和成本之间取得平衡。</p>
-<p>需要注意的是，对于更大的集群或更复杂的网络，可根据具体使用情况设计定制网络拓扑结构。</p>
-<h1 id="软件组件"><a href="#软件组件" class="headerlink" title="软件组件"></a>软件组件</h1><p>与硬件一致，软件也是以模块化的方式组装的。单个组件（如资源管理器、MPI、编译器等）有多种选择，并支持基于硬件选择的驱动程序。</p>
-<h2 id="集群软件栈"><a href="#集群软件栈" class="headerlink" title="集群软件栈"></a>集群软件栈</h2><p>HPC集群软件是一套工具包，可轻松部署、管理和维护高性能计算系统。</p>
-<h2 id="系统管理软件"><a href="#系统管理软件" class="headerlink" title="系统管理软件"></a>系统管理软件</h2><h2 id="应用性能"><a href="#应用性能" class="headerlink" title="应用性能"></a>应用性能</h2><h1 id="数据中心注意事项"><a href="#数据中心注意事项" class="headerlink" title="数据中心注意事项"></a>数据中心注意事项</h1><p>HPC系统的最终配置是一系列权衡的结果。现有的数据中心有诸多限制——空间的物理限制以及每个机架的功率、冷却和重量限制。</p>
-<h2 id="电源"><a href="#电源" class="headerlink" title="电源"></a>电源</h2><p>高密度服务器的一个权衡因素是每个机架的输入功率要求。随服务器平台密度的增加，以及每个平台支持更丰富、更耗电的配置，驱动单个机架所需的输入功率大幅增加。</p>
-<p>有关配电装置容量的详细信息，请咨询配电设备供应商。</p>
-<h2 id="机架冷却"><a href="#机架冷却" class="headerlink" title="机架冷却"></a>机架冷却</h2><p>为机架提供充足的电力，使其在不节流的情况下发挥最大性能，是确定基础设施密度的一个因素，但另一个因素则是散去产生的热量，以便在所需的环境温度限制内继续运行。</p>
-<p>首先从服务器本身来看，平台的硬件配置决定了服务器对环境温度的需求。机箱背板、磁盘数量、CPU瓦数、附加控制器、铜质或光纤网络电缆的选择决定了产生的热量。并影响平台的其六，从而影响平台安全有效运行所需的最高环境温度。</p>
-<p>在服务器中，可以选择（仅）风冷或液冷混合方案，大约30%~40%的服务器热量需要某种风冷设备解决方案。在讨论液冷之前，应首先讨论风冷方案，最先应该考虑更具成本效益和灵活性的解决方案。</p>
-<p>冷却方式：架空地板冷却系统、排式冷却、后门热交换器、液体冷却、冷板冷却</p>
-<h2 id="机架重量"><a href="#机架重量" class="headerlink" title="机架重量"></a>机架重量</h2><p>一台拥有72台服务器和5个机架顶部加环己的计算机架重约800kg，耗电量高达43kw。</p>
-<h2 id="机架布线"><a href="#机架布线" class="headerlink" title="机架布线"></a>机架布线</h2><p>现在已经清楚，密集型HPC系统包含多个PDU、网络交换机、电源电缆、网络结构和额外的液体冷却歧管，因此仅组装机架就会非常麻烦。安装好机架式关键，但可管理性（如拆卸服务器进行维护）、故障排除（更换故障电缆）甚至性能（粗大的电缆束会使平台受阻）也同样重要。</p>
-<h1 id="扩大设计规模"><a href="#扩大设计规模" class="headerlink" title="扩大设计规模"></a>扩大设计规模</h1><p>根据定义，HPC系统使可扩展的。随需求的增长，可使用更多的CPU、GPU等增加算力，也可以使用更多的存储阵列来增加存储容量或吞吐量。因此，网络必须支持这种扩展。在理想情况下，系统架构应在设计阶段就满足这种扩展需求。</p>
-<p>![png][figure9.png]</p>
-<p>虽然这种设计适用于大多数不同规模的高性能计算系统，但根据独特的使用案例或数据重心的需求，总有定制架构的需要。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>介绍了HPC设计的原则。HPC系统的配置包括硬件、软件、应用性能、数据中心、电源和冷却等几个方面。HPC的完整图景包括系统所在的环境，数据中心分析，包括电力、冷却和空间需求等方面。</p>
-]]></content>
-      <categories>
-        <category>竞赛</category>
-      </categories>
-      <tags>
-        <tag>计算机</tag>
-        <tag>自学</tag>
-        <tag>ASC</tag>
-        <tag>设计</tag>
       </tags>
   </entry>
   <entry>
@@ -325,6 +281,98 @@
         <tag>计算机</tag>
         <tag>项目开发</tag>
         <tag>跨平台</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HPC Design</title>
+    <url>/2023-08-11-01-HPC-Design/</url>
+    <content><![CDATA[<h1 id="构建HPC计算系统"><a href="#构建HPC计算系统" class="headerlink" title="构建HPC计算系统"></a>构建HPC计算系统</h1><p>HPC并非基于标准技术的组件的简单连接。这样构建的HPC系统通常被人们看作是一个松散的部件集合，这样即使可以工作，但不可能工作的很好，更不足以完成对于技术的全部承诺，而这是打比赛需要的。</p>
+<p>HPC的使用场景是构建的出发点。其预期支持的应用要求、用户数量、数据存储和处理要求、数据中心的大小、功率、冷却和重量限制都将决定HPC的大小。而ASC初赛的要求中只有直接规定功率限制，其他款项并没有要求，这样我们可以根据其题目灵活进行硬件的设计。</p>
+<p>HPC系统的架构设计同时需要考虑到软件环境，使得系统管理员和用户能够加速其工作负载。</p>
+<h1 id="硬件结构"><a href="#硬件结构" class="headerlink" title="硬件结构"></a>硬件结构</h1><h2 id="基础设施群"><a href="#基础设施群" class="headerlink" title="基础设施群"></a>基础设施群</h2><p>为HPC提供管理功能的服务器属于基础设施服务器，包括集群主节点、登陆节点和编译器节点。</p>
+<p>主节点管理集群的软件镜像，处理集群的部署、管理和监控。它还运行集群的资源调度程序和作业管理程序。主节点可在高可用性模式下主动或被动地与服务器配对运行，可以最大限度地减少停机时间。</p>
+<p>登陆节点为用户登录请求提供服务，编译器节点则为应用程序够减换届而设置。根据集群地规模，这些角色可以组合在一台服务器上，也可以分布在多台服务器上。</p>
+<p>基础设施服务器还可设置为以高可用性模式运行，为这些关键角色提供额外地弹性。基础架构服务器是保持HPC正常运行并供用户访问地关键。</p>
+<h2 id="计算单元"><a href="#计算单元" class="headerlink" title="计算单元"></a>计算单元</h2><p>HPC的计算单元是主要的计算工具，它包括CPU、GPU或FPGA，以及其他任何提供计算能力的单元。计算单元的大小，即计算节点的数量，取决于HPC的用例、预期性能、预算、空间和数据中心要求。决定因素包括计算服务器的类型或型号以及计算服务器本身的配置。</p>
+<p>在HPC中，计算和网络必须一起设计，因为计算单元的构建将由计算节点之间互联的交换机弧度决定。如，使用48端口交换机的结构时，每个交换机有24个计算节点。</p>
+<h2 id="存储单元"><a href="#存储单元" class="headerlink" title="存储单元"></a>存储单元</h2><p>存储组件可存储用户主目录、应用数据和结构，提供快速抓取空间，并可包括归档和备份。根据使用情况和HPC的规模，存储单元可以从主节点上导出到计算单元的磁盘，到用户数据、应用数据的独立文件系统、并行文件系统、快速从头备份恢复和磁带归档。</p>
+<p>其中的技术包括SAS&#x2F;SATA磁盘、SSD、NvMe以及任意组合，存储解决方案的选择取决于性能、容量和成本。</p>
+<h2 id="Networking-Options"><a href="#Networking-Options" class="headerlink" title="Networking Options"></a>Networking Options</h2><p>大多数HPC系统至少有两个网络结构。一个用于行政和管理，另一个用于进程间通信(IPC)和存储流量。根据使用情况，也可以为管理和存储浏览配置单独的网络。</p>
+<p>网络的选择范围从以太网（1GbE、10GbE、25GbE、40GbE、100GbE）到infiniBand和基于Omni-path架构（OPA）等。</p>
+<p>根据服务器适配器和交换机的选择，该网络可以使用光缆或铜线。典型的HPC系统在机架内使用铜缆布线，在机架间使用光缆，从而在电缆管理的便利性和成本之间取得平衡。</p>
+<p>需要注意的是，对于更大的集群或更复杂的网络，可根据具体使用情况设计定制网络拓扑结构。</p>
+<h1 id="软件组件"><a href="#软件组件" class="headerlink" title="软件组件"></a>软件组件</h1><p>与硬件一致，软件也是以模块化的方式组装的。单个组件（如资源管理器、MPI、编译器等）有多种选择，并支持基于硬件选择的驱动程序。</p>
+<h2 id="集群软件栈"><a href="#集群软件栈" class="headerlink" title="集群软件栈"></a>集群软件栈</h2><p>HPC集群软件是一套工具包，可轻松部署、管理和维护高性能计算系统。</p>
+<h2 id="系统管理软件"><a href="#系统管理软件" class="headerlink" title="系统管理软件"></a>系统管理软件</h2><h2 id="应用性能"><a href="#应用性能" class="headerlink" title="应用性能"></a>应用性能</h2><h1 id="数据中心注意事项"><a href="#数据中心注意事项" class="headerlink" title="数据中心注意事项"></a>数据中心注意事项</h1><p>HPC系统的最终配置是一系列权衡的结果。现有的数据中心有诸多限制——空间的物理限制以及每个机架的功率、冷却和重量限制。</p>
+<h2 id="电源"><a href="#电源" class="headerlink" title="电源"></a>电源</h2><p>高密度服务器的一个权衡因素是每个机架的输入功率要求。随服务器平台密度的增加，以及每个平台支持更丰富、更耗电的配置，驱动单个机架所需的输入功率大幅增加。</p>
+<p>有关配电装置容量的详细信息，请咨询配电设备供应商。</p>
+<h2 id="机架冷却"><a href="#机架冷却" class="headerlink" title="机架冷却"></a>机架冷却</h2><p>为机架提供充足的电力，使其在不节流的情况下发挥最大性能，是确定基础设施密度的一个因素，但另一个因素则是散去产生的热量，以便在所需的环境温度限制内继续运行。</p>
+<p>首先从服务器本身来看，平台的硬件配置决定了服务器对环境温度的需求。机箱背板、磁盘数量、CPU瓦数、附加控制器、铜质或光纤网络电缆的选择决定了产生的热量。并影响平台的其六，从而影响平台安全有效运行所需的最高环境温度。</p>
+<p>在服务器中，可以选择（仅）风冷或液冷混合方案，大约30%~40%的服务器热量需要某种风冷设备解决方案。在讨论液冷之前，应首先讨论风冷方案，最先应该考虑更具成本效益和灵活性的解决方案。</p>
+<p>冷却方式：架空地板冷却系统、排式冷却、后门热交换器、液体冷却、冷板冷却</p>
+<h2 id="机架重量"><a href="#机架重量" class="headerlink" title="机架重量"></a>机架重量</h2><p>一台拥有72台服务器和5个机架顶部加环己的计算机架重约800kg，耗电量高达43kw。</p>
+<h2 id="机架布线"><a href="#机架布线" class="headerlink" title="机架布线"></a>机架布线</h2><p>现在已经清楚，密集型HPC系统包含多个PDU、网络交换机、电源电缆、网络结构和额外的液体冷却歧管，因此仅组装机架就会非常麻烦。安装好机架式关键，但可管理性（如拆卸服务器进行维护）、故障排除（更换故障电缆）甚至性能（粗大的电缆束会使平台受阻）也同样重要。</p>
+<h1 id="扩大设计规模"><a href="#扩大设计规模" class="headerlink" title="扩大设计规模"></a>扩大设计规模</h1><p>根据定义，HPC系统使可扩展的。随需求的增长，可使用更多的CPU、GPU等增加算力，也可以使用更多的存储阵列来增加存储容量或吞吐量。因此，网络必须支持这种扩展。在理想情况下，系统架构应在设计阶段就满足这种扩展需求。</p>
+<p>![png][figure9.png]</p>
+<p>虽然这种设计适用于大多数不同规模的高性能计算系统，但根据独特的使用案例或数据重心的需求，总有定制架构的需要。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>介绍了HPC设计的原则。HPC系统的配置包括硬件、软件、应用性能、数据中心、电源和冷却等几个方面。HPC的完整图景包括系统所在的环境，数据中心分析，包括电力、冷却和空间需求等方面。</p>
+]]></content>
+      <categories>
+        <category>竞赛</category>
+      </categories>
+      <tags>
+        <tag>计算机</tag>
+        <tag>ASC</tag>
+        <tag>自学</tag>
+        <tag>设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NJU PA2022</title>
+    <url>/2023-08-12-23-NJU-PA2022/</url>
+    <content><![CDATA[<p>学长推荐把计算机体系结构量化研究方法、计算机组成与设计软硬件接口 两本书看懂后去做NJU的PA捏。我看了第一章发现内容非常眼熟，跳着看看感觉懂了又好像没懂的样子，直接来上PA！</p>
+<h1 id="PA0"><a href="#PA0" class="headerlink" title="PA0"></a>PA0</h1><p>硬核捏。</p>
+<h2 id="真机实装ubuntu22-04"><a href="#真机实装ubuntu22-04" class="headerlink" title="真机实装ubuntu22.04"></a>真机实装ubuntu22.04</h2><p>之后弄个专门的映像U盘然后来装系统，现在先用WSL糊弄一下。<br>下载PA用到的软件包，我出现了错误，但暂时不管。<br>熟悉基本的linux操作</p>
+<h2 id="编辑器之神vim"><a href="#编辑器之神vim" class="headerlink" title="编辑器之神vim"></a>编辑器之神vim</h2><p>够硬核，要不是提前接触过，真要费时间。<br>从下载到自主学习使用（by vimtutor），还用vim炫技，被它装到了。</p>
+<h3 id="vim-configuration"><a href="#vim-configuration" class="headerlink" title="vim configuration"></a>vim configuration</h3><p>下面是对vim进行配置，照抄了。之前摸索过，但是还是用的很原生，索性这里用他列出来的。<br>下面是我的配置 欢迎照抄捏。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot; All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by</span><br><span class="line">&quot; the call to :runtime you can find below.  If you wish to change any of those</span><br><span class="line">&quot; settings, you should do it in this file (/etc/vim/vimrc), since debian.vim</span><br><span class="line">&quot; will be overwritten everytime an upgrade of the vim packages is performed.</span><br><span class="line">&quot; It is recommended to make changes after sourcing debian.vim since it alters</span><br><span class="line">&quot; the value of the &#x27;compatible&#x27; option.</span><br><span class="line"></span><br><span class="line">runtime! debian.vim</span><br><span class="line"></span><br><span class="line">&quot; Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.</span><br><span class="line">&quot; This happens after /etc/vim/vimrc(.local) are loaded, so it will override</span><br><span class="line">&quot; any settings in these files.</span><br><span class="line">&quot; If you don&#x27;t want that to happen, uncomment the below line to prevent</span><br><span class="line">&quot; defaults.vim from being loaded.</span><br><span class="line">&quot; let g:skip_defaults_vim = 1</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the next line to make Vim more Vi-compatible</span><br><span class="line">&quot; NOTE: debian.vim sets &#x27;nocompatible&#x27;.  Setting &#x27;compatible&#x27; changes numerous</span><br><span class="line">&quot; options, so any other options should be set AFTER setting &#x27;compatible&#x27;.</span><br><span class="line">&quot;set compatible</span><br><span class="line"></span><br><span class="line">&quot; Vim5 and later versions support syntax highlighting. Uncommenting the next</span><br><span class="line">&quot; line enables syntax highlighting by default.</span><br><span class="line">if has(&quot;syntax&quot;)</span><br><span class="line">  syntax on</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; If using a dark background within the editing area and syntax highlighting</span><br><span class="line">&quot; turn on this option as well</span><br><span class="line">set background=dark</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the following to have Vim jump to the last position when</span><br><span class="line">&quot; reopening a file</span><br><span class="line">&quot;au BufReadPost * if line(&quot;&#x27;\&quot;&quot;) &gt; 1 &amp;&amp; line(&quot;&#x27;\&quot;&quot;) &lt;= line(&quot;$&quot;) | exe &quot;normal! g&#x27;\&quot;&quot; | endif</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the following to have Vim load indentation rules and plugins</span><br><span class="line">&quot; according to the detected filetype.</span><br><span class="line">filetype plugin indent on</span><br><span class="line"></span><br><span class="line">&quot; The following are commented out as they cause vim to behave a lot</span><br><span class="line">&quot; differently from regular Vi. They are highly recommended though.</span><br><span class="line">&quot;set showcmd		&quot; Show (partial) command in status line.</span><br><span class="line">set showmatch		&quot; Show matching brackets.</span><br><span class="line">set ignorecase		&quot; Do case insensitive matching</span><br><span class="line">set smartcase		&quot; Do smart case matching</span><br><span class="line">set incsearch		&quot; Incremental search</span><br><span class="line">&quot;set autowrite		&quot; Automatically save before commands like :next and :make</span><br><span class="line">set hidden		&quot; Hide buffers when they are abandoned</span><br><span class="line">&quot;set mouse=a		&quot; Enable mouse usage (all modes)</span><br><span class="line"></span><br><span class="line">&quot; PAs vim cong</span><br><span class="line">setlocal noswapfile &quot; 不要生成swap文件</span><br><span class="line">&quot;set bufhidden = hide &quot; 当buffer被丢弃的时候隐藏它</span><br><span class="line">&quot;colorscheme evening &quot; 设定配色方案</span><br><span class="line">set number &quot; 显示行号</span><br><span class="line">set cursorline &quot; 突出显示当前行</span><br><span class="line">set ruler &quot; 打开状态栏标尺</span><br><span class="line">set shiftwidth=2 &quot; 设定 &lt;&lt; 和 &gt;&gt; 命令移动时的宽度为 2</span><br><span class="line">set softtabstop=2 &quot; 使得按退格键时可以一次删掉 2 个空格</span><br><span class="line">set tabstop=4 &quot; 设定 tab 长度为 2</span><br><span class="line">set nobackup &quot; 覆盖文件时不备份</span><br><span class="line">set autochdir &quot; 自动切换当前目录为当前文件所在的目录</span><br><span class="line">set backupcopy=yes &quot; 设置备份时的行为为覆盖</span><br><span class="line">set hlsearch &quot; 搜索时高亮显示被找到的文本</span><br><span class="line">set noerrorbells &quot; 关闭错误信息响铃</span><br><span class="line">set novisualbell &quot; 关闭使用可视响铃代替呼叫</span><br><span class="line">set t_vb= &quot; 置空错误铃声的终端代码</span><br><span class="line">set matchtime=2 &quot; 短暂跳转到匹配括号的时间</span><br><span class="line">set magic &quot; 设置魔术</span><br><span class="line">set smartindent &quot; 开启新行时使用智能自动缩进</span><br><span class="line">set backspace=indent,eol,start &quot; 不设定在插入状态无法用退格键和 Delete 键删除回车符</span><br><span class="line">set cmdheight=1 &quot; 设定命令行的行数为 1</span><br><span class="line">set laststatus=2 &quot; 显示状态栏 (默认值为 1, 无法显示状态栏)</span><br><span class="line">set statusline=\ %&lt;%F[%1*%M%*%n%R%H]%=\ %y\ %0(%&#123;&amp;fileformat&#125;\ %&#123;&amp;encoding&#125;\ Ln\ %l,\ Col\ %c/%L%) &quot; 设置在状态行显示的信息</span><br><span class="line">set foldenable &quot; 开始折叠</span><br><span class="line">set foldmethod=syntax &quot; 设置语法折叠</span><br><span class="line">set foldcolumn=0 &quot; 设置折叠区域的宽度</span><br><span class="line">setlocal foldlevel=1 &quot; 设置折叠层数为 1</span><br><span class="line">nnoremap &lt;space&gt; @=((foldclosed(line(&#x27;.&#x27;)) &lt; 0) ? &#x27;zc&#x27; : &#x27;zo&#x27;)&lt;CR&gt; &quot; 用空格键来开关折叠</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot; Source a global configuration file if available</span><br><span class="line">if filereadable(&quot;/etc/vim/vimrc.local&quot;)</span><br><span class="line">  source /etc/vim/vimrc.local</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
+<p>这和记事本一点区别也没有，继续学习使用vim吧。vscode是IDE，可以插入vim插件。</p>
+<h2 id="学习使用基本工具"><a href="#学习使用基本工具" class="headerlink" title="学习使用基本工具"></a>学习使用基本工具</h2><h3 id="man"><a href="#man" class="headerlink" title="man"></a>man</h3><p>RTFM的神器呀。</p>
+<h3 id="Hello，world"><a href="#Hello，world" class="headerlink" title="Hello，world"></a>Hello，world</h3><p>无非vim编辑完，gcc编译一下完事。<br>还让我写一个makefile，简单的。<br>这个小东西就要求要学两个小玩意儿了。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">TARGET = hello </span><br><span class="line">OBJ = hello.c</span><br><span class="line">CC = gcc</span><br><span class="line"></span><br><span class="line">$(TARGET) : $(OBJ)</span><br><span class="line">	$(CC) $(OBJ) -o $(TARGET)</span><br></pre></td></tr></table></figure>
+<h3 id="GDB"><a href="#GDB" class="headerlink" title="GDB"></a>GDB</h3><p>调试捏，自学捏。</p>
+<h3 id="TMux"><a href="#TMux" class="headerlink" title="TMux"></a>TMux</h3><p>终端复用器，开多个窗口捏，让你配置好三个键映射就放养了。<br>同时又再次强调了提问的智慧。</p>
+<p>最后推荐了The missing semester of  your CS Education。只能说太经典了，前置代码课程是CS61aSICP，我只能感慨不愧是top3，这不是顶级缝合怪？</p>
+<p>我开始尝试学习TMux，装上之后发现C-a&#x2F;C-b都使用不了，尝试google，尝试StackOverflow，失败。我用的windows11+WSL2，窗口管理就是win再开一个bash，用不上Tmux，开摆！不学了，之后再说。</p>
+<h2 id="获取课程源码"><a href="#获取课程源码" class="headerlink" title="获取课程源码"></a>获取课程源码</h2><p>顺带交了git的使用，很全欸，基本包含了开发的所有场合了。</p>
+<p>但是用PA自带的sh脚本clone项目源码出现了问题，看了看脚本，没太看懂。<br>错误日志是这样的。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br><span class="line">Cloning into &#x27;am-kernels&#x27;...</span><br><span class="line">kex_exchange_identification: Connection closed by remote host</span><br><span class="line">Connection closed by UNKNOWN port 65535</span><br><span class="line">fatal: Could not read from remote repository.</span><br></pre></td></tr></table></figure>
+
+<p>PA0 End.</p>
+<h1 id="PA1"><a href="#PA1" class="headerlink" title="PA1"></a>PA1</h1><h1 id="开始愉快的作战吧！"><a href="#开始愉快的作战吧！" class="headerlink" title="开始愉快的作战吧！"></a>开始愉快的作战吧！</h1><p>如果没有寄存器, 计算机还可以工作吗? 如果可以, 这会对硬件提供的编程模型有什么影响呢?</p>
+<p>我觉得可以的。寄存器不是必须的。CPU可以连接到外部的存储器再进行数据的读取，只不过会降低运行效率罢了。</p>
+<blockquote>
+<p><em><strong>概念</strong></em><br>编程模型：模型是对事物共性的抽象，<strong>编程模型</strong>就是对编程的共性的抽象。<br><strong>什么是编程的共性呢？</strong><br><strong>最重要的共性</strong>就是：程序设计时，<strong>代码的抽象方式、组织方式或复用方式</strong>。编程模型主要是方法与思想。编程模型处于方法或思想性的层面，在很多情况下，也可称为编程方法、编程方式、编程模式或编程技术、编程范式。在这里就当做同一种说法。<br>当面对一个新问题时，通常的想法是通过分析，不断的转化和转换，得到本质相同的熟悉的、或抽象的、简单的一个问题，这就是<strong>化归思想</strong>。把初始的问题或对象称为原型，把化归后的相对定型的模拟化或理想化的对象称为<strong>模型</strong>。<br><strong>编程模型，简单地可以理解它就是模板</strong>，遇到相似问题就可以方便依模板解决,这样就简化了编程问题。不同的编程环境和不同的应用对象有不同的编程模型。</p>
+</blockquote>
+<p>啥是编程模型： <a href="https://zhuanlan.zhihu.com/p/419254235">https://zhuanlan.zhihu.com/p/419254235</a></p>
+<p>![[20230813145605.png]]<br>哈哈，被嘲讽了。</p>
+<p>PA1正式开始，非常懵逼。</p>
+<p>第一步make没成功，提示我的仓库不是NEMU的仓库，我返回PA0重新下载资料。</p>
+<p>脑抽删了ssh密钥，重新配置。</p>
+<p>跟着最后一节走。<br>![[20230813162607.png]]<br>令人振奋的菜单出现了。<br>![[20230813162756.png]]</p>
+<p>工具链安装好，查了一堆，用上了apt-cache policy，终于编译好了。<br>![[20230813172406.png]]<br>![[20230813172559.png]]<br>好耶！继续继续，可以开始PA1了。</p>
+<p>PA1一来就是逆天语录，<em><strong>给了目录树之后，你就可以开始阅读代码了，至于从哪里开始，就不用多费口舌了吧。</strong></em></p>
+<p>请回忆，一个程序是从哪里开始执行的呢？这个问题很难啊，C语言被编译器编译再经过连接之后得到可执行文件。可执行文件是缝合起来的，它由哪些组成呢？</p>
+<p>记得学汇编的时候，提到一个程序头，段什么什么的来着，来用来接入DOS和返回DOS。程序应该是从那段代码开始顺序读取指令，按指令执行的。</p>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+      <tags>
+        <tag>计算机</tag>
+        <tag>ASC</tag>
+        <tag>自学</tag>
+        <tag>设计</tag>
       </tags>
   </entry>
   <entry>
@@ -855,55 +903,6 @@ Name: label, Length: 42000, dtype: int64
       </tags>
   </entry>
   <entry>
-    <title>NJU PA2022</title>
-    <url>/2023-08-12-23-NJU-PA2022/</url>
-    <content><![CDATA[<p>学长推荐把计算机体系结构量化研究方法、计算机组成与设计软硬件接口 两本书看懂后去做NJU的PA捏。我看了第一章发现内容非常眼熟，跳着看看感觉懂了又好像没懂的样子，直接来上PA！</p>
-<h1 id="PA0"><a href="#PA0" class="headerlink" title="PA0"></a>PA0</h1><p>硬核捏。</p>
-<h2 id="真机实装ubuntu22-04"><a href="#真机实装ubuntu22-04" class="headerlink" title="真机实装ubuntu22.04"></a>真机实装ubuntu22.04</h2><p>之后弄个专门的映像U盘然后来装系统，现在先用WSL糊弄一下。<br>下载PA用到的软件包，我出现了错误，但暂时不管。<br>熟悉基本的linux操作</p>
-<h2 id="编辑器之神vim"><a href="#编辑器之神vim" class="headerlink" title="编辑器之神vim"></a>编辑器之神vim</h2><p>够硬核，要不是提前接触过，真要费时间。<br>从下载到自主学习使用（by vimtutor），还用vim炫技，被它装到了。</p>
-<h3 id="vim-configuration"><a href="#vim-configuration" class="headerlink" title="vim configuration"></a>vim configuration</h3><p>下面是对vim进行配置，照抄了。之前摸索过，但是还是用的很原生，索性这里用他列出来的。<br>下面是我的配置 欢迎照抄捏。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot; All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by</span><br><span class="line">&quot; the call to :runtime you can find below.  If you wish to change any of those</span><br><span class="line">&quot; settings, you should do it in this file (/etc/vim/vimrc), since debian.vim</span><br><span class="line">&quot; will be overwritten everytime an upgrade of the vim packages is performed.</span><br><span class="line">&quot; It is recommended to make changes after sourcing debian.vim since it alters</span><br><span class="line">&quot; the value of the &#x27;compatible&#x27; option.</span><br><span class="line"></span><br><span class="line">runtime! debian.vim</span><br><span class="line"></span><br><span class="line">&quot; Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.</span><br><span class="line">&quot; This happens after /etc/vim/vimrc(.local) are loaded, so it will override</span><br><span class="line">&quot; any settings in these files.</span><br><span class="line">&quot; If you don&#x27;t want that to happen, uncomment the below line to prevent</span><br><span class="line">&quot; defaults.vim from being loaded.</span><br><span class="line">&quot; let g:skip_defaults_vim = 1</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the next line to make Vim more Vi-compatible</span><br><span class="line">&quot; NOTE: debian.vim sets &#x27;nocompatible&#x27;.  Setting &#x27;compatible&#x27; changes numerous</span><br><span class="line">&quot; options, so any other options should be set AFTER setting &#x27;compatible&#x27;.</span><br><span class="line">&quot;set compatible</span><br><span class="line"></span><br><span class="line">&quot; Vim5 and later versions support syntax highlighting. Uncommenting the next</span><br><span class="line">&quot; line enables syntax highlighting by default.</span><br><span class="line">if has(&quot;syntax&quot;)</span><br><span class="line">  syntax on</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; If using a dark background within the editing area and syntax highlighting</span><br><span class="line">&quot; turn on this option as well</span><br><span class="line">set background=dark</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the following to have Vim jump to the last position when</span><br><span class="line">&quot; reopening a file</span><br><span class="line">&quot;au BufReadPost * if line(&quot;&#x27;\&quot;&quot;) &gt; 1 &amp;&amp; line(&quot;&#x27;\&quot;&quot;) &lt;= line(&quot;$&quot;) | exe &quot;normal! g&#x27;\&quot;&quot; | endif</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the following to have Vim load indentation rules and plugins</span><br><span class="line">&quot; according to the detected filetype.</span><br><span class="line">filetype plugin indent on</span><br><span class="line"></span><br><span class="line">&quot; The following are commented out as they cause vim to behave a lot</span><br><span class="line">&quot; differently from regular Vi. They are highly recommended though.</span><br><span class="line">&quot;set showcmd		&quot; Show (partial) command in status line.</span><br><span class="line">set showmatch		&quot; Show matching brackets.</span><br><span class="line">set ignorecase		&quot; Do case insensitive matching</span><br><span class="line">set smartcase		&quot; Do smart case matching</span><br><span class="line">set incsearch		&quot; Incremental search</span><br><span class="line">&quot;set autowrite		&quot; Automatically save before commands like :next and :make</span><br><span class="line">set hidden		&quot; Hide buffers when they are abandoned</span><br><span class="line">&quot;set mouse=a		&quot; Enable mouse usage (all modes)</span><br><span class="line"></span><br><span class="line">&quot; PAs vim cong</span><br><span class="line">setlocal noswapfile &quot; 不要生成swap文件</span><br><span class="line">&quot;set bufhidden = hide &quot; 当buffer被丢弃的时候隐藏它</span><br><span class="line">&quot;colorscheme evening &quot; 设定配色方案</span><br><span class="line">set number &quot; 显示行号</span><br><span class="line">set cursorline &quot; 突出显示当前行</span><br><span class="line">set ruler &quot; 打开状态栏标尺</span><br><span class="line">set shiftwidth=2 &quot; 设定 &lt;&lt; 和 &gt;&gt; 命令移动时的宽度为 2</span><br><span class="line">set softtabstop=2 &quot; 使得按退格键时可以一次删掉 2 个空格</span><br><span class="line">set tabstop=4 &quot; 设定 tab 长度为 2</span><br><span class="line">set nobackup &quot; 覆盖文件时不备份</span><br><span class="line">set autochdir &quot; 自动切换当前目录为当前文件所在的目录</span><br><span class="line">set backupcopy=yes &quot; 设置备份时的行为为覆盖</span><br><span class="line">set hlsearch &quot; 搜索时高亮显示被找到的文本</span><br><span class="line">set noerrorbells &quot; 关闭错误信息响铃</span><br><span class="line">set novisualbell &quot; 关闭使用可视响铃代替呼叫</span><br><span class="line">set t_vb= &quot; 置空错误铃声的终端代码</span><br><span class="line">set matchtime=2 &quot; 短暂跳转到匹配括号的时间</span><br><span class="line">set magic &quot; 设置魔术</span><br><span class="line">set smartindent &quot; 开启新行时使用智能自动缩进</span><br><span class="line">set backspace=indent,eol,start &quot; 不设定在插入状态无法用退格键和 Delete 键删除回车符</span><br><span class="line">set cmdheight=1 &quot; 设定命令行的行数为 1</span><br><span class="line">set laststatus=2 &quot; 显示状态栏 (默认值为 1, 无法显示状态栏)</span><br><span class="line">set statusline=\ %&lt;%F[%1*%M%*%n%R%H]%=\ %y\ %0(%&#123;&amp;fileformat&#125;\ %&#123;&amp;encoding&#125;\ Ln\ %l,\ Col\ %c/%L%) &quot; 设置在状态行显示的信息</span><br><span class="line">set foldenable &quot; 开始折叠</span><br><span class="line">set foldmethod=syntax &quot; 设置语法折叠</span><br><span class="line">set foldcolumn=0 &quot; 设置折叠区域的宽度</span><br><span class="line">setlocal foldlevel=1 &quot; 设置折叠层数为 1</span><br><span class="line">nnoremap &lt;space&gt; @=((foldclosed(line(&#x27;.&#x27;)) &lt; 0) ? &#x27;zc&#x27; : &#x27;zo&#x27;)&lt;CR&gt; &quot; 用空格键来开关折叠</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot; Source a global configuration file if available</span><br><span class="line">if filereadable(&quot;/etc/vim/vimrc.local&quot;)</span><br><span class="line">  source /etc/vim/vimrc.local</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
-<p>这和记事本一点区别也没有，继续学习使用vim吧。vscode是IDE，可以插入vim插件。</p>
-<h2 id="学习使用基本工具"><a href="#学习使用基本工具" class="headerlink" title="学习使用基本工具"></a>学习使用基本工具</h2><h3 id="man"><a href="#man" class="headerlink" title="man"></a>man</h3><p>RTFM的神器呀。</p>
-<h3 id="Hello，world"><a href="#Hello，world" class="headerlink" title="Hello，world"></a>Hello，world</h3><p>无非vim编辑完，gcc编译一下完事。<br>还让我写一个makefile，简单的。<br>这个小东西就要求要学两个小玩意儿了。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">TARGET = hello </span><br><span class="line">OBJ = hello.c</span><br><span class="line">CC = gcc</span><br><span class="line"></span><br><span class="line">$(TARGET) : $(OBJ)</span><br><span class="line">	$(CC) $(OBJ) -o $(TARGET)</span><br></pre></td></tr></table></figure>
-<h3 id="GDB"><a href="#GDB" class="headerlink" title="GDB"></a>GDB</h3><p>调试捏，自学捏。</p>
-<h3 id="TMux"><a href="#TMux" class="headerlink" title="TMux"></a>TMux</h3><p>终端复用器，开多个窗口捏，让你配置好三个键映射就放养了。<br>同时又再次强调了提问的智慧。</p>
-<p>最后推荐了The missing semester of  your CS Education。只能说太经典了，前置代码课程是CS61aSICP，我只能感慨不愧是top3，这不是顶级缝合怪？</p>
-<p>我开始尝试学习TMux，装上之后发现C-a&#x2F;C-b都使用不了，尝试google，尝试StackOverflow，失败。我用的windows11+WSL2，窗口管理就是win再开一个bash，用不上Tmux，开摆！不学了，之后再说。</p>
-<h2 id="获取课程源码"><a href="#获取课程源码" class="headerlink" title="获取课程源码"></a>获取课程源码</h2><p>顺带交了git的使用，很全欸，基本包含了开发的所有场合了。</p>
-<p>但是用PA自带的sh脚本clone项目源码出现了问题，看了看脚本，没太看懂。<br>错误日志是这样的。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br><span class="line">Cloning into &#x27;am-kernels&#x27;...</span><br><span class="line">kex_exchange_identification: Connection closed by remote host</span><br><span class="line">Connection closed by UNKNOWN port 65535</span><br><span class="line">fatal: Could not read from remote repository.</span><br></pre></td></tr></table></figure>
-
-<p>PA0 End.</p>
-<h1 id="PA1"><a href="#PA1" class="headerlink" title="PA1"></a>PA1</h1><h1 id="开始愉快的作战吧！"><a href="#开始愉快的作战吧！" class="headerlink" title="开始愉快的作战吧！"></a>开始愉快的作战吧！</h1><p>如果没有寄存器, 计算机还可以工作吗? 如果可以, 这会对硬件提供的编程模型有什么影响呢?</p>
-<p>我觉得可以的。寄存器不是必须的。CPU可以连接到外部的存储器再进行数据的读取，只不过会降低运行效率罢了。</p>
-<blockquote>
-<p><em><strong>概念</strong></em><br>编程模型：模型是对事物共性的抽象，<strong>编程模型</strong>就是对编程的共性的抽象。<br><strong>什么是编程的共性呢？</strong><br><strong>最重要的共性</strong>就是：程序设计时，<strong>代码的抽象方式、组织方式或复用方式</strong>。编程模型主要是方法与思想。编程模型处于方法或思想性的层面，在很多情况下，也可称为编程方法、编程方式、编程模式或编程技术、编程范式。在这里就当做同一种说法。<br>当面对一个新问题时，通常的想法是通过分析，不断的转化和转换，得到本质相同的熟悉的、或抽象的、简单的一个问题，这就是<strong>化归思想</strong>。把初始的问题或对象称为原型，把化归后的相对定型的模拟化或理想化的对象称为<strong>模型</strong>。<br><strong>编程模型，简单地可以理解它就是模板</strong>，遇到相似问题就可以方便依模板解决,这样就简化了编程问题。不同的编程环境和不同的应用对象有不同的编程模型。</p>
-</blockquote>
-<p>啥是编程模型： <a href="https://zhuanlan.zhihu.com/p/419254235">https://zhuanlan.zhihu.com/p/419254235</a></p>
-<p>![[20230813145605.png]]<br>哈哈，被嘲讽了。</p>
-<p>PA1正式开始，非常懵逼。</p>
-<p>第一步make没成功，提示我的仓库不是NEMU的仓库，我返回PA0重新下载资料。</p>
-<p>脑抽删了ssh密钥，重新配置。</p>
-<p>跟着最后一节走。<br>![[20230813162607.png]]<br>令人振奋的菜单出现了。<br>![[20230813162756.png]]</p>
-<p>工具链安装好，查了一堆，用上了apt-cache policy，终于编译好了。<br>![[20230813172406.png]]<br>![[20230813172559.png]]<br>好耶！继续继续，可以开始PA1了。</p>
-<p>PA1一来就是逆天语录，<em><strong>给了目录树之后，你就可以开始阅读代码了，至于从哪里开始，就不用多费口舌了吧。</strong></em></p>
-<p>请回忆，一个程序是从哪里开始执行的呢？这个问题很难啊，C语言被编译器编译再经过连接之后得到可执行文件。可执行文件是缝合起来的，它由哪些组成呢？</p>
-<p>记得学汇编的时候，提到一个程序头，段什么什么的来着，来用来接入DOS和返回DOS。程序应该是从那段代码开始顺序读取指令，按指令执行的。</p>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
-      <tags>
-        <tag>计算机</tag>
-        <tag>自学</tag>
-        <tag>C/C++</tag>
-        <tag>ASC</tag>
-        <tag>设计</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Orangepi zero3个人服务器开发</title>
     <url>/2023-09-10-50-Orangepi-zero3%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%8F%91/</url>
     <content><![CDATA[<h1 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h1><p>首先选择自己开发环境。</p>
@@ -923,9 +922,9 @@ Name: label, Length: 42000, dtype: int64
         <category>Learning</category>
       </categories>
       <tags>
-        <tag>应用</tag>
         <tag>项目开发</tag>
         <tag>服务器</tag>
+        <tag>应用</tag>
       </tags>
   </entry>
   <entry>
@@ -954,9 +953,9 @@ Name: label, Length: 42000, dtype: int64
         <category>Learning</category>
       </categories>
       <tags>
+        <tag>自学</tag>
         <tag>经验</tag>
         <tag>应用</tag>
-        <tag>自学</tag>
       </tags>
   </entry>
   <entry>
@@ -1256,8 +1255,8 @@ Name: label, Length: 42000, dtype: int64
         <category>Learning</category>
       </categories>
       <tags>
-        <tag>应用</tag>
         <tag>计算机</tag>
+        <tag>应用</tag>
         <tag>windows</tag>
       </tags>
   </entry>
@@ -1299,7 +1298,6 @@ Name: label, Length: 42000, dtype: int64
         <category>Learning</category>
       </categories>
       <tags>
-        <tag>C/C++</tag>
         <tag>项目开发</tag>
       </tags>
   </entry>
@@ -1344,9 +1342,9 @@ Name: label, Length: 42000, dtype: int64
         <category>Learning</category>
       </categories>
       <tags>
-        <tag>深度学习</tag>
         <tag>项目开发</tag>
         <tag>跨平台</tag>
+        <tag>深度学习</tag>
         <tag>数据分析</tag>
       </tags>
   </entry>
@@ -1404,46 +1402,6 @@ Name: label, Length: 42000, dtype: int64
 <h2 id="Problem-8"><a href="#Problem-8" class="headerlink" title="Problem 8"></a>Problem 8</h2><h1 id="Ants"><a href="#Ants" class="headerlink" title="Ants"></a>Ants</h1><h2 id="self-和-cls的区别"><a href="#self-和-cls的区别" class="headerlink" title="self 和 cls的区别"></a>self 和 cls的区别</h2><p>self保存当前工作实例的引用，python将其作为第一个参数传入每一个实例方法。</p>
 <p>cls保存的是类的引用，python将其作为第一个参数传递给每一个类方法。(带有@classmethod修饰器的方法)</p>
 <p>self和cls不是保留关键字，我们可以将它们重命名。<br>学习链接： <a href="https://pencilprogrammer.com/python-self-vs-cls/">https://pencilprogrammer.com/python-self-vs-cls/</a></p>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>【winget】如何使用包管理器管理windows系统——高效日常操作</title>
-    <url>/2023-07-28-04-%E3%80%90winget%E3%80%91%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%A1%E7%90%86windows%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E9%AB%98%E6%95%88%E6%97%A5%E5%B8%B8%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>在尝试了linux包管理器、python包管理器后，这种高效而帅气的下载方式吸引了我。</p>
-<p>本篇博客就让大家实现高效的类似于linux的命令行操作体验。</p>
-<p>各种各样的应用以及开发，很难避开shell的使用，而包管理器的存在可以很大程度提高生产效率，pip、conda、npm，应该是非常有名的了，在各个操作系统都很常见。</p>
-<p>“windows上也有类似的包管理器吗？”带着这样的想法，搜索引擎给了我两个答案。一个是chocolatey，另一个便是本次的主角——winget。chocolatey我之前尝试不深，不做深入的评论，但是我身边有学长用choco做包管理出现了bug的，后果还是蛮严重的（猜测）。</p>
-<h1 id="下载之前的准备"><a href="#下载之前的准备" class="headerlink" title="下载之前的准备"></a>下载之前的准备</h1><h2 id="为powershell配置alias"><a href="#为powershell配置alias" class="headerlink" title="为powershell配置alias"></a>为powershell配置alias</h2><p>查找powershell自启时的配置文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $PROFILE</span><br></pre></td></tr></table></figure>
-<p>若有，则可以开始修改；若无，则在相应位置创建一个新的，位置自行查找。</p>
-<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><p>格式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function alias &#123; command &#125;</span><br></pre></td></tr></table></figure>
-<p>首先复刻的命令是大名鼎鼎的sudo(superuser do)，用于提升权限。因为右键以管理员打开并不是时时刻刻都可以做到。</p>
-<p>步骤：</p>
-<ol>
-<li>win+x，选择打开计算机管理。</li>
-<li>进入本地用户和组</li>
-<li>设置Adiministrator的密码。</li>
-<li>修改并保存profile文件。</li>
-</ol>
-<p>可以做参考。（不想搞了，发现始终很难还原效果，直奔主题吧）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function sudo &#123; runas /profile /user:administrator &#125;</span><br><span class="line"></span><br><span class="line">function SwitchUser-Do &#123;</span><br><span class="line">    if($args.Length -lt 1) &#123;</span><br><span class="line">        Write-Warning(&quot;program must be provided!&quot;)</span><br><span class="line">        Write-Output(&quot;Usage: sudo program [args...]&quot;)</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    $program = $args[0]</span><br><span class="line">    $prog_args = $args[1..($args.Count-1)]</span><br><span class="line">    Write-Output(&quot;Program: &quot; + $program)</span><br><span class="line">    if ($args.Length -le 1) &#123;</span><br><span class="line">        Start-Process -FilePath $program -Verb RunAs</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        Write-Output(&quot;Arguments: &quot; + $prog_args)</span><br><span class="line">        Start-Process -FilePath $program -Verb RunAs -ArgumentList $prog_args</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Set-Alias sudo SwitchUser-Do</span><br><span class="line"></span><br><span class="line">function _su &#123;Start-Process -verb runas &quot;C:\Windows\System32\WindowsPowerShell\v1.0\Powershell.exe&quot;&#125;</span><br><span class="line">Set-alias su _su</span><br></pre></td></tr></table></figure>
-
-<h2 id="下载安装！"><a href="#下载安装！" class="headerlink" title="下载安装！"></a>下载安装！</h2><p><a href="https://www.bilibili.com/video/BV1DY4y1N7BM">winget | 简单、好用的 windows 包管理工具 | winget 安装_哔哩哔哩_bilibili</a></p>
-<p>prerequisites还挺麻烦，我的不齐全，下好了之后还得去补。</p>
-<p>直接去官网补，按manual上写的来。</p>
-<p><a href="https://github.com/microsoft/winget-cli">microsoft&#x2F;winget-cli: WinGet is the Windows Package Manage</a><br><a href="https://learn.microsoft.com/zh-CN/windows/package-manager/winget/">使用 winget 工具安装和管理应用程序 | Microsoft Learn</a></p>
-<p>挺无聊的RTFM。</p>
-<p>微软演示的shell配的还挺好看，花里胡哨的。那天可以看看也弄一个。</p>
-<p>选好位置后，git clone一下winget-cli库。</p>
-<p>跟着github上的README走。</p>
-<p>注意配置一下环境变量。</p>
-<p>命令行里输入winget反应成功后下一步吧！</p>
-<p>好像别的也没有什么了。</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>使用winget安装可能会破坏自己手动设置的环境变量，因此尽量对自己的环境变量进行备份，或者对自己的环境变量足够熟悉——破坏了之后还可以手动修复回来。</p>
 ]]></content>
       <categories>
         <category>Learning</category>
@@ -1539,6 +1497,46 @@ Name: label, Length: 42000, dtype: int64
 </blockquote>
 <p><a href="https://www.bilibili.com/video/BV1pT411v7Ej/?spm_id_from=333.880.my_history.page.click">从低维如何看高维_哔哩哔哩_bilibili</a></p>
 </blockquote>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>【winget】如何使用包管理器管理windows系统——高效日常操作</title>
+    <url>/2023-07-28-04-%E3%80%90winget%E3%80%91%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%AE%A1%E7%90%86windows%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E9%AB%98%E6%95%88%E6%97%A5%E5%B8%B8%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>在尝试了linux包管理器、python包管理器后，这种高效而帅气的下载方式吸引了我。</p>
+<p>本篇博客就让大家实现高效的类似于linux的命令行操作体验。</p>
+<p>各种各样的应用以及开发，很难避开shell的使用，而包管理器的存在可以很大程度提高生产效率，pip、conda、npm，应该是非常有名的了，在各个操作系统都很常见。</p>
+<p>“windows上也有类似的包管理器吗？”带着这样的想法，搜索引擎给了我两个答案。一个是chocolatey，另一个便是本次的主角——winget。chocolatey我之前尝试不深，不做深入的评论，但是我身边有学长用choco做包管理出现了bug的，后果还是蛮严重的（猜测）。</p>
+<h1 id="下载之前的准备"><a href="#下载之前的准备" class="headerlink" title="下载之前的准备"></a>下载之前的准备</h1><h2 id="为powershell配置alias"><a href="#为powershell配置alias" class="headerlink" title="为powershell配置alias"></a>为powershell配置alias</h2><p>查找powershell自启时的配置文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $PROFILE</span><br></pre></td></tr></table></figure>
+<p>若有，则可以开始修改；若无，则在相应位置创建一个新的，位置自行查找。</p>
+<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><p>格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function alias &#123; command &#125;</span><br></pre></td></tr></table></figure>
+<p>首先复刻的命令是大名鼎鼎的sudo(superuser do)，用于提升权限。因为右键以管理员打开并不是时时刻刻都可以做到。</p>
+<p>步骤：</p>
+<ol>
+<li>win+x，选择打开计算机管理。</li>
+<li>进入本地用户和组</li>
+<li>设置Adiministrator的密码。</li>
+<li>修改并保存profile文件。</li>
+</ol>
+<p>可以做参考。（不想搞了，发现始终很难还原效果，直奔主题吧）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function sudo &#123; runas /profile /user:administrator &#125;</span><br><span class="line"></span><br><span class="line">function SwitchUser-Do &#123;</span><br><span class="line">    if($args.Length -lt 1) &#123;</span><br><span class="line">        Write-Warning(&quot;program must be provided!&quot;)</span><br><span class="line">        Write-Output(&quot;Usage: sudo program [args...]&quot;)</span><br><span class="line">        return</span><br><span class="line">    &#125;</span><br><span class="line">    $program = $args[0]</span><br><span class="line">    $prog_args = $args[1..($args.Count-1)]</span><br><span class="line">    Write-Output(&quot;Program: &quot; + $program)</span><br><span class="line">    if ($args.Length -le 1) &#123;</span><br><span class="line">        Start-Process -FilePath $program -Verb RunAs</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        Write-Output(&quot;Arguments: &quot; + $prog_args)</span><br><span class="line">        Start-Process -FilePath $program -Verb RunAs -ArgumentList $prog_args</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Set-Alias sudo SwitchUser-Do</span><br><span class="line"></span><br><span class="line">function _su &#123;Start-Process -verb runas &quot;C:\Windows\System32\WindowsPowerShell\v1.0\Powershell.exe&quot;&#125;</span><br><span class="line">Set-alias su _su</span><br></pre></td></tr></table></figure>
+
+<h2 id="下载安装！"><a href="#下载安装！" class="headerlink" title="下载安装！"></a>下载安装！</h2><p><a href="https://www.bilibili.com/video/BV1DY4y1N7BM">winget | 简单、好用的 windows 包管理工具 | winget 安装_哔哩哔哩_bilibili</a></p>
+<p>prerequisites还挺麻烦，我的不齐全，下好了之后还得去补。</p>
+<p>直接去官网补，按manual上写的来。</p>
+<p><a href="https://github.com/microsoft/winget-cli">microsoft&#x2F;winget-cli: WinGet is the Windows Package Manage</a><br><a href="https://learn.microsoft.com/zh-CN/windows/package-manager/winget/">使用 winget 工具安装和管理应用程序 | Microsoft Learn</a></p>
+<p>挺无聊的RTFM。</p>
+<p>微软演示的shell配的还挺好看，花里胡哨的。那天可以看看也弄一个。</p>
+<p>选好位置后，git clone一下winget-cli库。</p>
+<p>跟着github上的README走。</p>
+<p>注意配置一下环境变量。</p>
+<p>命令行里输入winget反应成功后下一步吧！</p>
+<p>好像别的也没有什么了。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>使用winget安装可能会破坏自己手动设置的环境变量，因此尽量对自己的环境变量进行备份，或者对自己的环境变量足够熟悉——破坏了之后还可以手动修复回来。</p>
 ]]></content>
       <categories>
         <category>Learning</category>
@@ -1734,6 +1732,39 @@ Name: label, Length: 42000, dtype: int64
 ]]></content>
       <categories>
         <category>转载</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>深度学习服务器环境配置</title>
+    <url>/2023-10-17-26-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>开启TMux。</p>
+<ol>
+<li>更新源。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt update ; apt upgrade</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>可以熟悉下系统数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt install neofetch tree lscpu less</span><br><span class="line">neofetch</span><br><span class="line">tree -L 2</span><br><span class="line">lscpu | less</span><br></pre></td></tr></table></figure>
+
+<p>换上自己的配置。<br>Gitee仓库地址：<a href="https://gitee.com/irorange27/MyConfiguration.git">https://gitee.com/irorange27/MyConfiguration.git</a><br>Github仓库地址：<a href="https://github.com/irorange27/MyConfiguration.git">https://github.com/irorange27/MyConfiguration.git</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://gitee.com/irorange27/MyConfiguration.git</span><br><span class="line">git clone https://github.com/irorange27/MyConfiguration.git</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<ol start="2">
+<li><p>Download rust language</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl --proto &#x27;=https&#x27; --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Download FISH.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://github.com/fish-shell/fish-shell/releases/download/3.6.1/fish-3.6.1.tar.xz</span><br><span class="line"></span><br><span class="line">lscpu | less</span><br><span class="line"></span><br><span class="line">cmake .; make -j&lt;cpu_num&gt;; sudo make install</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">chsh -s $(which fish); export SHELL=`which fish`; [ -z &quot;$FISH_VERSION&quot; ] &amp;&amp; exec &quot;$SHELL&quot; -l|</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>Download git lfs. <a href="https://packagecloud.io/github/git-lfs/install">https://packagecloud.io/github/git-lfs/install</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Git pull repository</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git lfs install</span><br><span class="line">git clone https://huggingface.co/gpt2</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Learning</category>
       </categories>
   </entry>
   <entry>
@@ -1999,43 +2030,10 @@ Name: label, Length: 42000, dtype: int64
         <category>Learning</category>
       </categories>
       <tags>
-        <tag>装机</tag>
         <tag>计算机</tag>
         <tag>windows</tag>
+        <tag>装机</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>深度学习服务器环境配置</title>
-    <url>/2023-10-17-26-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>开启TMux。</p>
-<ol>
-<li>更新源。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt update ; apt upgrade</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>可以熟悉下系统数据。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt install neofetch tree lscpu less</span><br><span class="line">neofetch</span><br><span class="line">tree -L 2</span><br><span class="line">lscpu | less</span><br></pre></td></tr></table></figure>
-
-<p>换上自己的配置。<br>Gitee仓库地址：<a href="https://gitee.com/irorange27/MyConfiguration.git">https://gitee.com/irorange27/MyConfiguration.git</a><br>Github仓库地址：<a href="https://github.com/irorange27/MyConfiguration.git">https://github.com/irorange27/MyConfiguration.git</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://gitee.com/irorange27/MyConfiguration.git</span><br><span class="line">git clone https://github.com/irorange27/MyConfiguration.git</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<ol start="2">
-<li><p>Download rust language</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl --proto &#x27;=https&#x27; --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Download FISH.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://github.com/fish-shell/fish-shell/releases/download/3.6.1/fish-3.6.1.tar.xz</span><br><span class="line"></span><br><span class="line">lscpu | less</span><br><span class="line"></span><br><span class="line">cmake .; make -j&lt;cpu_num&gt;; sudo make install</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">chsh -s $(which fish); export SHELL=`which fish`; [ -z &quot;$FISH_VERSION&quot; ] &amp;&amp; exec &quot;$SHELL&quot; -l|</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>Download git lfs. <a href="https://packagecloud.io/github/git-lfs/install">https://packagecloud.io/github/git-lfs/install</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Git pull repository</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git lfs install</span><br><span class="line">git clone https://huggingface.co/gpt2</span><br></pre></td></tr></table></figure></li>
-</ol>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
   </entry>
   <entry>
     <title>磁盘管理，改变你电脑磁盘的大小吧！</title>
