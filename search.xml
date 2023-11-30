@@ -85,6 +85,19 @@
       </tags>
   </entry>
   <entry>
+    <title>Docker入门</title>
+    <url>/2023-07-28-21-Docker%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<p>Updating…</p>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+      <tags>
+        <tag>项目开发</tag>
+        <tag>跨平台</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ASC超算竞赛</title>
     <url>/2023-08-11-40-ASC%E8%B6%85%E7%AE%97%E7%AB%9E%E8%B5%9B/</url>
     <content><![CDATA[<p>我负责硬件方面，找些资料。</p>
@@ -108,31 +121,6 @@
         <tag>计算机</tag>
         <tag>ASC</tag>
         <tag>自学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker入门</title>
-    <url>/2023-07-28-21-Docker%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[<p>Updating…</p>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
-      <tags>
-        <tag>项目开发</tag>
-        <tag>跨平台</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Freshman Survive SHU Manual</title>
-    <url>/2023-04-10-06-Freshman-Survive-SHU-Manual/</url>
-    <content><![CDATA[<p>入学必看前:<br><a href="https://www.zhihu.com/question/401645789/answer/1354461326"> 在上海大学就读是什么体验？ - 知乎 (zhihu.com)</a>HenryAvery学长的回答。</p>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
-      <tags>
-        <tag>经验</tag>
       </tags>
   </entry>
   <entry>
@@ -284,6 +272,18 @@
       </tags>
   </entry>
   <entry>
+    <title>Freshman Survive SHU Manual</title>
+    <url>/2023-04-10-06-Freshman-Survive-SHU-Manual/</url>
+    <content><![CDATA[<p>入学必看前:<br><a href="https://www.zhihu.com/question/401645789/answer/1354461326"> 在上海大学就读是什么体验？ - 知乎 (zhihu.com)</a>HenryAvery学长的回答。</p>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+      <tags>
+        <tag>经验</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HPC Design</title>
     <url>/2023-08-11-01-HPC-Design/</url>
     <content><![CDATA[<h1 id="构建HPC计算系统"><a href="#构建HPC计算系统" class="headerlink" title="构建HPC计算系统"></a>构建HPC计算系统</h1><p>HPC并非基于标准技术的组件的简单连接。这样构建的HPC系统通常被人们看作是一个松散的部件集合，这样即使可以工作，但不可能工作的很好，更不足以完成对于技术的全部承诺，而这是打比赛需要的。</p>
@@ -319,6 +319,54 @@
 ]]></content>
       <categories>
         <category>竞赛</category>
+      </categories>
+      <tags>
+        <tag>计算机</tag>
+        <tag>ASC</tag>
+        <tag>自学</tag>
+        <tag>设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>NJU PA2022</title>
+    <url>/2023-08-12-23-NJU-PA2022/</url>
+    <content><![CDATA[<p>学长推荐把计算机体系结构量化研究方法、计算机组成与设计软硬件接口 两本书看懂后去做NJU的PA捏。我看了第一章发现内容非常眼熟，跳着看看感觉懂了又好像没懂的样子，直接来上PA！</p>
+<h1 id="PA0"><a href="#PA0" class="headerlink" title="PA0"></a>PA0</h1><p>硬核捏。</p>
+<h2 id="真机实装ubuntu22-04"><a href="#真机实装ubuntu22-04" class="headerlink" title="真机实装ubuntu22.04"></a>真机实装ubuntu22.04</h2><p>之后弄个专门的映像U盘然后来装系统，现在先用WSL糊弄一下。<br>下载PA用到的软件包，我出现了错误，但暂时不管。<br>熟悉基本的linux操作</p>
+<h2 id="编辑器之神vim"><a href="#编辑器之神vim" class="headerlink" title="编辑器之神vim"></a>编辑器之神vim</h2><p>够硬核，要不是提前接触过，真要费时间。<br>从下载到自主学习使用（by vimtutor），还用vim炫技，被它装到了。</p>
+<h3 id="vim-configuration"><a href="#vim-configuration" class="headerlink" title="vim configuration"></a>vim configuration</h3><p>下面是对vim进行配置，照抄了。之前摸索过，但是还是用的很原生，索性这里用他列出来的。<br>下面是我的配置 欢迎照抄捏。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot; All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by</span><br><span class="line">&quot; the call to :runtime you can find below.  If you wish to change any of those</span><br><span class="line">&quot; settings, you should do it in this file (/etc/vim/vimrc), since debian.vim</span><br><span class="line">&quot; will be overwritten everytime an upgrade of the vim packages is performed.</span><br><span class="line">&quot; It is recommended to make changes after sourcing debian.vim since it alters</span><br><span class="line">&quot; the value of the &#x27;compatible&#x27; option.</span><br><span class="line"></span><br><span class="line">runtime! debian.vim</span><br><span class="line"></span><br><span class="line">&quot; Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.</span><br><span class="line">&quot; This happens after /etc/vim/vimrc(.local) are loaded, so it will override</span><br><span class="line">&quot; any settings in these files.</span><br><span class="line">&quot; If you don&#x27;t want that to happen, uncomment the below line to prevent</span><br><span class="line">&quot; defaults.vim from being loaded.</span><br><span class="line">&quot; let g:skip_defaults_vim = 1</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the next line to make Vim more Vi-compatible</span><br><span class="line">&quot; NOTE: debian.vim sets &#x27;nocompatible&#x27;.  Setting &#x27;compatible&#x27; changes numerous</span><br><span class="line">&quot; options, so any other options should be set AFTER setting &#x27;compatible&#x27;.</span><br><span class="line">&quot;set compatible</span><br><span class="line"></span><br><span class="line">&quot; Vim5 and later versions support syntax highlighting. Uncommenting the next</span><br><span class="line">&quot; line enables syntax highlighting by default.</span><br><span class="line">if has(&quot;syntax&quot;)</span><br><span class="line">  syntax on</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; If using a dark background within the editing area and syntax highlighting</span><br><span class="line">&quot; turn on this option as well</span><br><span class="line">set background=dark</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the following to have Vim jump to the last position when</span><br><span class="line">&quot; reopening a file</span><br><span class="line">&quot;au BufReadPost * if line(&quot;&#x27;\&quot;&quot;) &gt; 1 &amp;&amp; line(&quot;&#x27;\&quot;&quot;) &lt;= line(&quot;$&quot;) | exe &quot;normal! g&#x27;\&quot;&quot; | endif</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the following to have Vim load indentation rules and plugins</span><br><span class="line">&quot; according to the detected filetype.</span><br><span class="line">filetype plugin indent on</span><br><span class="line"></span><br><span class="line">&quot; The following are commented out as they cause vim to behave a lot</span><br><span class="line">&quot; differently from regular Vi. They are highly recommended though.</span><br><span class="line">&quot;set showcmd		&quot; Show (partial) command in status line.</span><br><span class="line">set showmatch		&quot; Show matching brackets.</span><br><span class="line">set ignorecase		&quot; Do case insensitive matching</span><br><span class="line">set smartcase		&quot; Do smart case matching</span><br><span class="line">set incsearch		&quot; Incremental search</span><br><span class="line">&quot;set autowrite		&quot; Automatically save before commands like :next and :make</span><br><span class="line">set hidden		&quot; Hide buffers when they are abandoned</span><br><span class="line">&quot;set mouse=a		&quot; Enable mouse usage (all modes)</span><br><span class="line"></span><br><span class="line">&quot; PAs vim cong</span><br><span class="line">setlocal noswapfile &quot; 不要生成swap文件</span><br><span class="line">&quot;set bufhidden = hide &quot; 当buffer被丢弃的时候隐藏它</span><br><span class="line">&quot;colorscheme evening &quot; 设定配色方案</span><br><span class="line">set number &quot; 显示行号</span><br><span class="line">set cursorline &quot; 突出显示当前行</span><br><span class="line">set ruler &quot; 打开状态栏标尺</span><br><span class="line">set shiftwidth=2 &quot; 设定 &lt;&lt; 和 &gt;&gt; 命令移动时的宽度为 2</span><br><span class="line">set softtabstop=2 &quot; 使得按退格键时可以一次删掉 2 个空格</span><br><span class="line">set tabstop=4 &quot; 设定 tab 长度为 2</span><br><span class="line">set nobackup &quot; 覆盖文件时不备份</span><br><span class="line">set autochdir &quot; 自动切换当前目录为当前文件所在的目录</span><br><span class="line">set backupcopy=yes &quot; 设置备份时的行为为覆盖</span><br><span class="line">set hlsearch &quot; 搜索时高亮显示被找到的文本</span><br><span class="line">set noerrorbells &quot; 关闭错误信息响铃</span><br><span class="line">set novisualbell &quot; 关闭使用可视响铃代替呼叫</span><br><span class="line">set t_vb= &quot; 置空错误铃声的终端代码</span><br><span class="line">set matchtime=2 &quot; 短暂跳转到匹配括号的时间</span><br><span class="line">set magic &quot; 设置魔术</span><br><span class="line">set smartindent &quot; 开启新行时使用智能自动缩进</span><br><span class="line">set backspace=indent,eol,start &quot; 不设定在插入状态无法用退格键和 Delete 键删除回车符</span><br><span class="line">set cmdheight=1 &quot; 设定命令行的行数为 1</span><br><span class="line">set laststatus=2 &quot; 显示状态栏 (默认值为 1, 无法显示状态栏)</span><br><span class="line">set statusline=\ %&lt;%F[%1*%M%*%n%R%H]%=\ %y\ %0(%&#123;&amp;fileformat&#125;\ %&#123;&amp;encoding&#125;\ Ln\ %l,\ Col\ %c/%L%) &quot; 设置在状态行显示的信息</span><br><span class="line">set foldenable &quot; 开始折叠</span><br><span class="line">set foldmethod=syntax &quot; 设置语法折叠</span><br><span class="line">set foldcolumn=0 &quot; 设置折叠区域的宽度</span><br><span class="line">setlocal foldlevel=1 &quot; 设置折叠层数为 1</span><br><span class="line">nnoremap &lt;space&gt; @=((foldclosed(line(&#x27;.&#x27;)) &lt; 0) ? &#x27;zc&#x27; : &#x27;zo&#x27;)&lt;CR&gt; &quot; 用空格键来开关折叠</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot; Source a global configuration file if available</span><br><span class="line">if filereadable(&quot;/etc/vim/vimrc.local&quot;)</span><br><span class="line">  source /etc/vim/vimrc.local</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
+<p>这和记事本一点区别也没有，继续学习使用vim吧。vscode是IDE，可以插入vim插件。</p>
+<h2 id="学习使用基本工具"><a href="#学习使用基本工具" class="headerlink" title="学习使用基本工具"></a>学习使用基本工具</h2><h3 id="man"><a href="#man" class="headerlink" title="man"></a>man</h3><p>RTFM的神器呀。</p>
+<h3 id="Hello，world"><a href="#Hello，world" class="headerlink" title="Hello，world"></a>Hello，world</h3><p>无非vim编辑完，gcc编译一下完事。<br>还让我写一个makefile，简单的。<br>这个小东西就要求要学两个小玩意儿了。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">TARGET = hello </span><br><span class="line">OBJ = hello.c</span><br><span class="line">CC = gcc</span><br><span class="line"></span><br><span class="line">$(TARGET) : $(OBJ)</span><br><span class="line">	$(CC) $(OBJ) -o $(TARGET)</span><br></pre></td></tr></table></figure>
+<h3 id="GDB"><a href="#GDB" class="headerlink" title="GDB"></a>GDB</h3><p>调试捏，自学捏。</p>
+<h3 id="TMux"><a href="#TMux" class="headerlink" title="TMux"></a>TMux</h3><p>终端复用器，开多个窗口捏，让你配置好三个键映射就放养了。<br>同时又再次强调了提问的智慧。</p>
+<p>最后推荐了The missing semester of  your CS Education。只能说太经典了，前置代码课程是CS61aSICP，我只能感慨不愧是top3，这不是顶级缝合怪？</p>
+<p>我开始尝试学习TMux，装上之后发现C-a&#x2F;C-b都使用不了，尝试google，尝试StackOverflow，失败。我用的windows11+WSL2，窗口管理就是win再开一个bash，用不上Tmux，开摆！不学了，之后再说。</p>
+<h2 id="获取课程源码"><a href="#获取课程源码" class="headerlink" title="获取课程源码"></a>获取课程源码</h2><p>顺带交了git的使用，很全欸，基本包含了开发的所有场合了。</p>
+<p>但是用PA自带的sh脚本clone项目源码出现了问题，看了看脚本，没太看懂。<br>错误日志是这样的。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br><span class="line">Cloning into &#x27;am-kernels&#x27;...</span><br><span class="line">kex_exchange_identification: Connection closed by remote host</span><br><span class="line">Connection closed by UNKNOWN port 65535</span><br><span class="line">fatal: Could not read from remote repository.</span><br></pre></td></tr></table></figure>
+
+<p>PA0 End.</p>
+<h1 id="PA1"><a href="#PA1" class="headerlink" title="PA1"></a>PA1</h1><h1 id="开始愉快的作战吧！"><a href="#开始愉快的作战吧！" class="headerlink" title="开始愉快的作战吧！"></a>开始愉快的作战吧！</h1><p>如果没有寄存器, 计算机还可以工作吗? 如果可以, 这会对硬件提供的编程模型有什么影响呢?</p>
+<p>我觉得可以的。寄存器不是必须的。CPU可以连接到外部的存储器再进行数据的读取，只不过会降低运行效率罢了。</p>
+<blockquote>
+<p><em><strong>概念</strong></em><br>编程模型：模型是对事物共性的抽象，<strong>编程模型</strong>就是对编程的共性的抽象。<br><strong>什么是编程的共性呢？</strong><br><strong>最重要的共性</strong>就是：程序设计时，<strong>代码的抽象方式、组织方式或复用方式</strong>。编程模型主要是方法与思想。编程模型处于方法或思想性的层面，在很多情况下，也可称为编程方法、编程方式、编程模式或编程技术、编程范式。在这里就当做同一种说法。<br>当面对一个新问题时，通常的想法是通过分析，不断的转化和转换，得到本质相同的熟悉的、或抽象的、简单的一个问题，这就是<strong>化归思想</strong>。把初始的问题或对象称为原型，把化归后的相对定型的模拟化或理想化的对象称为<strong>模型</strong>。<br><strong>编程模型，简单地可以理解它就是模板</strong>，遇到相似问题就可以方便依模板解决,这样就简化了编程问题。不同的编程环境和不同的应用对象有不同的编程模型。</p>
+</blockquote>
+<p>啥是编程模型： <a href="https://zhuanlan.zhihu.com/p/419254235">https://zhuanlan.zhihu.com/p/419254235</a></p>
+<p>![[20230813145605.png]]<br>哈哈，被嘲讽了。</p>
+<p>PA1正式开始，非常懵逼。</p>
+<p>第一步make没成功，提示我的仓库不是NEMU的仓库，我返回PA0重新下载资料。</p>
+<p>脑抽删了ssh密钥，重新配置。</p>
+<p>跟着最后一节走。<br>![[20230813162607.png]]<br>令人振奋的菜单出现了。<br>![[20230813162756.png]]</p>
+<p>工具链安装好，查了一堆，用上了apt-cache policy，终于编译好了。<br>![[20230813172406.png]]<br>![[20230813172559.png]]<br>好耶！继续继续，可以开始PA1了。</p>
+<p>PA1一来就是逆天语录，<em><strong>给了目录树之后，你就可以开始阅读代码了，至于从哪里开始，就不用多费口舌了吧。</strong></em></p>
+<p>请回忆，一个程序是从哪里开始执行的呢？这个问题很难啊，C语言被编译器编译再经过连接之后得到可执行文件。可执行文件是缝合起来的，它由哪些组成呢？</p>
+<p>记得学汇编的时候，提到一个程序头，段什么什么的来着，来用来接入DOS和返回DOS。程序应该是从那段代码开始顺序读取指令，按指令执行的。</p>
+]]></content>
+      <categories>
+        <category>Learning</category>
       </categories>
       <tags>
         <tag>计算机</tag>
@@ -855,54 +903,6 @@ Name: label, Length: 42000, dtype: int64
       </tags>
   </entry>
   <entry>
-    <title>NJU PA2022</title>
-    <url>/2023-08-12-23-NJU-PA2022/</url>
-    <content><![CDATA[<p>学长推荐把计算机体系结构量化研究方法、计算机组成与设计软硬件接口 两本书看懂后去做NJU的PA捏。我看了第一章发现内容非常眼熟，跳着看看感觉懂了又好像没懂的样子，直接来上PA！</p>
-<h1 id="PA0"><a href="#PA0" class="headerlink" title="PA0"></a>PA0</h1><p>硬核捏。</p>
-<h2 id="真机实装ubuntu22-04"><a href="#真机实装ubuntu22-04" class="headerlink" title="真机实装ubuntu22.04"></a>真机实装ubuntu22.04</h2><p>之后弄个专门的映像U盘然后来装系统，现在先用WSL糊弄一下。<br>下载PA用到的软件包，我出现了错误，但暂时不管。<br>熟悉基本的linux操作</p>
-<h2 id="编辑器之神vim"><a href="#编辑器之神vim" class="headerlink" title="编辑器之神vim"></a>编辑器之神vim</h2><p>够硬核，要不是提前接触过，真要费时间。<br>从下载到自主学习使用（by vimtutor），还用vim炫技，被它装到了。</p>
-<h3 id="vim-configuration"><a href="#vim-configuration" class="headerlink" title="vim configuration"></a>vim configuration</h3><p>下面是对vim进行配置，照抄了。之前摸索过，但是还是用的很原生，索性这里用他列出来的。<br>下面是我的配置 欢迎照抄捏。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot; All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by</span><br><span class="line">&quot; the call to :runtime you can find below.  If you wish to change any of those</span><br><span class="line">&quot; settings, you should do it in this file (/etc/vim/vimrc), since debian.vim</span><br><span class="line">&quot; will be overwritten everytime an upgrade of the vim packages is performed.</span><br><span class="line">&quot; It is recommended to make changes after sourcing debian.vim since it alters</span><br><span class="line">&quot; the value of the &#x27;compatible&#x27; option.</span><br><span class="line"></span><br><span class="line">runtime! debian.vim</span><br><span class="line"></span><br><span class="line">&quot; Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.</span><br><span class="line">&quot; This happens after /etc/vim/vimrc(.local) are loaded, so it will override</span><br><span class="line">&quot; any settings in these files.</span><br><span class="line">&quot; If you don&#x27;t want that to happen, uncomment the below line to prevent</span><br><span class="line">&quot; defaults.vim from being loaded.</span><br><span class="line">&quot; let g:skip_defaults_vim = 1</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the next line to make Vim more Vi-compatible</span><br><span class="line">&quot; NOTE: debian.vim sets &#x27;nocompatible&#x27;.  Setting &#x27;compatible&#x27; changes numerous</span><br><span class="line">&quot; options, so any other options should be set AFTER setting &#x27;compatible&#x27;.</span><br><span class="line">&quot;set compatible</span><br><span class="line"></span><br><span class="line">&quot; Vim5 and later versions support syntax highlighting. Uncommenting the next</span><br><span class="line">&quot; line enables syntax highlighting by default.</span><br><span class="line">if has(&quot;syntax&quot;)</span><br><span class="line">  syntax on</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">&quot; If using a dark background within the editing area and syntax highlighting</span><br><span class="line">&quot; turn on this option as well</span><br><span class="line">set background=dark</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the following to have Vim jump to the last position when</span><br><span class="line">&quot; reopening a file</span><br><span class="line">&quot;au BufReadPost * if line(&quot;&#x27;\&quot;&quot;) &gt; 1 &amp;&amp; line(&quot;&#x27;\&quot;&quot;) &lt;= line(&quot;$&quot;) | exe &quot;normal! g&#x27;\&quot;&quot; | endif</span><br><span class="line"></span><br><span class="line">&quot; Uncomment the following to have Vim load indentation rules and plugins</span><br><span class="line">&quot; according to the detected filetype.</span><br><span class="line">filetype plugin indent on</span><br><span class="line"></span><br><span class="line">&quot; The following are commented out as they cause vim to behave a lot</span><br><span class="line">&quot; differently from regular Vi. They are highly recommended though.</span><br><span class="line">&quot;set showcmd		&quot; Show (partial) command in status line.</span><br><span class="line">set showmatch		&quot; Show matching brackets.</span><br><span class="line">set ignorecase		&quot; Do case insensitive matching</span><br><span class="line">set smartcase		&quot; Do smart case matching</span><br><span class="line">set incsearch		&quot; Incremental search</span><br><span class="line">&quot;set autowrite		&quot; Automatically save before commands like :next and :make</span><br><span class="line">set hidden		&quot; Hide buffers when they are abandoned</span><br><span class="line">&quot;set mouse=a		&quot; Enable mouse usage (all modes)</span><br><span class="line"></span><br><span class="line">&quot; PAs vim cong</span><br><span class="line">setlocal noswapfile &quot; 不要生成swap文件</span><br><span class="line">&quot;set bufhidden = hide &quot; 当buffer被丢弃的时候隐藏它</span><br><span class="line">&quot;colorscheme evening &quot; 设定配色方案</span><br><span class="line">set number &quot; 显示行号</span><br><span class="line">set cursorline &quot; 突出显示当前行</span><br><span class="line">set ruler &quot; 打开状态栏标尺</span><br><span class="line">set shiftwidth=2 &quot; 设定 &lt;&lt; 和 &gt;&gt; 命令移动时的宽度为 2</span><br><span class="line">set softtabstop=2 &quot; 使得按退格键时可以一次删掉 2 个空格</span><br><span class="line">set tabstop=4 &quot; 设定 tab 长度为 2</span><br><span class="line">set nobackup &quot; 覆盖文件时不备份</span><br><span class="line">set autochdir &quot; 自动切换当前目录为当前文件所在的目录</span><br><span class="line">set backupcopy=yes &quot; 设置备份时的行为为覆盖</span><br><span class="line">set hlsearch &quot; 搜索时高亮显示被找到的文本</span><br><span class="line">set noerrorbells &quot; 关闭错误信息响铃</span><br><span class="line">set novisualbell &quot; 关闭使用可视响铃代替呼叫</span><br><span class="line">set t_vb= &quot; 置空错误铃声的终端代码</span><br><span class="line">set matchtime=2 &quot; 短暂跳转到匹配括号的时间</span><br><span class="line">set magic &quot; 设置魔术</span><br><span class="line">set smartindent &quot; 开启新行时使用智能自动缩进</span><br><span class="line">set backspace=indent,eol,start &quot; 不设定在插入状态无法用退格键和 Delete 键删除回车符</span><br><span class="line">set cmdheight=1 &quot; 设定命令行的行数为 1</span><br><span class="line">set laststatus=2 &quot; 显示状态栏 (默认值为 1, 无法显示状态栏)</span><br><span class="line">set statusline=\ %&lt;%F[%1*%M%*%n%R%H]%=\ %y\ %0(%&#123;&amp;fileformat&#125;\ %&#123;&amp;encoding&#125;\ Ln\ %l,\ Col\ %c/%L%) &quot; 设置在状态行显示的信息</span><br><span class="line">set foldenable &quot; 开始折叠</span><br><span class="line">set foldmethod=syntax &quot; 设置语法折叠</span><br><span class="line">set foldcolumn=0 &quot; 设置折叠区域的宽度</span><br><span class="line">setlocal foldlevel=1 &quot; 设置折叠层数为 1</span><br><span class="line">nnoremap &lt;space&gt; @=((foldclosed(line(&#x27;.&#x27;)) &lt; 0) ? &#x27;zc&#x27; : &#x27;zo&#x27;)&lt;CR&gt; &quot; 用空格键来开关折叠</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot; Source a global configuration file if available</span><br><span class="line">if filereadable(&quot;/etc/vim/vimrc.local&quot;)</span><br><span class="line">  source /etc/vim/vimrc.local</span><br><span class="line">endif</span><br></pre></td></tr></table></figure>
-<p>这和记事本一点区别也没有，继续学习使用vim吧。vscode是IDE，可以插入vim插件。</p>
-<h2 id="学习使用基本工具"><a href="#学习使用基本工具" class="headerlink" title="学习使用基本工具"></a>学习使用基本工具</h2><h3 id="man"><a href="#man" class="headerlink" title="man"></a>man</h3><p>RTFM的神器呀。</p>
-<h3 id="Hello，world"><a href="#Hello，world" class="headerlink" title="Hello，world"></a>Hello，world</h3><p>无非vim编辑完，gcc编译一下完事。<br>还让我写一个makefile，简单的。<br>这个小东西就要求要学两个小玩意儿了。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">TARGET = hello </span><br><span class="line">OBJ = hello.c</span><br><span class="line">CC = gcc</span><br><span class="line"></span><br><span class="line">$(TARGET) : $(OBJ)</span><br><span class="line">	$(CC) $(OBJ) -o $(TARGET)</span><br></pre></td></tr></table></figure>
-<h3 id="GDB"><a href="#GDB" class="headerlink" title="GDB"></a>GDB</h3><p>调试捏，自学捏。</p>
-<h3 id="TMux"><a href="#TMux" class="headerlink" title="TMux"></a>TMux</h3><p>终端复用器，开多个窗口捏，让你配置好三个键映射就放养了。<br>同时又再次强调了提问的智慧。</p>
-<p>最后推荐了The missing semester of  your CS Education。只能说太经典了，前置代码课程是CS61aSICP，我只能感慨不愧是top3，这不是顶级缝合怪？</p>
-<p>我开始尝试学习TMux，装上之后发现C-a&#x2F;C-b都使用不了，尝试google，尝试StackOverflow，失败。我用的windows11+WSL2，窗口管理就是win再开一个bash，用不上Tmux，开摆！不学了，之后再说。</p>
-<h2 id="获取课程源码"><a href="#获取课程源码" class="headerlink" title="获取课程源码"></a>获取课程源码</h2><p>顺带交了git的使用，很全欸，基本包含了开发的所有场合了。</p>
-<p>但是用PA自带的sh脚本clone项目源码出现了问题，看了看脚本，没太看懂。<br>错误日志是这样的。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br><span class="line">Cloning into &#x27;am-kernels&#x27;...</span><br><span class="line">kex_exchange_identification: Connection closed by remote host</span><br><span class="line">Connection closed by UNKNOWN port 65535</span><br><span class="line">fatal: Could not read from remote repository.</span><br></pre></td></tr></table></figure>
-
-<p>PA0 End.</p>
-<h1 id="PA1"><a href="#PA1" class="headerlink" title="PA1"></a>PA1</h1><h1 id="开始愉快的作战吧！"><a href="#开始愉快的作战吧！" class="headerlink" title="开始愉快的作战吧！"></a>开始愉快的作战吧！</h1><p>如果没有寄存器, 计算机还可以工作吗? 如果可以, 这会对硬件提供的编程模型有什么影响呢?</p>
-<p>我觉得可以的。寄存器不是必须的。CPU可以连接到外部的存储器再进行数据的读取，只不过会降低运行效率罢了。</p>
-<blockquote>
-<p><em><strong>概念</strong></em><br>编程模型：模型是对事物共性的抽象，<strong>编程模型</strong>就是对编程的共性的抽象。<br><strong>什么是编程的共性呢？</strong><br><strong>最重要的共性</strong>就是：程序设计时，<strong>代码的抽象方式、组织方式或复用方式</strong>。编程模型主要是方法与思想。编程模型处于方法或思想性的层面，在很多情况下，也可称为编程方法、编程方式、编程模式或编程技术、编程范式。在这里就当做同一种说法。<br>当面对一个新问题时，通常的想法是通过分析，不断的转化和转换，得到本质相同的熟悉的、或抽象的、简单的一个问题，这就是<strong>化归思想</strong>。把初始的问题或对象称为原型，把化归后的相对定型的模拟化或理想化的对象称为<strong>模型</strong>。<br><strong>编程模型，简单地可以理解它就是模板</strong>，遇到相似问题就可以方便依模板解决,这样就简化了编程问题。不同的编程环境和不同的应用对象有不同的编程模型。</p>
-</blockquote>
-<p>啥是编程模型： <a href="https://zhuanlan.zhihu.com/p/419254235">https://zhuanlan.zhihu.com/p/419254235</a></p>
-<p>![[20230813145605.png]]<br>哈哈，被嘲讽了。</p>
-<p>PA1正式开始，非常懵逼。</p>
-<p>第一步make没成功，提示我的仓库不是NEMU的仓库，我返回PA0重新下载资料。</p>
-<p>脑抽删了ssh密钥，重新配置。</p>
-<p>跟着最后一节走。<br>![[20230813162607.png]]<br>令人振奋的菜单出现了。<br>![[20230813162756.png]]</p>
-<p>工具链安装好，查了一堆，用上了apt-cache policy，终于编译好了。<br>![[20230813172406.png]]<br>![[20230813172559.png]]<br>好耶！继续继续，可以开始PA1了。</p>
-<p>PA1一来就是逆天语录，<em><strong>给了目录树之后，你就可以开始阅读代码了，至于从哪里开始，就不用多费口舌了吧。</strong></em></p>
-<p>请回忆，一个程序是从哪里开始执行的呢？这个问题很难啊，C语言被编译器编译再经过连接之后得到可执行文件。可执行文件是缝合起来的，它由哪些组成呢？</p>
-<p>记得学汇编的时候，提到一个程序头，段什么什么的来着，来用来接入DOS和返回DOS。程序应该是从那段代码开始顺序读取指令，按指令执行的。</p>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
-      <tags>
-        <tag>计算机</tag>
-        <tag>ASC</tag>
-        <tag>自学</tag>
-        <tag>设计</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Orangepi zero3个人服务器开发</title>
     <url>/2023-09-10-50-Orangepi-zero3%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%8F%91/</url>
     <content><![CDATA[<h1 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h1><p>首先选择自己开发环境。</p>
@@ -1010,6 +1010,32 @@ Name: label, Length: 42000, dtype: int64
       <categories>
         <category>Learning</category>
       </categories>
+  </entry>
+  <entry>
+    <title>SHU个人服务器网络避坑</title>
+    <url>/2023-11-30-12-SHU%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E7%BB%9C%E9%81%BF%E5%9D%91/</url>
+    <content><![CDATA[<blockquote>
+<p>上海大学宝山校区个人服务器网络环境配置之中的一些经验。</p>
+</blockquote>
+<p>宝山校区的校园网可以连接的种类繁多。有些时候我们会需要一些让人迷惑的情况：我在寝室可以与服务器进行通信，在本图或者东区就不可以了。这是因为我们的网络环境发生了变化。</p>
+<p>在宝山校区中存在的校园网如下：</p>
+<ol>
+<li>Shu(ForAll)：没有密码验证。需要浏览器进行锐捷认证方可上网。</li>
+<li>ShuWlan-1X：通过学号和密码进行验证后可以上网。</li>
+<li>ShuWlan-1X-5G: 登录方式同上。</li>
+<li>eduroam：通过账号密码登录。账号即 <code>学号 + @sdvip.shu.edu.cn</code>。</li>
+<li>以太网方式以网线连接（已知的可以直接插网线的区域有南区宿舍）。</li>
+</ol>
+<p>而这几种网络中，只有 Shu(ForAll) 和 以太网连接 这两种方式不存在内网通信中的防火墙。如果连接其余的网络，内网是无法直接通信的。</p>
+<p>因此，部署服务的服务器最好以 以太网方式 连接或者使用 Shu(ForAll) 。</p>
+<p><a href="https://github.com/irorange27/RuijiePortalLoginShellScript">上海大学锐捷认证脚本</a>有自动认证锐捷连接以太网或者 Shu(ForAll) 的脚本，同学们可自行使用。</p>
+<p>当然，除了 Shell脚本 之外。通过 Python 的 Requests库 或者 Selenium库 都可以实现自动认证连接的功能。</p>
+]]></content>
+      <tags>
+        <tag>经验</tag>
+        <tag>服务器</tag>
+        <tag>应用</tag>
+      </tags>
   </entry>
   <entry>
     <title>SHU机组体实验——WSL+Docker实现</title>
