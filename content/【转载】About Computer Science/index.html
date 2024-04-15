@@ -1,0 +1,428 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【转载】About Computer Science | 橙27的小站</title><meta name="author" content="Orange27"><meta name="copyright" content="Orange27"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="转载学长写的一篇博客推荐理工类学子阅读。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【转载】About Computer Science">
+<meta property="og:url" content="https://irorange27.github.io/content/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91About%20Computer%20Science/">
+<meta property="og:site_name" content="橙27的小站">
+<meta property="og:description" content="转载学长写的一篇博客推荐理工类学子阅读。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://irorange27.github.io/image/039.png">
+<meta property="article:published_time" content="2023-03-06T12:35:13.000Z">
+<meta property="article:modified_time" content="2023-09-06T15:40:01.949Z">
+<meta property="article:author" content="Orange27">
+<meta property="article:tag" content="配置">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://irorange27.github.io/image/039.png"><link rel="shortcut icon" href="/image/039.png"><link rel="canonical" href="https://irorange27.github.io/content/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91About%20Computer%20Science/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":270},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【转载】About Computer Science',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-06 23:40:01'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.0.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/image/039.png" onerror="onerror=null;src='/image/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-archive"></i><span> Archives</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/image/045.png')"><nav id="nav"><span id="blog-info"><a href="/" title="橙27的小站"><span class="site-name">橙27的小站</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-archive"></i><span> Archives</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【转载】About Computer Science</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-06T12:35:13.000Z" title="发表于 2023-03-06 20:35:13">2023-03-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-06T15:40:01.949Z" title="更新于 2023-09-06 23:40:01">2023-09-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%BD%AC%E8%BD%BD/">转载</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>18分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【转载】About Computer Science"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>授权转载自<a target="_blank" rel="noopener" href="https://chasing1020.github.io/post/about-computer-science/">chasing学长的博客</a>。</p>
+<p>要知道写一份像这样的经验分享东西，而且是关于学科专业生活学习各个方面的博客，是很花费精力和心血的。在此对学长表示感谢。文中涉及了计算机科学相关的问题：什么是计算机科学与工程？我们为什么要学习它？我们所处的环境怎样？未来的形势会如何？专业的日常生活是什么样？我们该以何种方法途径去学习？</p>
+<hr>
+<p>It is a yearly “divide major” season, and now I am looking back at the series of computer science <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/326615493/answer/711051528">questions</a> and answers I have browsed in Zhihu during my freshman year, and I feel a lot of emotions. I have been thinking about it for a long time, and this is the first time I have seen such numerous questions and discussions about computer science, hence I write about this post. If you find any bugs or grammar issues, please don’t hesitate to contact me to fix them. Anyway, thanks again for accepting my poor English.</p>
+<h1 id="0-Preface"><a href="#0-Preface" class="headerlink" title="0. Preface"></a>0. Preface</h1><blockquote>
+<p>What is computer science? Why does our country need students majoring in it? What is the future of this major? Will computer science be popular in the future?</p>
+</blockquote>
+<p>Two years later, when I introduced this major to my younger brother and sister who study at our university as a “past person”, it was too difficult for me to write the answer because I was worried about my lack of ability and short-sightedness, which brought all kinds of misguidance to them; secondly, the choice of major at the undergraduate level will probably affect a person’s life and mislead others. The third is that the choice of major at the undergraduate level may affect one’s life and mislead the future of others.</p>
+<p>Therefore, in this article, I will try my best to talk about my experience and thoughts in computer science over the past two years, and hope readers can gain something worthwhile. The content I share is only my opinion and does not represent any absolute theory. </p>
+<h1 id="1-Our-Environment"><a href="#1-Our-Environment" class="headerlink" title="1. Our Environment"></a>1. Our Environment</h1><blockquote>
+<p>This is an era of prosperity and crisis: Owing to the COVID-19, our world is experiencing changes never seen in a century.</p>
+</blockquote>
+<p>The annually spring and autumn recruitment is the barometer of the development of the computer industry, from last year, Tencent paid 40w high salary in the hot search, and then some time ago, due to the epidemic of the re-emergence of the side of layoffs while also locking the head count. Until today President Liu Kiping of Tencent issued an article: “Internal manpower investment will be adjusted from the edge of the business to the core business, in the industry to occur fundamental changes in the industry when actively embracing change”.</p>
+<p>In the general environment, today’s Internet is far less than what it was 10 years ago, the so-called “Although it is a pig, it can wind and waves.”, which Howard’s comment is: “Now the Internet from the era of incremental into the era of stock. Everyone has no way to make the cake bigger, so they can only grab each other’s cake”.</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/The_Mythical_Man-Month">The Mythical Man-Month</a> which is the bible of software engineering points out that more people can not shorten the software development progress, and it is dangerous to use “man-month” to measure the size of the work. Because <code>the number of people != efficiency</code>, the way to adjust the organizational structure of the current major manufacturers is also very straightforward - leaving the most valuable programmers. In this environment, with only a small pool of talent to dig, the Internet starting salary also seems very high.</p>
+<p>If only to high salary or good employment and blindly choose computer science major, it can only be said to have entered the survivorship bias. An objective fact is that the average salary of students graduating from our school is far below the average level of Zhihu or Maimai. The best students can collect offers from all the big companies, but the students who usually waste their time, even though they choose this major, often end up not as good as they expect. The salary distribution of this industry is not normal but power-law distribution, only a small group of the best people can share the most cake, the variance of the future development of the same industry will be very large. If you will choose to enter the industry in the future, please try to become the front group of people.</p>
+<p>In this regard, I think the reason for choosing this major should be “you love computer science enough”, not “this major is hot”. If you like the process of building a whole world of order through a process control (auto-state machine) and have some interest in this major, you may want to read on below.</p>
+<h1 id="2-About-CES"><a href="#2-About-CES" class="headerlink" title="2. About CES"></a>2. About CES</h1><blockquote>
+<p>What is the Computer Engineering and Science?</p>
+</blockquote>
+<p>The School of Computer Engineering and Science (CES) offers four majors: Computer Science and Technology, Intelligent Science and Technology, Cyberspace Security, and Artificial Intelligence.</p>
+<p>The gap between these majors, as reflected in the professional courses taken at the undergraduate level, will not be so big, at least most of the basic courses such as data structures, principles of computer composition, operating systems, computer networks (i.e., the 408 in the Master’s degree examination) are treated equally. Corresponding professional courses will focus on the study content, specific details refer to Shanghai University undergraduate professional training program in <a target="_blank" rel="noopener" href="https://www.jwc.shu.edu.cn/content.jsp?urltype=news.NewsContentUrl&wbtreeid=1192&wbnewsid=31263">2019</a> and <a target="_blank" rel="noopener" href="https://www.jwc.shu.edu.cn/content.jsp?urltype=news.NewsContentUrl&wbtreeid=1192&wbnewsid=32552">2020</a>. And all majors’ rankings are represented by the following table:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>2021 Plan</th>
+<th>2021 Rank</th>
+<th>2020 Plan</th>
+<th>2020 Rank</th>
+<th>2019 Plan</th>
+<th>2019 Rank</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Computer Science and Technology</td>
+<td>110</td>
+<td>289&#x2F;1573</td>
+<td>135</td>
+<td>560&#x2F;2029</td>
+<td>150</td>
+<td>582&#x2F;2090</td>
+</tr>
+<tr>
+<td>Intelligent Science and Technology</td>
+<td>26</td>
+<td>375&#x2F;1573</td>
+<td>45</td>
+<td>486&#x2F;2029</td>
+<td>60</td>
+<td>281&#x2F;2090</td>
+</tr>
+<tr>
+<td>Cyberspace Security</td>
+<td>20</td>
+<td>396&#x2F;1573</td>
+<td>25</td>
+<td>495&#x2F;2029</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Artificial Intelligence</td>
+<td>21</td>
+<td>366&#x2F;1573</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p>In most cases, there will not be a significant gap in the daily academic communication of interdisciplinary students, because the skills you will use in your future work may not be as closely related to your current chosen major. What teachers teach you will not determine what you will learn about. For example, if you choose computer science and technology, you can still study artificial intelligence, and if you choose AI, you can study cybersecurity-related content. But in detail:</p>
+<ul>
+<li>Computer science and technology: can be understood as the computer industry, the Polytechnic University class, belongs to the computer in the basic disciplines, both soft and hard, optional development direction range is very wide, and the specific direction of research depends entirely on your interest.</li>
+<li>Intelligent science and technology: need to learn some signal processing, matrix algebra, brain cognition, and operations research-related courses, across a wide range.</li>
+<li>Cyberspace security: a new major in my year, the scope of the study is not limited to the so-called “cyber security”, but also distinguishes penetration, reverse, cryptography and so on.</li>
+<li>Artificial intelligence: the research direction and professional course arrangement are also close to the wisdom of science, including mathematical logic, data mining, brain cognition, etc.,<br>it is recommended that students with good mathematics choose, need very good linear algebra and probability theory foundation, but also this is the Department of Mathematics “to grab a job” one of the directions.</li>
+</ul>
+<p>There is no absolute answer to the question of whether a specific major is better or worse. From a personal point of view, the teaching program of the new major still needs time to settle down, 10 weeks of short semesters are compressed together, and even if you take grade 4.0 does not mean that you learned the course well.</p>
+<p>Remember <code>what the school teaches != what I need to learn</code>, you need to be clear about where your future competitiveness in the industry lies. Nowadays, more than 90% of the interview contents of large Internet companies are not what the teachers can teach you, but the fact that the teacher did not teach is not a reason why you don’t know that.</p>
+<h1 id="3-The-future"><a href="#3-The-future" class="headerlink" title="3. The future"></a>3. The future</h1><blockquote>
+<p>What I will do in the future?</p>
+</blockquote>
+<p>In fact, each road is divided and the choice will be different.</p>
+<p><code>For work</code>: If you do not have the intention to study what, it is not recommended to go in the direction of algorithms, the main directions include front-end, client, back-end, testing, operations and maintenance, security, etc. Before the junior year, make sure to finish the professional courses, and do not leave too many courses for the senior year. As early as possible to determine the technology stack used in the interview, looking for online classes (preferably open courses in foreign famous universities, books, blogs, and <a target="_blank" rel="noopener" href="https://github.com/sindresorhus/awesome">awesome list</a>; job search in the early efforts to do <a target="_blank" rel="noopener" href="https://leetcode.com/problemset/all/">leetcode</a>, the summer of the junior year (or the end of the second year of winter) as early as possible to go to the Internet companies for internship, more accumulated internship experience project experience.</p>
+<ul>
+<li>Internship: it is best to find the schoolmates or online internal push, more understanding of the department’s working environment, overtime status, etc. The primary purpose of the internship is to enrich the resume, it is not recommended to care too much about the salary more or less, the key is you will learn what.</li>
+<li>When you are looking for a job with your internship experience, the name of your internship company only exists for the interviewer to have heard of&#x2F;not heard of two situations. If the goal is to work for a big company, it is not particularly recommended to go to outsourcing companies and traditional industry companies (i.e. companies whose old business is not the Internet) or if you want to take “private jobs” from teachers and make sure to identify the good and bad projects, refer to <a target="_blank" rel="noopener" href="https://survivesjtu.gitbook.io/survivesjtumanual/fang-tan-ji/xiao-xin-xiang-mu-de-xian-jing">Shanghai Jiao Tong University Survives Guide</a>.</li>
+</ul>
+<p><code>Taking part in the civil servant exam</code>: Mainly depends on the province, city, unit, and tier, the specific details are unknown.</p>
+<p><code>Push avoid</code>: The specific policy will change every year, refer to The Implementation plan for the work of recommending fresh outstanding undergraduate graduates to be exempted from studying for a master’s degree in <a target="_blank" rel="noopener" href="https://cs.shu.edu.cn/info/1198/20176.htm">2022</a> and <a target="_blank" rel="noopener" href="https://cs.shu.edu.cn/info/1198/19884.htm">2021</a> School of Computer Science of Shanghai University. The details of the policy will change every year, but it is important to be clear about where you need to get extra points.</p>
+<ul>
+<li>Note that “the scientific research achievements and competition awards of students who cooperate with their immediate family members or those with significantly higher education, titles and positions than themselves are only for reference and are not included in the calculation system of the comprehensive evaluation results.”, means that the route of publishing papers in cooperation with supervisors, finding joint competitions for graduate Ph.D. will not work.</li>
+<li>On the other hand, <code>Shanghai University has a lot of ACM experts == Shanghai University ACM is powerful != you will be powerful definitely when you come to ACM</code>, same for CTF, ASC, etc. Some competitions will cost a lot of time investment if you find it is not suitable also please give up the sunk cost in time, spend time to do leetcode than waste time in the competition.</li>
+</ul>
+<p><code>Taking part in the postgraduate entrance exams</code>: The students with low GPAs who want to fulfill their dreams of a famous domestic school is also the choice of most students who do not want to work for the time being. The preparation time for the exam begins in the second semester of the junior year, choice is greater than effort. The process of preparing for the exam, choosing a school, etc., depends on the individual situation, so I won’t go into detail here.</p>
+<p><code>Study abroad</code>: The first thing you need to do is to make sure that you are ready to go to the country you want to go to, whether you need to take IELTS or TOEFL, and whether you want to take GRE. In addition, striving to participate in internationally renowned competitions or publish some academic results but also trying to accumulate some foreign company internship experience, in the application are very plus points. As for whether to stay or return to your home country at the end of your graduate studies abroad, it ultimately depends on your situation.</p>
+<h1 id="4-Daily-life"><a href="#4-Daily-life" class="headerlink" title="4. Daily life"></a>4. Daily life</h1><blockquote>
+<p>What is life like in the college?</p>
+</blockquote>
+<ol>
+<li>Grade 2019 and 2020 dormitories are arranged in the New Century, subsequent accommodation is unknown, depending on the school arrangements.</li>
+<li>Some classes have been deleted from the seminar, but there are still a lot of reports, and some teachers have a lot of requirements.</li>
+<li>College study materials, textbooks, etc., in the major group chat, can also be seen, you can also refer to <a target="_blank" rel="noopener" href="https://chasing1020.github.io/post/ces-materials/">CES Materials</a> and you may find it helpful to browse the <a target="_blank" rel="noopener" href="https://github.com/shuosc/libshu">libshu</a> which includes the material collected by the Open Source Community.</li>
+<li>Many of the final exams are far less detailed than the freshman year, most of them are less incomplete, and you will need some preparation skills.</li>
+<li>In class, most of the girls sit in the front row more, and whether or not you can get rid of the single depends on your ability.</li>
+<li>About class activities, because our courses are self-selected, everyone’s daily life trajectory is more scattered or gathered in their small circle, I think the class cohesion is not so strong to some extent.</li>
+<li>Most of the courses, including laboratory classes, will be on the East Side, or relatively far, winter morning on eight East Side is very painful, so it is recommended to learn a bicycle for convenience.</li>
+<li>ACM and Cyberspace security labs are located on the 7th and 6th floors of the computer building, which are currently open to specific students. For teamwork competitions, it is important to find like-minded partners who are willing to devote their time and have strong abilities (not reflected in their GPAs).</li>
+<li>Students who major in AI should try to contact their supervisors as early as possible to try to borrow a GPU server, and those who are strong can also try to contact their supervisors in advance to join their graduate groups.</li>
+</ol>
+<h1 id="5-On-the-way"><a href="#5-On-the-way" class="headerlink" title="5. On the way"></a>5. On the way</h1><blockquote>
+<p>If you have decided to major in the Computer Science and Technology, here are some suggestions for studying in advance.</p>
+</blockquote>
+<ol>
+<li><p>English counts! English counts! English counts!</p>
+<ul>
+<li>Learn to use Google and learn to read English materials. Never use Baidu to find answers. (It is highly recommended to add <code>127.0.0.1 www.baidu.com</code> in your <a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man5/hosts.5.html">&#x2F;etc&#x2F;hosts</a> file, which will promise that you will not able to use it.)</li>
+<li>Learn more on <a target="_blank" rel="noopener" href="https://github.com/">Github</a>, <a target="_blank" rel="noopener" href="https://stackoverflow.com/">Stackoverflow</a> and less on CSDN or Cnblogs.</li>
+<li>Learn to fix bugs by <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/STFW">STFW</a> and <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/RTFM">RTFM</a>, which is the most important skill for a programmer.</li>
+<li>Learn <a target="_blank" rel="noopener" href="http://www.catb.org/~esr/faqs/smart-questions.html">how to ask questions the smart way</a>.</li>
+</ul>
+</li>
+<li><p>Create a GitHub account, and build a personal blog on it, you can use <a target="_blank" rel="noopener" href="https://gohugo.io/">hugo</a>, <a target="_blank" rel="noopener" href="https://hexo.io/">hexo</a> and other frameworks, the whole specific process follows Google and official documentation, the process you will learn a lot, including Git, read documents, write configuration files and other operations.</p>
+</li>
+<li><p>Specific learning direction, learning a new language and related technologies, learning process to take notes.</p>
+<ul>
+<li>Back-end: Java, Golang, C++, Rust, etc., and Web frameworks such as Springboot, and Gin, capable students can learn about DBMS, Redis, MQ, ES and other technologies in advance.</li>
+<li>Front-end&#x2F;client: JavaScript, TypeScript, Dart, Kotlin, Swift and so on, frameworks including Vue, React, Angular, etc., learning Node.js, as well as agents, caches, gateways, tunnels, etc.</li>
+<li>AI can start to learn Python, Matlab and so on, as well as the common TensorFlow or PyTorch, efforts to improve the level of English and start trying to improve the ability to find literature&#x2F;reading literature.</li>
+</ul>
+</li>
+<li><p>Learn Linux including <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/wsl/install">WSL</a> and <a target="_blank" rel="noopener" href="https://www.docker.com/">Docker</a>, it is highly recommended to learn Docker to save the time to build the environment.</p>
+</li>
+<li><p>Learn the professional course knowledge in advance, refer to the <a target="_blank" rel="noopener" href="https://csdiy.wiki/">CS Self-Study Guide</a>, it is suggested to learn computer science by doing the labs.</p>
+</li>
+<li><p>When you finish the above, you should have a general direction of what to study in the future, you can also read <a target="_blank" rel="noopener" href="https://chasing1020.github.io/post/my-cs-learning-route/">My Computer Study Route</a>.</p>
+</li>
+</ol>
+<h1 id="6-Ending"><a href="#6-Ending" class="headerlink" title="6. Ending"></a>6. Ending</h1><p>This article is only expressing my personal opinion, I hope students will not change their opinion towards this major because of the shortcomings of the profession I mentioned, or blindly decide because of the so-called high salary. On the way of choosing a major, often a decision will greatly affect the future trajectory of your life.</p>
+<p>The fact that you have the grades to get into a computer science college also means that you have the right to choose almost any major, so please choose your major carefully. After all, the final choice of major is still yours, so please make sure to make a decision based on your interests, family environment, future development and all kinds of factors, and remember that at this point, anyone, including your teachers, family and classmates, can only just provide advice at all.</p>
+<p>Four years of college life is neither too long nor too short. While enjoying the comfortable campus life, you have become a frog in warm water without realizing it.</p>
+<p>We need to break away from the inertia of student thinking under the score measurement system, “Please be sure to remember: four years of college life gives you is just a kind of the undergo of your life, when you graduate, the string of pale scores has been invalidated.”.</p>
+<h1 id="7-Remarks"><a href="#7-Remarks" class="headerlink" title="7. Remarks"></a>7. Remarks</h1><p>Here are some links related to this post.</p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://lemon-412.github.io/2020/07/17/%E4%B8%8A%E5%A4%A7%E8%AE%A1%E9%99%A2%E6%8A%A5%E8%80%83%E6%8C%87%E5%8C%97/">Guide of Choice SHU CES</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://luminolt.cn/post/a-guide-for-newbies-in-cs/">A Guide for newbies in Cyberspace Security</a></p>
+</li>
+</ol>
+<p>Thank you for reading here, after you have finished your blog, you can comment on this post below to contact me to add your link. Anyway, you are free to ask any questions about this post. If there is anything inappropriate, please comment&#x2F;contact me and I will change it as soon as possible.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://irorange27.github.io">Orange27</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://irorange27.github.io/content/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91About%20Computer%20Science/">https://irorange27.github.io/content/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91About%20Computer%20Science/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://irorange27.github.io" target="_blank">橙27的小站</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/image/039.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/content/80x86%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" title="80x86汇编语言"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">80x86汇编语言</div></div></a></div><div class="next-post pull-right"><a href="/content/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91%E7%B2%BE%E5%8A%9B%E6%9C%89%E9%99%90%E8%AF%B4/" title="【转载】精力有限说"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【转载】精力有限说</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><span id="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/image/039.png" onerror="this.onerror=null;this.src='/image/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Orange27</div><div class="author-info__description">这是橙27的个人博客。用于记录个人兴趣爱好发展和知识分享。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">34</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/irorange27"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/irorange27" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:orange27@shu.edu.cn" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/47245506" target="_blank" title=""><i class="fa-brands fa-bilibili"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">近期准备重写博客，敬请期待！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0-Preface"><span class="toc-number">1.</span> <span class="toc-text">0. Preface</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Our-Environment"><span class="toc-number">2.</span> <span class="toc-text">1. Our Environment</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-About-CES"><span class="toc-number">3.</span> <span class="toc-text">2. About CES</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-The-future"><span class="toc-number">4.</span> <span class="toc-text">3. The future</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Daily-life"><span class="toc-number">5.</span> <span class="toc-text">4. Daily life</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-On-the-way"><span class="toc-number">6.</span> <span class="toc-text">5. On the way</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-Ending"><span class="toc-number">7.</span> <span class="toc-text">6. Ending</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-Remarks"><span class="toc-number">8.</span> <span class="toc-text">7. Remarks</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/content/%E6%9C%AA%E5%91%BD%E5%90%8D/" title="无题">无题</a><time datetime="2024-03-31T04:59:45.294Z" title="发表于 2024-03-31 12:59:45">2024-03-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/content/C-%E7%8E%B0%E4%BB%A3%E7%89%B9%E6%80%A7/" title="C++现代特性">C++现代特性</a><time datetime="2024-03-26T07:19:11.000Z" title="发表于 2024-03-26 15:19:11">2024-03-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/content/HPL/" title="无题">无题</a><time datetime="2024-03-13T09:49:53.039Z" title="发表于 2024-03-13 17:49:53">2024-03-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/content/%E4%B8%80%E6%96%87%E5%85%A5%E9%97%A8FTXUI%E6%A1%86%E6%9E%B6/" title="一文入门FTXUI框架">一文入门FTXUI框架</a><time datetime="2024-01-16T04:38:49.000Z" title="发表于 2024-01-16 12:38:49">2024-01-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/content/LXMs-System-%E7%B3%BB%E7%BB%9F%E7%90%86%E8%A7%A3LMs/" title="LXMs System 系统理解LMs">LXMs System 系统理解LMs</a><time datetime="2023-12-20T03:12:08.000Z" title="发表于 2023-12-20 11:12:08">2023-12-20</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/image/045.png')"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Orange27</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'dRBSSjuqNnimJKoycsPN65UB-gzGzoHsz',
+      appKey: 'nh4zkrDyG3T3zeRPNgftAiqr',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !true) {
+    if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script><script>(() => {
+  const disqus_config = function () {
+    this.page.url = 'https://irorange27.github.io/content/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91About%20Computer%20Science/'
+    this.page.identifier = '/content/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91About%20Computer%20Science/'
+    this.page.title = '【转载】About Computer Science'
+  }
+
+  const disqusReset = () => {
+    window.DISQUS && window.DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addGlobalFn('themeChange', disqusReset, 'disqus')
+
+  const loadDisqus = () =>{
+    if (window.DISQUS) disqusReset()
+    else {
+      const script = document.createElement('script')
+      script.src = 'https://.disqus.com/embed.js'
+      script.setAttribute('data-timestamp', +new Date())
+      document.head.appendChild(script)
+    }
+  }
+
+  const getCount = async() => {
+    try {
+      const eleGroup = document.querySelector('#post-meta .disqus-comment-count')
+      if (!eleGroup) return
+      const cleanedLinks = eleGroup.href.replace(/#post-comment$/, '')
+
+      const res = await fetch(`https://disqus.com/api/3.0/threads/set.json?forum=&api_key=&thread:link=${cleanedLinks}`,{
+        method: 'GET'
+      })
+      const result = await res.json()
+
+      const count = result.response.length ? result.response[0].posts : 0
+      eleGroup.textContent = count
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  if ('Valine' === 'Disqus' || !true) {
+    if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+    else {
+      loadDisqus()
+      GLOBAL_CONFIG_SITE.isPost && getCount()
+    }
+  } else {
+    window.loadOtherComment = loadDisqus
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
