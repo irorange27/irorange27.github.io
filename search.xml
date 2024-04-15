@@ -1081,6 +1081,37 @@ Name: label, Length: 42000, dtype: int64
       </categories>
   </entry>
   <entry>
+    <title>SHU机组体实验——WSL+Docker实现</title>
+    <url>/content/SHU%E6%9C%BA%E7%BB%84%E4%BD%93%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94WSL-Docker%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<blockquote>
+<p>在Windows11上以Docker部署CentOS容器作为虚拟机进行试验。</p>
+</blockquote>
+<p>前置：安装好WSL和Docker Desktop。</p>
+<h1 id="虚拟容器的创建"><a href="#虚拟容器的创建" class="headerlink" title="虚拟容器的创建"></a>虚拟容器的创建</h1><p>通过Docker创建的虚拟容器是自定义的，可以根据需求进行安排。因此可以快速轻量的完成部署，且避免了传统虚拟机的性能损耗。通过我的Dockerfile创建的CentOS，无需配置网卡，开箱即用。</p>
+<p>Docker相关的概念不做多余介绍。</p>
+<p>其他的就不做多余描述，请参考网络上相关的教程即可。<br>下面是Dockerfile。</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/home/dockerfile</span></span><br><span class="line"><span class="comment"># Based CentOS7 image</span></span><br><span class="line"><span class="keyword">FROM</span> centos:centos7</span><br><span class="line"><span class="keyword">MAINTAINER</span> niina</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /home</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y update; yum clean all</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y install openssh-server openssh-clients passwd</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y install net-tools vim</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set password = password.</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">echo</span> <span class="string">&#x27;root:password&#x27;</span> | chpasswd</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># port 22 to make ssh work</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">22</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">&quot;/usr/sbin/sshd&quot;</span>, <span class="string">&quot;-D&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>从dockerfile创建镜像。此时指令目录为dockerfile所在目录。<br><code>docker build -t mycentos:dev .</code></p>
+<p>构建好镜像后创建并启动容器。注意将容器的80端口映射到主机的45678端口(此端口不指定，大于1200即可)，以便后续SSH连接。指令如下。请查阅<code>docker --help</code>查看相关参数含义。<br>&#96;docker run -p 45678:22 -it -d –name&#x3D;my_centos_1 mycentos:dev</p>
+<p>以bash进入容器。<br><code>docker exec -it my_centos_1 /bin/bash</code></p>
+<p>以上是基本操作，根据实验内容创建第二个容器也是相似的操作。</p>
+<h1 id="宿主机与虚拟机通信"><a href="#宿主机与虚拟机通信" class="headerlink" title="宿主机与虚拟机通信"></a>宿主机与虚拟机通信</h1><h2 id="WSL与CentOS容器以SSH相互通信"><a href="#WSL与CentOS容器以SSH相互通信" class="headerlink" title="WSL与CentOS容器以SSH相互通信"></a>WSL与CentOS容器以SSH相互通信</h2><p>首先介绍在任意的WSL实例中进行通行。<br>！我并未测试过多个WSL实例会出现什么情况，读者可以进行实验，希望得到反馈！</p>
+<h3 id="WSL登录CentOS容器"><a href="#WSL登录CentOS容器" class="headerlink" title="WSL登录CentOS容器"></a>WSL登录CentOS容器</h3><p>在容器中，查找到IP。<br>切换到WSL，以SSH连接。举例如下。<br><code>ssh root@172.17.0.2</code><br>输入设置的密码即可。</p>
+<h3 id="从CentOS容器登录到WSL"><a href="#从CentOS容器登录到WSL" class="headerlink" title="从CentOS容器登录到WSL"></a>从CentOS容器登录到WSL</h3><p>在WSL中通过指令查看IP。<br>切换到容器。命令如下。<br><code>ssh &lt;用户名&gt;@192.168.158.4</code></p>
+<h2 id="PwSh与CentOS容器以SSH相互通信"><a href="#PwSh与CentOS容器以SSH相互通信" class="headerlink" title="PwSh与CentOS容器以SSH相互通信"></a>PwSh与CentOS容器以SSH相互通信</h2><h3 id="从容器或WSL登录宿主机"><a href="#从容器或WSL登录宿主机" class="headerlink" title="从容器或WSL登录宿主机"></a>从容器或WSL登录宿主机</h3><p>法一：PowerShell下查看IP，显示WSL(Hyper-V firewall)的IP地址就是Windows的IP地址。<br>后通过SSH连接即可。</p>
+<p>法二：首先在WSL中查看主机的IP。<br><code>cat /etc/resolv.conf</code><br>后通过SSH连接即可。在WSL和CentOS容器中都是相同的操作。这样可以登录到宿主机上。</p>
+<h3 id="从宿主机登录到WSL"><a href="#从宿主机登录到WSL" class="headerlink" title="从宿主机登录到WSL"></a>从宿主机登录到WSL</h3><p>在WSL查看IP。<br>后在Windows输入以下命令即可。<br><code>ssh &lt;user&gt;@&lt;your_IP&gt;</code></p>
+<h3 id="从宿主机或WSL登录到容器"><a href="#从宿主机或WSL登录到容器" class="headerlink" title="从宿主机或WSL登录到容器"></a>从宿主机或WSL登录到容器</h3><p>SSH需要开放22端口，如果没有在一开始设置好22端口的话，将无法使用SSH。<br>如果从WSL进行登录的话，IP可以是localhost，也可以是Docker分配到的IP，但都必须加入端口映射。<br>如果从Windows进行登录的话，IP只能是localhost。</p>
+<h3 id="容器间相互通信"><a href="#容器间相互通信" class="headerlink" title="容器间相互通信"></a>容器间相互通信</h3><p>我构建的镜像默认的网络设置就是桥接(所有的容器连接到Docker虚拟机上的网卡，再连接到WSL，WSL以默认NAT的方式设置)。因此可以直接通过SSH在各容器间相互通信。</p>
+<p>自此，通信内容全部打通。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>SSH默认的监听端口是22。在宿主机上做端口映射是将容器的端口映射到主机上的端口，如果在容器中SSH监听的端口和所映射的端口不一致的话，SSH无法正常工作。<br>WSL和Docker采用的虚拟化技术十分先进，建议使用。</p>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+  </entry>
+  <entry>
     <title>SHU个人服务器网络避坑</title>
     <url>/content/SHU%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E7%BB%9C%E9%81%BF%E5%9D%91/</url>
     <content><![CDATA[<blockquote>
@@ -1404,37 +1435,6 @@ Name: label, Length: 42000, dtype: int64
         <tag>应用</tag>
         <tag>windows</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>SHU机组体实验——WSL+Docker实现</title>
-    <url>/content/SHU%E6%9C%BA%E7%BB%84%E4%BD%93%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94WSL-Docker%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<blockquote>
-<p>在Windows11上以Docker部署CentOS容器作为虚拟机进行试验。</p>
-</blockquote>
-<p>前置：安装好WSL和Docker Desktop。</p>
-<h1 id="虚拟容器的创建"><a href="#虚拟容器的创建" class="headerlink" title="虚拟容器的创建"></a>虚拟容器的创建</h1><p>通过Docker创建的虚拟容器是自定义的，可以根据需求进行安排。因此可以快速轻量的完成部署，且避免了传统虚拟机的性能损耗。通过我的Dockerfile创建的CentOS，无需配置网卡，开箱即用。</p>
-<p>Docker相关的概念不做多余介绍。</p>
-<p>其他的就不做多余描述，请参考网络上相关的教程即可。<br>下面是Dockerfile。</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/home/dockerfile</span></span><br><span class="line"><span class="comment"># Based CentOS7 image</span></span><br><span class="line"><span class="keyword">FROM</span> centos:centos7</span><br><span class="line"><span class="keyword">MAINTAINER</span> niina</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /home</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y update; yum clean all</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y install openssh-server openssh-clients passwd</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y install net-tools vim</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N <span class="string">&#x27;&#x27;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Set password = password.</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">echo</span> <span class="string">&#x27;root:password&#x27;</span> | chpasswd</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># port 22 to make ssh work</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">22</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">&quot;/usr/sbin/sshd&quot;</span>, <span class="string">&quot;-D&quot;</span>]</span></span><br></pre></td></tr></table></figure>
-
-<p>从dockerfile创建镜像。此时指令目录为dockerfile所在目录。<br><code>docker build -t mycentos:dev .</code></p>
-<p>构建好镜像后创建并启动容器。注意将容器的80端口映射到主机的45678端口(此端口不指定，大于1200即可)，以便后续SSH连接。指令如下。请查阅<code>docker --help</code>查看相关参数含义。<br>&#96;docker run -p 45678:22 -it -d –name&#x3D;my_centos_1 mycentos:dev</p>
-<p>以bash进入容器。<br><code>docker exec -it my_centos_1 /bin/bash</code></p>
-<p>以上是基本操作，根据实验内容创建第二个容器也是相似的操作。</p>
-<h1 id="宿主机与虚拟机通信"><a href="#宿主机与虚拟机通信" class="headerlink" title="宿主机与虚拟机通信"></a>宿主机与虚拟机通信</h1><h2 id="WSL与CentOS容器以SSH相互通信"><a href="#WSL与CentOS容器以SSH相互通信" class="headerlink" title="WSL与CentOS容器以SSH相互通信"></a>WSL与CentOS容器以SSH相互通信</h2><p>首先介绍在任意的WSL实例中进行通行。<br>！我并未测试过多个WSL实例会出现什么情况，读者可以进行实验，希望得到反馈！</p>
-<h3 id="WSL登录CentOS容器"><a href="#WSL登录CentOS容器" class="headerlink" title="WSL登录CentOS容器"></a>WSL登录CentOS容器</h3><p>在容器中，查找到IP。<br>切换到WSL，以SSH连接。举例如下。<br><code>ssh root@172.17.0.2</code><br>输入设置的密码即可。</p>
-<h3 id="从CentOS容器登录到WSL"><a href="#从CentOS容器登录到WSL" class="headerlink" title="从CentOS容器登录到WSL"></a>从CentOS容器登录到WSL</h3><p>在WSL中通过指令查看IP。<br>切换到容器。命令如下。<br><code>ssh &lt;用户名&gt;@192.168.158.4</code></p>
-<h2 id="PwSh与CentOS容器以SSH相互通信"><a href="#PwSh与CentOS容器以SSH相互通信" class="headerlink" title="PwSh与CentOS容器以SSH相互通信"></a>PwSh与CentOS容器以SSH相互通信</h2><h3 id="从容器或WSL登录宿主机"><a href="#从容器或WSL登录宿主机" class="headerlink" title="从容器或WSL登录宿主机"></a>从容器或WSL登录宿主机</h3><p>法一：PowerShell下查看IP，显示WSL(Hyper-V firewall)的IP地址就是Windows的IP地址。<br>后通过SSH连接即可。</p>
-<p>法二：首先在WSL中查看主机的IP。<br><code>cat /etc/resolv.conf</code><br>后通过SSH连接即可。在WSL和CentOS容器中都是相同的操作。这样可以登录到宿主机上。</p>
-<h3 id="从宿主机登录到WSL"><a href="#从宿主机登录到WSL" class="headerlink" title="从宿主机登录到WSL"></a>从宿主机登录到WSL</h3><p>在WSL查看IP。<br>后在Windows输入以下命令即可。<br><code>ssh &lt;user&gt;@&lt;your_IP&gt;</code></p>
-<h3 id="从宿主机或WSL登录到容器"><a href="#从宿主机或WSL登录到容器" class="headerlink" title="从宿主机或WSL登录到容器"></a>从宿主机或WSL登录到容器</h3><p>SSH需要开放22端口，如果没有在一开始设置好22端口的话，将无法使用SSH。<br>如果从WSL进行登录的话，IP可以是localhost，也可以是Docker分配到的IP，但都必须加入端口映射。<br>如果从Windows进行登录的话，IP只能是localhost。</p>
-<h3 id="容器间相互通信"><a href="#容器间相互通信" class="headerlink" title="容器间相互通信"></a>容器间相互通信</h3><p>我构建的镜像默认的网络设置就是桥接(所有的容器连接到Docker虚拟机上的网卡，再连接到WSL，WSL以默认NAT的方式设置)。因此可以直接通过SSH在各容器间相互通信。</p>
-<p>自此，通信内容全部打通。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>SSH默认的监听端口是22。在宿主机上做端口映射是将容器的端口映射到主机上的端口，如果在容器中SSH监听的端口和所映射的端口不一致的话，SSH无法正常工作。<br>WSL和Docker采用的虚拟化技术十分先进，建议使用。</p>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
   </entry>
   <entry>
     <title>cmake学习使用</title>
@@ -1961,6 +1961,44 @@ Name: label, Length: 42000, dtype: int64
       </categories>
   </entry>
   <entry>
+    <title></title>
+    <url>/content/%E6%9C%AA%E5%91%BD%E5%90%8D/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>深度学习服务器环境配置</title>
+    <url>/content/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>开启TMux。</p>
+<ol>
+<li>更新源。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt update ; apt upgrade</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>可以熟悉下系统数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt install neofetch tree lscpu less</span><br><span class="line">neofetch</span><br><span class="line">tree -L 2</span><br><span class="line">lscpu | less</span><br></pre></td></tr></table></figure>
+
+<p>换上自己的配置。<br>Gitee仓库地址：<a href="https://gitee.com/irorange27/MyConfiguration.git">https://gitee.com/irorange27/MyConfiguration.git</a><br>Github仓库地址：<a href="https://github.com/irorange27/MyConfiguration.git">https://github.com/irorange27/MyConfiguration.git</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://gitee.com/irorange27/MyConfiguration.git</span><br><span class="line">git clone https://github.com/irorange27/MyConfiguration.git</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<ol start="2">
+<li><p>Download rust language</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl --proto &#x27;=https&#x27; --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Download FISH.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://github.com/fish-shell/fish-shell/releases/download/3.6.1/fish-3.6.1.tar.xz</span><br><span class="line"></span><br><span class="line">lscpu | less</span><br><span class="line"></span><br><span class="line">cmake .; make -j&lt;cpu_num&gt;; sudo make install</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">chsh -s $(which fish); export SHELL=`which fish`; [ -z &quot;$FISH_VERSION&quot; ] &amp;&amp; exec &quot;$SHELL&quot; -l|</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>Download git lfs. <a href="https://packagecloud.io/github/git-lfs/install">https://packagecloud.io/github/git-lfs/install</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Git pull repository</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git lfs install</span><br><span class="line">git clone https://huggingface.co/gpt2</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+  </entry>
+  <entry>
     <title>从零配置windows11开发环境</title>
     <url>/content/%E4%BB%8E%E9%9B%B6%E9%85%8D%E7%BD%AEwindows11%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
     <content><![CDATA[<p>Fork from: <a href="https://kirigaya.cn/blog/article?seq=28">汇尘轩 - 锦恢的博客 (kirigaya.cn)</a></p>
@@ -2163,44 +2201,6 @@ Name: label, Length: 42000, dtype: int64
         <tag>windows</tag>
         <tag>装机</tag>
       </tags>
-  </entry>
-  <entry>
-    <title></title>
-    <url>/content/%E6%9C%AA%E5%91%BD%E5%90%8D/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>深度学习服务器环境配置</title>
-    <url>/content/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>开启TMux。</p>
-<ol>
-<li>更新源。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt update ; apt upgrade</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>可以熟悉下系统数据。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt install neofetch tree lscpu less</span><br><span class="line">neofetch</span><br><span class="line">tree -L 2</span><br><span class="line">lscpu | less</span><br></pre></td></tr></table></figure>
-
-<p>换上自己的配置。<br>Gitee仓库地址：<a href="https://gitee.com/irorange27/MyConfiguration.git">https://gitee.com/irorange27/MyConfiguration.git</a><br>Github仓库地址：<a href="https://github.com/irorange27/MyConfiguration.git">https://github.com/irorange27/MyConfiguration.git</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://gitee.com/irorange27/MyConfiguration.git</span><br><span class="line">git clone https://github.com/irorange27/MyConfiguration.git</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<ol start="2">
-<li><p>Download rust language</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl --proto &#x27;=https&#x27; --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Download FISH.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://github.com/fish-shell/fish-shell/releases/download/3.6.1/fish-3.6.1.tar.xz</span><br><span class="line"></span><br><span class="line">lscpu | less</span><br><span class="line"></span><br><span class="line">cmake .; make -j&lt;cpu_num&gt;; sudo make install</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">chsh -s $(which fish); export SHELL=`which fish`; [ -z &quot;$FISH_VERSION&quot; ] &amp;&amp; exec &quot;$SHELL&quot; -l|</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>Download git lfs. <a href="https://packagecloud.io/github/git-lfs/install">https://packagecloud.io/github/git-lfs/install</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Git pull repository</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git lfs install</span><br><span class="line">git clone https://huggingface.co/gpt2</span><br></pre></td></tr></table></figure></li>
-</ol>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
   </entry>
   <entry>
     <title>磁盘管理，改变你电脑磁盘的大小吧！</title>
