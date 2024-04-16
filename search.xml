@@ -1081,6 +1081,36 @@ Name: label, Length: 42000, dtype: int64
       </categories>
   </entry>
   <entry>
+    <title>SHU个人服务器网络避坑</title>
+    <url>/content/SHU%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E7%BB%9C%E9%81%BF%E5%9D%91/</url>
+    <content><![CDATA[<blockquote>
+<p>上海大学宝山校区个人服务器网络环境配置之中的一些经验。</p>
+</blockquote>
+<p>宝山校区的校园网可以连接的种类繁多。有些时候我们会需要一些让人迷惑的情况：我在寝室可以与服务器进行通信，在本图或者东区就不可以了。这是因为我们的网络环境发生了变化。</p>
+<p>在宝山校区中存在的校园网如下：</p>
+<ol>
+<li>Shu(ForAll)：没有密码验证。需要浏览器进行锐捷认证方可上网。</li>
+<li>ShuWlan-1X：通过学号和密码进行验证后可以上网。</li>
+<li>ShuWlan-1X-5G: 登录方式同上。</li>
+<li>eduroam：通过账号密码登录。账号即 <code>学号 + @sdvip.shu.edu.cn</code>。</li>
+<li>以太网方式以网线连接（已知的可以直接插网线的区域有南区宿舍）。</li>
+</ol>
+<p>而这几种网络中，只有 Shu(ForAll) 和 以太网连接 这两种方式不存在内网通信中的防火墙。如果连接其余的网络，内网是无法直接通信的。</p>
+<p>因此，部署服务的服务器最好以 以太网方式 连接或者使用 Shu(ForAll) 。</p>
+<p><a href="https://github.com/irorange27/RuijiePortalLoginShellScript">上海大学锐捷认证脚本</a>有自动认证锐捷连接以太网或者 Shu(ForAll) 的脚本，同学们可自行使用。</p>
+<p>当然，除了 Shell脚本 之外。通过 Python 的 Requests库 或者 Selenium库 都可以实现自动认证连接的功能。</p>
+<h1 id="如何快速检测当前网络是否支持SSH？"><a href="#如何快速检测当前网络是否支持SSH？" class="headerlink" title="如何快速检测当前网络是否支持SSH？"></a>如何快速检测当前网络是否支持SSH？</h1><blockquote>
+<p>更多方法欢迎大家补充。</p>
+</blockquote>
+<h2 id="法一-WSL-Unix-ports-scan——nmap法："><a href="#法一-WSL-Unix-ports-scan——nmap法：" class="headerlink" title="法一 WSL Unix ports scan——nmap法："></a>法一 WSL Unix ports scan——nmap法：</h2><p>需求： WSL2(启用镜像网络)<br>使用nmap分别扫描localhost和当前的IP地址，对比可知。</p>
+]]></content>
+      <tags>
+        <tag>经验</tag>
+        <tag>服务器</tag>
+        <tag>应用</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SHU机组体实验——WSL+Docker实现</title>
     <url>/content/SHU%E6%9C%BA%E7%BB%84%E4%BD%93%E5%AE%9E%E9%AA%8C%E2%80%94%E2%80%94WSL-Docker%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<blockquote>
@@ -1110,36 +1140,6 @@ Name: label, Length: 42000, dtype: int64
       <categories>
         <category>Learning</category>
       </categories>
-  </entry>
-  <entry>
-    <title>SHU个人服务器网络避坑</title>
-    <url>/content/SHU%E4%B8%AA%E4%BA%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BD%91%E7%BB%9C%E9%81%BF%E5%9D%91/</url>
-    <content><![CDATA[<blockquote>
-<p>上海大学宝山校区个人服务器网络环境配置之中的一些经验。</p>
-</blockquote>
-<p>宝山校区的校园网可以连接的种类繁多。有些时候我们会需要一些让人迷惑的情况：我在寝室可以与服务器进行通信，在本图或者东区就不可以了。这是因为我们的网络环境发生了变化。</p>
-<p>在宝山校区中存在的校园网如下：</p>
-<ol>
-<li>Shu(ForAll)：没有密码验证。需要浏览器进行锐捷认证方可上网。</li>
-<li>ShuWlan-1X：通过学号和密码进行验证后可以上网。</li>
-<li>ShuWlan-1X-5G: 登录方式同上。</li>
-<li>eduroam：通过账号密码登录。账号即 <code>学号 + @sdvip.shu.edu.cn</code>。</li>
-<li>以太网方式以网线连接（已知的可以直接插网线的区域有南区宿舍）。</li>
-</ol>
-<p>而这几种网络中，只有 Shu(ForAll) 和 以太网连接 这两种方式不存在内网通信中的防火墙。如果连接其余的网络，内网是无法直接通信的。</p>
-<p>因此，部署服务的服务器最好以 以太网方式 连接或者使用 Shu(ForAll) 。</p>
-<p><a href="https://github.com/irorange27/RuijiePortalLoginShellScript">上海大学锐捷认证脚本</a>有自动认证锐捷连接以太网或者 Shu(ForAll) 的脚本，同学们可自行使用。</p>
-<p>当然，除了 Shell脚本 之外。通过 Python 的 Requests库 或者 Selenium库 都可以实现自动认证连接的功能。</p>
-<h1 id="如何快速检测当前网络是否支持SSH？"><a href="#如何快速检测当前网络是否支持SSH？" class="headerlink" title="如何快速检测当前网络是否支持SSH？"></a>如何快速检测当前网络是否支持SSH？</h1><blockquote>
-<p>更多方法欢迎大家补充。</p>
-</blockquote>
-<h2 id="法一-WSL-Unix-ports-scan——nmap法："><a href="#法一-WSL-Unix-ports-scan——nmap法：" class="headerlink" title="法一 WSL Unix ports scan——nmap法："></a>法一 WSL Unix ports scan——nmap法：</h2><p>需求： WSL2(启用镜像网络)<br>使用nmap分别扫描localhost和当前的IP地址，对比可知。</p>
-]]></content>
-      <tags>
-        <tag>经验</tag>
-        <tag>服务器</tag>
-        <tag>应用</tag>
-      </tags>
   </entry>
   <entry>
     <title>Windows-&gt;Windows by ssh 使用ssh免密登录Windows server</title>
@@ -1961,44 +1961,6 @@ Name: label, Length: 42000, dtype: int64
       </categories>
   </entry>
   <entry>
-    <title></title>
-    <url>/content/%E6%9C%AA%E5%91%BD%E5%90%8D/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>深度学习服务器环境配置</title>
-    <url>/content/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<p>开启TMux。</p>
-<ol>
-<li>更新源。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt update ; apt upgrade</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>可以熟悉下系统数据。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt install neofetch tree lscpu less</span><br><span class="line">neofetch</span><br><span class="line">tree -L 2</span><br><span class="line">lscpu | less</span><br></pre></td></tr></table></figure>
-
-<p>换上自己的配置。<br>Gitee仓库地址：<a href="https://gitee.com/irorange27/MyConfiguration.git">https://gitee.com/irorange27/MyConfiguration.git</a><br>Github仓库地址：<a href="https://github.com/irorange27/MyConfiguration.git">https://github.com/irorange27/MyConfiguration.git</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://gitee.com/irorange27/MyConfiguration.git</span><br><span class="line">git clone https://github.com/irorange27/MyConfiguration.git</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-<ol start="2">
-<li><p>Download rust language</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl --proto &#x27;=https&#x27; --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Download FISH.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://github.com/fish-shell/fish-shell/releases/download/3.6.1/fish-3.6.1.tar.xz</span><br><span class="line"></span><br><span class="line">lscpu | less</span><br><span class="line"></span><br><span class="line">cmake .; make -j&lt;cpu_num&gt;; sudo make install</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">chsh -s $(which fish); export SHELL=`which fish`; [ -z &quot;$FISH_VERSION&quot; ] &amp;&amp; exec &quot;$SHELL&quot; -l|</span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>Download git lfs. <a href="https://packagecloud.io/github/git-lfs/install">https://packagecloud.io/github/git-lfs/install</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Git pull repository</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git lfs install</span><br><span class="line">git clone https://huggingface.co/gpt2</span><br></pre></td></tr></table></figure></li>
-</ol>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
-  </entry>
-  <entry>
     <title>从零配置windows11开发环境</title>
     <url>/content/%E4%BB%8E%E9%9B%B6%E9%85%8D%E7%BD%AEwindows11%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
     <content><![CDATA[<p>Fork from: <a href="https://kirigaya.cn/blog/article?seq=28">汇尘轩 - 锦恢的博客 (kirigaya.cn)</a></p>
@@ -2201,6 +2163,39 @@ Name: label, Length: 42000, dtype: int64
         <tag>windows</tag>
         <tag>装机</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>深度学习服务器环境配置</title>
+    <url>/content/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<p>开启TMux。</p>
+<ol>
+<li>更新源。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt update ; apt upgrade</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>可以熟悉下系统数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt install neofetch tree lscpu less</span><br><span class="line">neofetch</span><br><span class="line">tree -L 2</span><br><span class="line">lscpu | less</span><br></pre></td></tr></table></figure>
+
+<p>换上自己的配置。<br>Gitee仓库地址：<a href="https://gitee.com/irorange27/MyConfiguration.git">https://gitee.com/irorange27/MyConfiguration.git</a><br>Github仓库地址：<a href="https://github.com/irorange27/MyConfiguration.git">https://github.com/irorange27/MyConfiguration.git</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://gitee.com/irorange27/MyConfiguration.git</span><br><span class="line">git clone https://github.com/irorange27/MyConfiguration.git</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<ol start="2">
+<li><p>Download rust language</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl --proto &#x27;=https&#x27; --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Download FISH.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://github.com/fish-shell/fish-shell/releases/download/3.6.1/fish-3.6.1.tar.xz</span><br><span class="line"></span><br><span class="line">lscpu | less</span><br><span class="line"></span><br><span class="line">cmake .; make -j&lt;cpu_num&gt;; sudo make install</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">chsh -s $(which fish); export SHELL=`which fish`; [ -z &quot;$FISH_VERSION&quot; ] &amp;&amp; exec &quot;$SHELL&quot; -l|</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>Download git lfs. <a href="https://packagecloud.io/github/git-lfs/install">https://packagecloud.io/github/git-lfs/install</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Git pull repository</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git lfs install</span><br><span class="line">git clone https://huggingface.co/gpt2</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
   </entry>
   <entry>
     <title>磁盘管理，改变你电脑磁盘的大小吧！</title>
