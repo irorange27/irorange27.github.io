@@ -45,6 +45,238 @@
       </categories>
   </entry>
   <entry>
+    <title>从零配置windows11开发环境</title>
+    <url>/content/%E4%BB%8E%E9%9B%B6%E9%85%8D%E7%BD%AEwindows11%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p>Fork from: <a href="https://kirigaya.cn/blog/article?seq=28">汇尘轩 - 锦恢的博客 (kirigaya.cn)</a></p>
+<blockquote>
+<p>There is no end though there is a start in space. —Infinity.  </p>
+</blockquote>
+<p>一个新的操作系统必须有的最轻量级的。</p>
+<p>Linux OS:</p>
+<ol>
+<li>Shell: FISH</li>
+<li>Language: Rust、Python3、C++（Clang&#x2F;GCC）</li>
+<li>SSHkey</li>
+<li>Git、Make、CMake</li>
+<li>Editor：Vim、（Notepad++）</li>
+</ol>
+<p>Windows就不轻量了，因此包含Windows应该下载的所有依赖。<br>Windows OS:</p>
+<ol>
+<li>Shell: Pwsh、WSL2</li>
+<li>Language: Rust、Python3、C++(MSVC)、Go、Java、JavaScript（Node）、C#（.net）</li>
+<li>SSHkey</li>
+<li>Git、Make、CMake</li>
+<li>Editor：Helix、Vim、Notepad++、Notepad、Obsidian</li>
+<li>IDE：VS、VSCode</li>
+<li>Docker</li>
+</ol>
+<p>Linux OS 全量版。</p>
+<ol>
+<li>Shell: FISH</li>
+<li>Language: Rust、Python3、C++（Clang&#x2F;GCC）、Go、Java、JavaScript（Node）</li>
+<li>SSHkey</li>
+<li>Git、Make、CMake、XMake</li>
+<li>Editor：Vim、Notepad++、Obsidian</li>
+<li>IDE：VSCode</li>
+<li>Docker</li>
+<li>Nginx</li>
+</ol>
+<p>由于经常换电脑，记录一下简单的电脑配置流程。按照这个顺序配置即可。</p>
+<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><p>必须是Win11，因为我需要这个版本上面的一些特性，或是功能性的，或是装饰性的。</p>
+<h2 id="一、登录微软账号"><a href="#一、登录微软账号" class="headerlink" title="一、登录微软账号"></a>一、登录微软账号</h2><ol>
+<li>同步部分OS配置</li>
+<li>同步edge</li>
+<li>同步应用商店</li>
+<li>升级到相应的Win11版本</li>
+</ol>
+<h2 id="二、转移基本的静态文件"><a href="#二、转移基本的静态文件" class="headerlink" title="二、转移基本的静态文件"></a>二、转移基本的静态文件</h2><ol>
+<li>所有的图片（壁纸+图标+光标）</li>
+<li>所有的额外字体文件（Jetbrain+Nerd等宽字体+几款我喜欢的中文字体）</li>
+<li><code>.ssh</code>文件夹（用于登录服务器）</li>
+<li>windows terminal 的配置文件<code>setting.json</code>，并替换本机windows terminal配置文件，将部分的图标路径进行修改。</li>
+</ol>
+<h2 id="三、下载应用软件"><a href="#三、下载应用软件" class="headerlink" title="三、下载应用软件"></a>三、下载应用软件</h2><ol>
+<li>微软应用商店：Dolby Access（音效）, ScreenMix（录屏）, Snipaste（截屏）、TranslucentTB（美化任务栏）、Starrea（ePub阅读器）</li>
+<li>下载前往魔法址获取SSR订阅，下载并配置CFW。</li>
+<li>网上下载：Google Chrome, FireFox, Tim, 微信, 飞书, 百度网盘, 7z, postman, Office套件, 向日葵, obsidian, OneNote</li>
+</ol>
+<h2 id="四、配置开发环境"><a href="#四、配置开发环境" class="headerlink" title="四、配置开发环境"></a>四、配置开发环境</h2><ol start="0">
+<li><p>下载 PowerShell 7.x 最新版本<br>官方文档：<a href="https://learn.microsoft.com/zh-cn/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3#msi">在 Windows 上安装 PowerShell - PowerShell | Microsoft Learn</a></p>
+</li>
+<li><p>删除和python默认起冲突的可执行文件。使用管理员权限打开powershell，输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd C:\Users\&lt;用户名&gt;\AppData\Local\Microsoft\WindowsApps</span><br><span class="line">rm python*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载 Git</p>
+<ol>
+<li>前往 <a href="https://git-scm.com/download/win">https://git-scm.com/download/win</a></li>
+<li>配置信息：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global user.email xxx</span><br><span class="line">git config --global user.name xxx</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>设置代理：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global http.proxy http://127.0.0.1:&lt;端口号&gt;</span><br><span class="line">git config --global https.proxy https://127.0.0.1:&lt;端口号&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装python</p>
+<ol>
+<li>去 <a href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a> 寻找稳定版本的x64可执行文件下载</li>
+<li>配置pip源：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">pip config set global.proxy http://127.0.0.1:&lt;端口号&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装MinGW <a href="https://sourceforge.net/projects/mingw/">https://sourceforge.net/projects/mingw/</a></p>
+<blockquote>
+<p>忘记安装配置怎么选看<a href="https://blog.csdn.net/QuantumYou/article/details/119676283">这篇博客</a></p>
+</blockquote>
+</li>
+<li><p>安装cmake <a href="https://cmake.org/download/">https://cmake.org/download/</a></p>
+</li>
+</ol>
+<blockquote>
+<p>如果安装了VS，可以查看路径<code>C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin</code>，这里面存在VS构建的cmake，上面的cmake可以不用下载。</p>
+</blockquote>
+<ol start="6">
+<li><p>安装node <a href="https://nodejs.org/en/download/">https://nodejs.org/en/download/</a></p>
+<p>npm 换源：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm config set registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装go</p>
+<ol>
+<li>找到安装 <a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></li>
+<li>配置：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">go env -w GO111MODULE=on</span><br><span class="line">go env -w GOPROXY=https://goproxy.cn,direct</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>如果有必要，设置GOROOT和GOPATH环境变量</li>
+</ol>
+</li>
+<li><p>安装Java：<a href="https://www.oracle.com/hk/java/technologies/downloads/">https://www.oracle.com/hk/java/technologies/downloads/</a></p>
+</li>
+<li><p>测试以上编译器、解释器能否正常工作。</p>
+</li>
+<li><p>安装vscode（科学上网），安装后打开并登录GitHub账号进行配置与插件同步（等到左下角的“正在同步”消失后，就可以退出了）</p>
+</li>
+<li><p>安装VS2022（反正是最新版的就行），安装windows通用开发和C++的。</p>
+</li>
+</ol>
+<h2 id="五、配置终端"><a href="#五、配置终端" class="headerlink" title="五、配置终端"></a>五、配置终端</h2><p>以管理员权限打开windows terminal，执行下面的指令</p>
+<ol>
+<li>配置 powershell，安装powershell插件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 允许运行Install-Module脚本</span><br><span class="line">set-executionpolicy remotesigned</span><br><span class="line"></span><br><span class="line"># 更新最新版本的PSReadLine，为了自动补全</span><br><span class="line">Install-Module PSReadLine -Force</span><br><span class="line"></span><br><span class="line"># 创建powershell 的初始化脚本，点击确认创建即可</span><br><span class="line">notepad $profile</span><br><span class="line"></span><br><span class="line"># 安装几个插件</span><br><span class="line">Install-Module posh-git</span><br><span class="line">Install-Module Terminal-Icons</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>安装并配置oh-my-posh</p>
+<ol>
+<li>安装oh-my-posh</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">winget install JanDeDobbeleer.OhMyPosh -s winget</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果该方法失效，移步<a href="https://ohmyposh.dev/docs/installation/windows">oh-my-posh windows set up</a>查看最新安装方法</p>
+</blockquote>
+<ol start="2">
+<li>下载oh-my-posh主题</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/JanDeDobbeleer/oh-my-posh </span><br></pre></td></tr></table></figure>
+
+<p>将里面的theme文件夹保留即可。</p>
+<ol start="3">
+<li>测试</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">oh-my-posh init pwsh | Invoke-Expression</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置整体运行文件</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">notepad $profile</span><br></pre></td></tr></table></figure>
+
+<p>将以下文本写入其中：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">oh-my-posh init pwsh --config &lt;主题路径（json文件）&gt; | Invoke-Expression</span><br><span class="line">Import-Module posh-git</span><br><span class="line">Import-Module Terminal-Icons</span><br><span class="line">Set-PSReadLineOption -PredictionSource History</span><br><span class="line">Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete</span><br></pre></td></tr></table></figure>
+
+<p>重新打开terminal查看安装效果</p>
+<h2 id="六、安装WSL2"><a href="#六、安装WSL2" class="headerlink" title="六、安装WSL2"></a>六、安装WSL2</h2><p><strong>以管理员身份</strong>打开windows terminal</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 开启VM组件 开启后需要重启电脑</span><br><span class="line">Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform</span><br><span class="line"></span><br><span class="line"># 列出可安装的安装包</span><br><span class="line">wsl --list --online</span><br><span class="line"></span><br><span class="line"># 安装你想要的发行版，我这里是Ubuntu-22.04</span><br><span class="line">wsl --install -d Ubuntu-22.04</span><br><span class="line"></span><br><span class="line"># 设置为wsl2</span><br><span class="line">wsl --set-default-version 2</span><br></pre></td></tr></table></figure>
+
+<p>WSL可以简单的创建多个发行版，并进行管理和切换。并且可以对接VS code及Jetbrain(学生可以申请专业版！！快去)等IDE。支持CUDA，docker，并且享受linux命令行的各种工具。掌握使用WSL是重要的。<br>现在来举例一些基本的操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 列出已安装的Linux发行版</span><br><span class="line">wsl -l -v</span><br><span class="line"># 导出/备份</span><br><span class="line">wsl --export Ubuntu-22.04 Ubuntu-22.04.tar</span><br><span class="line"># 导入/还原/利用备份创建新的安装</span><br><span class="line"># wsl --import &lt;wsl_name&gt; &lt;route&gt; &lt;source&gt;</span><br><span class="line">wsl --import Anaconda C:\Users\niina\root\var\wsl\anaconda</span><br></pre></td></tr></table></figure>
+
+<p>以上操作完成后，在win+Q(或win)中搜索ubuntu on Windows，打开，完成安装和账号注册（Unix账号必须是开头小写的单词）</p>
+<p>完成后打开windows terminal的下拉菜单，会发现多出了一个Ubuntu的标签页。后面移步Linux的配置。</p>
+<p>WSL学习使用：<a href="https://learn.microsoft.com/zh-cn/windows/wsl/">适用于 Linux 的 Windows 子系统文档 | Microsoft Learn</a><br>开源的一个WSL入门手册： <a href="https://dowww.spencerwoo.com/">在Windows上优雅地使用WSL开发</a></p>
+<h2 id="七、兴趣爱好"><a href="#七、兴趣爱好" class="headerlink" title="七、兴趣爱好"></a>七、兴趣爱好</h2><ul>
+<li>cuDNN开发套件（用于开发kernel op和安装编译torch cuda） <a href="https://developer.nvidia.com/cuda-downloads">https://developer.nvidia.com/cuda-downloads</a></li>
+<li>暴雪战网 <a href="https://starcraft2.blizzard.com/zh-tw/">https://starcraft2.blizzard.com/zh-tw/</a></li>
+</ul>
+<blockquote>
+<p>下个星际争霸做强化学习不过分吧</p>
+</blockquote>
+<ul>
+<li><a href="https://www.flstudiochina.com/xiazai.html">FL Studio</a></li>
+<li>Cubase</li>
+<li><a href="https://www.reaper.fm/download.php">REAPER</a></li>
+<li><a href="https://dreamtonics.com/en/synthesizerv/">Synthesizer V</a></li>
+<li><a href="https://store.steampowered.com/about/">Steam</a></li>
+<li>ACE studio  <a href="https://ace-studio.timedomain.cn/">https://ace-studio.timedomain.cn/</a></li>
+</ul>
+<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><h2 id="一、给apt换源"><a href="#一、给apt换源" class="headerlink" title="一、给apt换源"></a>一、给apt换源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /etc/apt/</span><br><span class="line"></span><br><span class="line"># 留个source备份</span><br><span class="line">sudo cp sources.list sources.list.backup</span><br><span class="line"></span><br><span class="line"># 使用源</span><br><span class="line">sudo vim sources.list</span><br></pre></td></tr></table></figure>
+
+<p>写入：（根据ubuntu版本号自己查, <code>cat /etc/os-release</code>)<br>清华源给出的Ubuntu22.04源的网址 <a href="https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/">Ubuntu</a><br>下面是同版本aliyun的源，复制粘贴进即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">## aliyun mirrors</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line">## aliyun mirrors End</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>保存退出。</p>
+<p>移除自带的包（因为可能和国内源的软件有冲突）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt remove ubuntu-advantage-tools</span><br></pre></td></tr></table></figure>
+
+<p>更新包管理器：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt update &amp;&amp; sudo apt upgrade</span><br><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、安装基本的开发工具"><a href="#二、安装基本的开发工具" class="headerlink" title="二、安装基本的开发工具"></a>二、安装基本的开发工具</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># mingw套组</span><br><span class="line">sudo apt install build-essential cmake </span><br><span class="line"></span><br><span class="line"># python3 pip 工具</span><br><span class="line">sudo apt install python3-pip</span><br><span class="line">pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、美化终端"><a href="#三、美化终端" class="headerlink" title="三、美化终端"></a>三、美化终端</h2><h3 id="使用fish"><a href="#使用fish" class="headerlink" title="使用fish"></a>使用fish</h3><p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install fish</span><br><span class="line">chsh -s $(which fish)</span><br><span class="line">export SHELL=`which fish`</span><br><span class="line">[ -z &quot;$FISH_VERSION&quot; ] &amp;&amp; exec &quot;$SHELL&quot; -l</span><br></pre></td></tr></table></figure>
+
+<p>安装<a href="https://github.com/oh-my-fish/oh-my-fish">oh-my-fish</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># with git</span><br><span class="line">$ git clone https://github.com/oh-my-fish/oh-my-fish</span><br><span class="line">$ cd oh-my-fish</span><br><span class="line">$ bin/install --offline</span><br><span class="line"># with a tarball</span><br><span class="line">$ curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install &gt; install</span><br><span class="line">$ fish install --offline=omf.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用zsh"><a href="#使用zsh" class="headerlink" title="使用zsh"></a>使用zsh</h3><p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install zsh</span><br><span class="line">chsh -s $(which zsh)</span><br></pre></td></tr></table></figure>
+
+<p>在bashrc里面加入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export SHELL=`which zsh`</span><br><span class="line">[ -z &quot;$ZSH_VERSION&quot; ] &amp;&amp; exec &quot;$SHELL&quot; -l</span><br></pre></td></tr></table></figure>
+
+<p>重新打开当前终端，就会进入zsh终端，接着安装oh-my-zsh主题框架。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd ~</span><br><span class="line">git clone https://gitee.com/mirrors/oh-my-zsh</span><br><span class="line">sh oh-my-zsh/tools/install.sh</span><br></pre></td></tr></table></figure>
+
+<p>安装两个插件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd ~/.oh-my-zsh/custom/plugins/</span><br><span class="line"></span><br><span class="line"># 高亮关键词</span><br><span class="line">git clone https://gitee.com/haohaogood/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line"># 自动补全</span><br><span class="line">git clone https://gitee.com/qiushaocloud/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
+
+<p>然后进入<code>~/.zshrc</code>在plugins参数中添加<code>zsh-syntax-highlighting</code>和<code>zsh-autosuggestions</code>。也就是说你的.zshrc中必须要有一行长这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">plugins=(git zsh-syntax-highlighting zsh-autosuggestions)</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、安装部分驱动程序"><a href="#四、安装部分驱动程序" class="headerlink" title="四、安装部分驱动程序"></a>四、安装部分驱动程序</h2><p>默认pip 版本较低，升级一下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install --upgrade pip</span><br></pre></td></tr></table></figure>
+
+<p>安装opencv的包</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install libopencv-dev</span><br><span class="line">pip install opencv-python</span><br></pre></td></tr></table></figure>
+
+<p>安装torch cuda</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install nvidia-cuda-toolkit</span><br></pre></td></tr></table></figure>
+
+<p>然后去<a href="https://pytorch.org/%E6%89%BE%E5%AF%B9%E5%BA%94%E7%9A%84%E5%AE%89%E8%A3%85%E6%8C%87%E4%BB%A4%E3%80%82">https://pytorch.org/找对应的安装指令。</a></p>
+]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+      <tags>
+        <tag>装机</tag>
+        <tag>windows</tag>
+        <tag>计算机</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【转载】About Computer Science</title>
     <url>/content/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91About%20Computer%20Science/</url>
     <content><![CDATA[<p>授权转载自<a href="https://chasing1020.github.io/post/about-computer-science/">chasing学长的博客</a>。</p>
@@ -202,209 +434,5 @@
       <categories>
         <category>转载</category>
       </categories>
-  </entry>
-  <entry>
-    <title>从零配置windows11开发环境</title>
-    <url>/content/%E4%BB%8E%E9%9B%B6%E9%85%8D%E7%BD%AEwindows11%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<p>Fork from: <a href="https://kirigaya.cn/blog/article?seq=28">汇尘轩 - 锦恢的博客 (kirigaya.cn)</a></p>
-<blockquote>
-<p>There is no end though there is a start in space. —Infinity.  </p>
-<p>It has own power, it ruins, and it goes though there is a start also in the star. —Finite.  </p>
-<p>Only the person who was wisdom can read the most foolish one from the history.<br>The fish that lives in the sea doesn’t know the world in the land.<br>It also ruins and goes if they have wisdom.</p>
-</blockquote>
-<p>由于经常换电脑，记录一下简单的电脑配置流程。按照这个顺序配置即可。</p>
-<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><p>必须是win11，因为我需要这个版本上面的一些特性，或是功能性的，或是装饰性的。</p>
-<h2 id="一、登录微软账号"><a href="#一、登录微软账号" class="headerlink" title="一、登录微软账号"></a>一、登录微软账号</h2><ol>
-<li>同步部分OS配置</li>
-<li>同步edge</li>
-<li>同步应用商店</li>
-<li>升级到相应的win11版本</li>
-</ol>
-<h2 id="二、转移基本的静态文件"><a href="#二、转移基本的静态文件" class="headerlink" title="二、转移基本的静态文件"></a>二、转移基本的静态文件</h2><ol>
-<li>所有的图片（壁纸+图标+光标）</li>
-<li>所有的额外字体文件（Jetbrain+Nerd等宽字体+几款我喜欢的中文字体）</li>
-<li><code>.ssh</code>文件夹（用于登录服务器）</li>
-<li>windows terminal 的配置文件<code>setting.json</code>，并替换本机windows terminal配置文件，将部分的图标路径进行修改。</li>
-</ol>
-<h2 id="三、下载应用软件"><a href="#三、下载应用软件" class="headerlink" title="三、下载应用软件"></a>三、下载应用软件</h2><ol>
-<li>微软应用商店：Dolby Access, ScreenMix</li>
-<li>下载前往魔法址获取SSR订阅，下载并配置CFW。</li>
-<li>网上下载：Google Chrome, FireFox, Tim, 微信, 飞书, 百度网盘, bandizip, postman, office套件, 向日葵, obsidian, oneNote</li>
-</ol>
-<h2 id="四、配置开发环境"><a href="#四、配置开发环境" class="headerlink" title="四、配置开发环境"></a>四、配置开发环境</h2><ol start="0">
-<li><p>下载powershell 7.3.<br>官方文档：<a href="https://learn.microsoft.com/zh-cn/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3#msi">在 Windows 上安装 PowerShell - PowerShell | Microsoft Learn</a></p>
-</li>
-<li><p>删除和python默认起冲突的可执行文件。使用管理员权限打开powershell，输入：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd C:\Users\&lt;用户名&gt;\AppData\Local\Microsoft\WindowsApps</span><br><span class="line">rm python*</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>下载git</p>
-<ol>
-<li>前往 <a href="https://git-scm.com/download/win">https://git-scm.com/download/win</a></li>
-<li>配置信息：</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global user.email xxx</span><br><span class="line">git config --global user.name xxx</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>设置代理：</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global http.proxy http://127.0.0.1:&lt;端口号&gt;</span><br><span class="line">git config --global https.proxy https://127.0.0.1:&lt;端口号&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装python</p>
-<ol>
-<li>去 <a href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a> 寻找稳定版本的x64可执行文件下载</li>
-<li>配置pip源：</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">pip config set global.proxy http://127.0.0.1:&lt;端口号&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装MinGW <a href="https://sourceforge.net/projects/mingw/">https://sourceforge.net/projects/mingw/</a></p>
-<blockquote>
-<p>忘记安装配置怎么选看<a href="https://blog.csdn.net/QuantumYou/article/details/119676283">这篇博客</a></p>
-</blockquote>
-</li>
-<li><p>安装cmake <a href="https://cmake.org/download/">https://cmake.org/download/</a></p>
-</li>
-</ol>
-<blockquote>
-<p>如果安装了VS，可以查看路径<code>C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin</code>，这里面存在VS构建的cmake，上面的cmake可以不用下载。</p>
-</blockquote>
-<ol start="6">
-<li><p>安装node <a href="https://nodejs.org/en/download/">https://nodejs.org/en/download/</a></p>
-<p>npm 换源：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm config set registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装go</p>
-<ol>
-<li>找到安装 <a href="https://golang.google.cn/dl/">https://golang.google.cn/dl/</a></li>
-<li>配置：</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">go env -w GO111MODULE=on</span><br><span class="line">go env -w GOPROXY=https://goproxy.cn,direct</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>如果有必要，设置GOROOT和GOPATH环境变量</li>
-</ol>
-</li>
-<li><p>安装Java：<a href="https://www.oracle.com/hk/java/technologies/downloads/">https://www.oracle.com/hk/java/technologies/downloads/</a></p>
-</li>
-<li><p>测试以上编译器、解释器能否正常工。</p>
-</li>
-<li><p>安装vscode（科学上网），安装后打开并登录GitHub账号进行配置与插件同步（等到左下角的“正在同步”消失后，就可以退出了）</p>
-</li>
-<li><p>安装VS2022（反正是最新版的就行），安装windows通用开发和C++的（19G好像是）</p>
-</li>
-</ol>
-<h2 id="五、配置终端"><a href="#五、配置终端" class="headerlink" title="五、配置终端"></a>五、配置终端</h2><p>以管理员权限打开windows terminal，执行下面的指令</p>
-<ol>
-<li>配置 powershell，安装powershell插件</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 允许运行Install-Module脚本</span><br><span class="line">set-executionpolicy remotesigned</span><br><span class="line"></span><br><span class="line"># 更新最新版本的PSReadLine，为了自动补全</span><br><span class="line">Install-Module PSReadLine -Force</span><br><span class="line"></span><br><span class="line"># 创建powershell 的初始化脚本，点击确认创建即可</span><br><span class="line">notepad $profile</span><br><span class="line"></span><br><span class="line"># 安装几个插件</span><br><span class="line">Install-Module posh-git</span><br><span class="line">Install-Module Terminal-Icons</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><p>安装并配置oh-my-posh</p>
-<ol>
-<li>安装oh-my-posh</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">winget install JanDeDobbeleer.OhMyPosh -s winget</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>如果该方法失效，移步<a href="https://ohmyposh.dev/docs/installation/windows">oh-my-posh windows set up</a>查看最新安装方法</p>
-</blockquote>
-<ol start="2">
-<li>下载oh-my-posh主题</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/JanDeDobbeleer/oh-my-posh </span><br></pre></td></tr></table></figure>
-
-<p>将里面的theme文件夹保留即可。</p>
-<ol start="3">
-<li>测试</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">oh-my-posh init pwsh | Invoke-Expression</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置整体运行文件</p>
-</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">notepad $profile</span><br></pre></td></tr></table></figure>
-
-<p>将以下文本写入其中：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">oh-my-posh init pwsh --config &lt;主题路径（json文件）&gt; | Invoke-Expression</span><br><span class="line">Import-Module posh-git</span><br><span class="line">Import-Module Terminal-Icons</span><br><span class="line">Set-PSReadLineOption -PredictionSource History</span><br><span class="line">Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete</span><br></pre></td></tr></table></figure>
-
-<p>重新打开terminal查看安装效果</p>
-<h2 id="六、安装WSL2"><a href="#六、安装WSL2" class="headerlink" title="六、安装WSL2"></a>六、安装WSL2</h2><p><strong>以管理员身份</strong>打开windows terminal</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 开启VM组件 开启后需要重启电脑</span><br><span class="line">Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform</span><br><span class="line"></span><br><span class="line"># 列出可安装的安装包</span><br><span class="line">wsl --list --online</span><br><span class="line"></span><br><span class="line"># 安装你想要的发行版，我这里是Ubuntu-22.04</span><br><span class="line">wsl --install -d Ubuntu-22.04</span><br><span class="line"></span><br><span class="line"># 设置为wsl2</span><br><span class="line">wsl --set-default-version 2</span><br></pre></td></tr></table></figure>
-
-<p>WSL可以简单的创建多个发行版，并进行管理和切换。并且可以对接VS code及Jetbrain(学生可以申请专业版！！快去)等IDE。支持CUDA，docker，并且享受linux命令行的各种工具。掌握使用WSL是重要的。<br>现在来举例一些基本的操作。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 列出已安装的Linux发行版</span><br><span class="line">wsl -l -v</span><br><span class="line"># 导出/备份</span><br><span class="line">wsl --export Ubuntu-22.04 Ubuntu-22.04.tar</span><br><span class="line"># 导入/还原/利用备份创建新的安装</span><br><span class="line"># wsl --import &lt;wsl_name&gt; &lt;route&gt; &lt;source&gt;</span><br><span class="line">wsl --import Anaconda C:\Users\niina\root\var\wsl\anaconda</span><br></pre></td></tr></table></figure>
-
-<p>以上操作完成后，在win+Q(或win)中搜索ubuntu on Windows，打开，完成安装和账号注册（Unix账号必须是开头小写的单词）</p>
-<p>完成后打开windows terminal的下拉菜单，会发现多出了一个Ubuntu的标签页。后面移步Linux的配置。</p>
-<p>WSL学习使用：<a href="https://learn.microsoft.com/zh-cn/windows/wsl/">适用于 Linux 的 Windows 子系统文档 | Microsoft Learn</a><br>开源的一个WSL入门手册： <a href="https://dowww.spencerwoo.com/">在Windows上优雅地使用WSL开发</a></p>
-<h2 id="七、兴趣爱好"><a href="#七、兴趣爱好" class="headerlink" title="七、兴趣爱好"></a>七、兴趣爱好</h2><ul>
-<li>cuDNN开发套件（用于开发kernel op和安装编译torch cuda） <a href="https://developer.nvidia.com/cuda-downloads">https://developer.nvidia.com/cuda-downloads</a></li>
-<li>暴雪战网 <a href="https://starcraft2.blizzard.com/zh-tw/">https://starcraft2.blizzard.com/zh-tw/</a></li>
-</ul>
-<blockquote>
-<p>下个星际争霸做强化学习不过分吧</p>
-</blockquote>
-<ul>
-<li><a href="https://www.flstudiochina.com/xiazai.html">FL Studio</a></li>
-<li>Cubase</li>
-<li><a href="https://www.reaper.fm/download.php">REAPER</a></li>
-<li><a href="https://dreamtonics.com/en/synthesizerv/">Synthesizer V</a></li>
-<li><a href="https://store.steampowered.com/about/">Steam</a></li>
-<li>ACE studio  <a href="https://ace-studio.timedomain.cn/">https://ace-studio.timedomain.cn/</a></li>
-</ul>
-<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><h2 id="一、给apt换源"><a href="#一、给apt换源" class="headerlink" title="一、给apt换源"></a>一、给apt换源</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /etc/apt/</span><br><span class="line"></span><br><span class="line"># 留个source备份</span><br><span class="line">sudo cp sources.list sources.list.backup</span><br><span class="line"></span><br><span class="line"># 使用源</span><br><span class="line">sudo vim sources.list</span><br></pre></td></tr></table></figure>
-
-<p>写入：（根据ubuntu版本号自己查, <code>cat /etc/os-release</code>)<br>清华源给出的Ubuntu22.04源的网址 <a href="https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/">Ubuntu</a><br>下面是同版本aliyun的源，复制粘贴进即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">## aliyun mirrors</span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse</span><br><span class="line"></span><br><span class="line">deb http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line">deb-src http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse</span><br><span class="line">## aliyun mirrors End</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>保存退出。</p>
-<p>移除自带的包（因为可能和国内源的软件有冲突）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt remove ubuntu-advantage-tools</span><br></pre></td></tr></table></figure>
-
-<p>更新包管理器：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt update &amp;&amp; sudo apt upgrade</span><br><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、安装基本的开发工具"><a href="#二、安装基本的开发工具" class="headerlink" title="二、安装基本的开发工具"></a>二、安装基本的开发工具</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># mingw套组</span><br><span class="line">sudo apt install build-essential cmake </span><br><span class="line"></span><br><span class="line"># python3 pip 工具</span><br><span class="line">sudo apt install python3-pip</span><br><span class="line">pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、美化终端"><a href="#三、美化终端" class="headerlink" title="三、美化终端"></a>三、美化终端</h2><h3 id="使用fish"><a href="#使用fish" class="headerlink" title="使用fish"></a>使用fish</h3><p>安装</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install fish</span><br><span class="line">chsh -s $(which fish)</span><br><span class="line">export SHELL=`which fish`</span><br><span class="line">[ -z &quot;$FISH_VERSION&quot; ] &amp;&amp; exec &quot;$SHELL&quot; -l</span><br></pre></td></tr></table></figure>
-
-<p>安装<a href="https://github.com/oh-my-fish/oh-my-fish">oh-my-fish</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># with git</span><br><span class="line">$ git clone https://github.com/oh-my-fish/oh-my-fish</span><br><span class="line">$ cd oh-my-fish</span><br><span class="line">$ bin/install --offline</span><br><span class="line"># with a tarball</span><br><span class="line">$ curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install &gt; install</span><br><span class="line">$ fish install --offline=omf.tar.gz</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用zsh"><a href="#使用zsh" class="headerlink" title="使用zsh"></a>使用zsh</h3><p>安装</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install zsh</span><br><span class="line">chsh -s $(which zsh)</span><br></pre></td></tr></table></figure>
-
-<p>在bashrc里面加入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export SHELL=`which zsh`</span><br><span class="line">[ -z &quot;$ZSH_VERSION&quot; ] &amp;&amp; exec &quot;$SHELL&quot; -l</span><br></pre></td></tr></table></figure>
-
-<p>重新打开当前终端，就会进入zsh终端，接着安装oh-my-zsh主题框架。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd ~</span><br><span class="line">git clone https://gitee.com/mirrors/oh-my-zsh</span><br><span class="line">sh oh-my-zsh/tools/install.sh</span><br></pre></td></tr></table></figure>
-
-<p>安装两个插件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd ~/.oh-my-zsh/custom/plugins/</span><br><span class="line"></span><br><span class="line"># 高亮关键词</span><br><span class="line">git clone https://gitee.com/haohaogood/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line"># 自动补全</span><br><span class="line">git clone https://gitee.com/qiushaocloud/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
-
-<p>然后进入<code>~/.zshrc</code>在plugins参数中添加<code>zsh-syntax-highlighting</code>和<code>zsh-autosuggestions</code>。也就是说你的.zshrc中必须要有一行长这样：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">plugins=(git zsh-syntax-highlighting zsh-autosuggestions)</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、安装部分驱动程序"><a href="#四、安装部分驱动程序" class="headerlink" title="四、安装部分驱动程序"></a>四、安装部分驱动程序</h2><p>默认pip 版本较低，升级一下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install --upgrade pip</span><br></pre></td></tr></table></figure>
-
-<p>安装opencv的包</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install libopencv-dev</span><br><span class="line">pip install opencv-python</span><br></pre></td></tr></table></figure>
-
-<p>安装torch cuda</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt install nvidia-cuda-toolkit</span><br></pre></td></tr></table></figure>
-
-<p>然后去<a href="https://pytorch.org/%E6%89%BE%E5%AF%B9%E5%BA%94%E7%9A%84%E5%AE%89%E8%A3%85%E6%8C%87%E4%BB%A4%E3%80%82">https://pytorch.org/找对应的安装指令。</a></p>
-]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
-      <tags>
-        <tag>装机</tag>
-        <tag>windows</tag>
-        <tag>计算机</tag>
-      </tags>
   </entry>
 </search>
