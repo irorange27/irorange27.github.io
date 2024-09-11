@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Kubernetes 集群搭建与使用（一）</title>
+    <url>/Kubernetes-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<blockquote>
+<p>本篇主讲 Kubernates 集群如何以 Containerd 初始化 Kube-APIServer 以及加入节点。</p>
+</blockquote>
+<h1 id="Kubernetes-集群初始化"><a href="#Kubernetes-集群初始化" class="headerlink" title="Kubernetes 集群初始化"></a>Kubernetes 集群初始化</h1><h2 id="Kebernetes-API-server安装"><a href="#Kebernetes-API-server安装" class="headerlink" title="Kebernetes API-server安装"></a>Kebernetes API-server安装</h2><h3 id="1-install-kubectl-kubelet-and-kubectl"><a href="#1-install-kubectl-kubelet-and-kubectl" class="headerlink" title="1. install kubectl, kubelet and kubectl"></a>1. install kubectl, kubelet and kubectl</h3><p>根据自己的需要选择合适的版本进行安装，这里我选择使用 <a href="https://v1-30.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl">v1.30</a> ，跟随文档完成五步安装即可。目前最新的 Release 版本是 <code>v1.31</code>，但是很多生态并没有完全适配最新稳定版本，选用<code>v1.30</code>可以支持上下浮动一个版本。</p>
+<p>配置完成后加载补全。</p>
+<p>对于 <code>fish</code>：<code>kubectl completion fish &gt; ~/.config/fish/completions/kubectl.fish</code>。</p>
+<p>对于 <code>zsh</code> ： <code>kubectl completion zsh &gt; ~/.kubectl-completion &amp;&amp; source ~/.kubectl-completion</code>。</p>
+<h3 id="2-install-containerd"><a href="#2-install-containerd" class="headerlink" title="2. install containerd"></a>2. install containerd</h3><ul>
+<li>启用IPv4包转发</li>
+</ul>
+<p>开启IPv4数据包转发:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># sysctl params required by setup, params persist across reboots</span><br><span class="line">cat &lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"># Apply sysctl params without reboot</span><br><span class="line">sudo sysctl --system</span><br></pre></td></tr></table></figure>
+
+<p>验证 <code>net.ipv4.ip_forward</code> 是否设置为1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.ip_forward # -&gt; net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>控制组(cgroup)驱动程序</li>
+</ul>
+<p><code>control groups</code> 在Linux上用于限制分配给进程的资源，目前PC机上的最新Linux OS大多采用的是<code>systemd</code>作为<code>cgroup driver</code>。</p>
+<p>修改 <code>ctr</code> 设置(<code>/etc/containerd/config.toml</code>)，启动 <code>cgroup</code>。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">[<span class="string">plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes.runc.options</span>]</span><br><span class="line">  <span class="string">...</span></span><br><span class="line">  <span class="string">SystemdCgroup</span> <span class="string">=</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>修改配置后重启服务。</p>
+<p>选择选项1 <a href="https://v1-30.docs.kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd">从官方源下载containerd</a>，完成三步的安装。</p>
+<ul>
+<li>配置 <code>ctr</code> HTTP代理</li>
+</ul>
+<p>在 <code>systemd</code> 处配置HTTP代理。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo vim /etc/systemd/system/containerd.service</span></span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">...</span><br><span class="line">Environment=&quot;HTTP_PROXY=http://10.0.65.15:3128&quot;</span><br><span class="line">Environment=&quot;HTTPS_PROXY=http://10.0.65.15:3128&quot;</span><br><span class="line">Environment=&quot;NO_PROXY=localhost,127.0.0.1,10.0.4.11&quot;</span><br></pre></td></tr></table></figure>
+
+<p>重新加载配置生效。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl daemon-reload &amp;&amp; sudo systemctl restart containerd</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>ctr</code> 配置<br>修改 <code>sandbox镜像</code> 为 <code>registry.lank8s.cn/pause:3.9</code>（根据kubeadm提示的版本）。<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># /etc/containerd/config.toml</span></span><br><span class="line">[<span class="string">plugins.&quot;io.containerd.grpc.v1.cri&quot;</span>]</span><br><span class="line"> <span class="string">...</span></span><br><span class="line"> <span class="string">sandbox_image</span> <span class="string">=</span> <span class="string">&quot;registry.lank8s.cn/pause:3.9&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-kubeadm-启动"><a href="#3-kubeadm-启动" class="headerlink" title="3. kubeadm 启动"></a>3. kubeadm 启动</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo kubeadm init --image-repository=lank8s.cn --kubernetes-version=v1.30.4 --pod-network-cidr=10.244.0.0/16 --service-cidr=10.96.0.0/12 --ignore-preflight-errors=Swap </span><br></pre></td></tr></table></figure>
+
+<p>此时应当看到集群成功初始化，可以看到可以加入其他节点到集群中。</p>
+<p>初始化完成后会提醒必须先完成 配置 <code>KUBECONFIG</code> 变量以及完成 <code>k8s</code>网络配置后才能加入新的 <code>node</code> 。注意按照初始化完成后提示的步骤将 <code>kubelet</code> 的配置文件复制并更改拥有权到 <code>~/.kube/config</code> 文件处。</p>
+<p>完成配置和网络设置后，可以向集群加入新的 <code>node</code>。</p>
+<p>对于新的 <code>node</code> 至少需要完成步骤一和步骤二，才能成功加入。</p>
+<p>如果 <code>kubectl get node</code> 发现不在 <code>Running</code> 状态，可以使用 <code>systemctl</code>, <code>journalctl</code>, <code>kubectl describe</code>, <code>kubectl get</code> 等等命令检查集群状态。</p>
+<p>如果初始化搭建不成功，可以使用 <code>kubeadm reset</code> 重新进行操作。</p>
+<h3 id="关于网络配置"><a href="#关于网络配置" class="headerlink" title="关于网络配置"></a>关于网络配置</h3><p>Kubernetes 官方给出了诸多方案，也算其生态混乱的一种体现。这里先选用最简单的一种网络方案 <code>flaanel</code>。</p>
+<p>如果选用 <code>flannel</code>，似乎需要在每个加入的节点都安装。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Deploying Flannel with kubectl</span><br><span class="line">kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Learning</category>
+      </categories>
+      <tags>
+        <tag>运维</tag>
+        <tag>集群</tag>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C++现代特性</title>
     <url>/content/C-%E7%8E%B0%E4%BB%A3%E7%89%B9%E6%80%A7/</url>
     <content><![CDATA[<h1 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h1><h2 id="C-11"><a href="#C-11" class="headerlink" title="C++11"></a>C++11</h2><h3 id="Lambda-Expressions"><a href="#Lambda-Expressions" class="headerlink" title="Lambda Expressions"></a>Lambda Expressions</h3><p>C++11开始支持lambda函数。</p>
@@ -42,6 +101,165 @@
 ]]></content>
       <categories>
         <category>Learning</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>【转载】About Computer Science</title>
+    <url>/content/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91About%20Computer%20Science/</url>
+    <content><![CDATA[<p>授权转载自<a href="https://chasing1020.github.io/post/about-computer-science/">chasing学长的博客</a>。</p>
+<p>要知道写一份像这样的经验分享东西，而且是关于学科专业生活学习各个方面的博客，是很花费精力和心血的。在此对学长表示感谢。文中涉及了计算机科学相关的问题：什么是计算机科学与工程？我们为什么要学习它？我们所处的环境怎样？未来的形势会如何？专业的日常生活是什么样？我们该以何种方法途径去学习？</p>
+<hr>
+<p>It is a yearly “divide major” season, and now I am looking back at the series of computer science <a href="https://www.zhihu.com/question/326615493/answer/711051528">questions</a> and answers I have browsed in Zhihu during my freshman year, and I feel a lot of emotions. I have been thinking about it for a long time, and this is the first time I have seen such numerous questions and discussions about computer science, hence I write about this post. If you find any bugs or grammar issues, please don’t hesitate to contact me to fix them. Anyway, thanks again for accepting my poor English.</p>
+<h1 id="0-Preface"><a href="#0-Preface" class="headerlink" title="0. Preface"></a>0. Preface</h1><blockquote>
+<p>What is computer science? Why does our country need students majoring in it? What is the future of this major? Will computer science be popular in the future?</p>
+</blockquote>
+<p>Two years later, when I introduced this major to my younger brother and sister who study at our university as a “past person”, it was too difficult for me to write the answer because I was worried about my lack of ability and short-sightedness, which brought all kinds of misguidance to them; secondly, the choice of major at the undergraduate level will probably affect a person’s life and mislead others. The third is that the choice of major at the undergraduate level may affect one’s life and mislead the future of others.</p>
+<p>Therefore, in this article, I will try my best to talk about my experience and thoughts in computer science over the past two years, and hope readers can gain something worthwhile. The content I share is only my opinion and does not represent any absolute theory. </p>
+<h1 id="1-Our-Environment"><a href="#1-Our-Environment" class="headerlink" title="1. Our Environment"></a>1. Our Environment</h1><blockquote>
+<p>This is an era of prosperity and crisis: Owing to the COVID-19, our world is experiencing changes never seen in a century.</p>
+</blockquote>
+<p>The annually spring and autumn recruitment is the barometer of the development of the computer industry, from last year, Tencent paid 40w high salary in the hot search, and then some time ago, due to the epidemic of the re-emergence of the side of layoffs while also locking the head count. Until today President Liu Kiping of Tencent issued an article: “Internal manpower investment will be adjusted from the edge of the business to the core business, in the industry to occur fundamental changes in the industry when actively embracing change”.</p>
+<p>In the general environment, today’s Internet is far less than what it was 10 years ago, the so-called “Although it is a pig, it can wind and waves.”, which Howard’s comment is: “Now the Internet from the era of incremental into the era of stock. Everyone has no way to make the cake bigger, so they can only grab each other’s cake”.</p>
+<p><a href="https://en.wikipedia.org/wiki/The_Mythical_Man-Month">The Mythical Man-Month</a> which is the bible of software engineering points out that more people can not shorten the software development progress, and it is dangerous to use “man-month” to measure the size of the work. Because <code>the number of people != efficiency</code>, the way to adjust the organizational structure of the current major manufacturers is also very straightforward - leaving the most valuable programmers. In this environment, with only a small pool of talent to dig, the Internet starting salary also seems very high.</p>
+<p>If only to high salary or good employment and blindly choose computer science major, it can only be said to have entered the survivorship bias. An objective fact is that the average salary of students graduating from our school is far below the average level of Zhihu or Maimai. The best students can collect offers from all the big companies, but the students who usually waste their time, even though they choose this major, often end up not as good as they expect. The salary distribution of this industry is not normal but power-law distribution, only a small group of the best people can share the most cake, the variance of the future development of the same industry will be very large. If you will choose to enter the industry in the future, please try to become the front group of people.</p>
+<p>In this regard, I think the reason for choosing this major should be “you love computer science enough”, not “this major is hot”. If you like the process of building a whole world of order through a process control (auto-state machine) and have some interest in this major, you may want to read on below.</p>
+<h1 id="2-About-CES"><a href="#2-About-CES" class="headerlink" title="2. About CES"></a>2. About CES</h1><blockquote>
+<p>What is the Computer Engineering and Science?</p>
+</blockquote>
+<p>The School of Computer Engineering and Science (CES) offers four majors: Computer Science and Technology, Intelligent Science and Technology, Cyberspace Security, and Artificial Intelligence.</p>
+<p>The gap between these majors, as reflected in the professional courses taken at the undergraduate level, will not be so big, at least most of the basic courses such as data structures, principles of computer composition, operating systems, computer networks (i.e., the 408 in the Master’s degree examination) are treated equally. Corresponding professional courses will focus on the study content, specific details refer to Shanghai University undergraduate professional training program in <a href="https://www.jwc.shu.edu.cn/content.jsp?urltype=news.NewsContentUrl&wbtreeid=1192&wbnewsid=31263">2019</a> and <a href="https://www.jwc.shu.edu.cn/content.jsp?urltype=news.NewsContentUrl&wbtreeid=1192&wbnewsid=32552">2020</a>. And all majors’ rankings are represented by the following table:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>2021 Plan</th>
+<th>2021 Rank</th>
+<th>2020 Plan</th>
+<th>2020 Rank</th>
+<th>2019 Plan</th>
+<th>2019 Rank</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Computer Science and Technology</td>
+<td>110</td>
+<td>289&#x2F;1573</td>
+<td>135</td>
+<td>560&#x2F;2029</td>
+<td>150</td>
+<td>582&#x2F;2090</td>
+</tr>
+<tr>
+<td>Intelligent Science and Technology</td>
+<td>26</td>
+<td>375&#x2F;1573</td>
+<td>45</td>
+<td>486&#x2F;2029</td>
+<td>60</td>
+<td>281&#x2F;2090</td>
+</tr>
+<tr>
+<td>Cyberspace Security</td>
+<td>20</td>
+<td>396&#x2F;1573</td>
+<td>25</td>
+<td>495&#x2F;2029</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Artificial Intelligence</td>
+<td>21</td>
+<td>366&#x2F;1573</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<p>In most cases, there will not be a significant gap in the daily academic communication of interdisciplinary students, because the skills you will use in your future work may not be as closely related to your current chosen major. What teachers teach you will not determine what you will learn about. For example, if you choose computer science and technology, you can still study artificial intelligence, and if you choose AI, you can study cybersecurity-related content. But in detail:</p>
+<ul>
+<li>Computer science and technology: can be understood as the computer industry, the Polytechnic University class, belongs to the computer in the basic disciplines, both soft and hard, optional development direction range is very wide, and the specific direction of research depends entirely on your interest.</li>
+<li>Intelligent science and technology: need to learn some signal processing, matrix algebra, brain cognition, and operations research-related courses, across a wide range.</li>
+<li>Cyberspace security: a new major in my year, the scope of the study is not limited to the so-called “cyber security”, but also distinguishes penetration, reverse, cryptography and so on.</li>
+<li>Artificial intelligence: the research direction and professional course arrangement are also close to the wisdom of science, including mathematical logic, data mining, brain cognition, etc.,<br>it is recommended that students with good mathematics choose, need very good linear algebra and probability theory foundation, but also this is the Department of Mathematics “to grab a job” one of the directions.</li>
+</ul>
+<p>There is no absolute answer to the question of whether a specific major is better or worse. From a personal point of view, the teaching program of the new major still needs time to settle down, 10 weeks of short semesters are compressed together, and even if you take grade 4.0 does not mean that you learned the course well.</p>
+<p>Remember <code>what the school teaches != what I need to learn</code>, you need to be clear about where your future competitiveness in the industry lies. Nowadays, more than 90% of the interview contents of large Internet companies are not what the teachers can teach you, but the fact that the teacher did not teach is not a reason why you don’t know that.</p>
+<h1 id="3-The-future"><a href="#3-The-future" class="headerlink" title="3. The future"></a>3. The future</h1><blockquote>
+<p>What I will do in the future?</p>
+</blockquote>
+<p>In fact, each road is divided and the choice will be different.</p>
+<p><code>For work</code>: If you do not have the intention to study what, it is not recommended to go in the direction of algorithms, the main directions include front-end, client, back-end, testing, operations and maintenance, security, etc. Before the junior year, make sure to finish the professional courses, and do not leave too many courses for the senior year. As early as possible to determine the technology stack used in the interview, looking for online classes (preferably open courses in foreign famous universities, books, blogs, and <a href="https://github.com/sindresorhus/awesome">awesome list</a>; job search in the early efforts to do <a href="https://leetcode.com/problemset/all/">leetcode</a>, the summer of the junior year (or the end of the second year of winter) as early as possible to go to the Internet companies for internship, more accumulated internship experience project experience.</p>
+<ul>
+<li>Internship: it is best to find the schoolmates or online internal push, more understanding of the department’s working environment, overtime status, etc. The primary purpose of the internship is to enrich the resume, it is not recommended to care too much about the salary more or less, the key is you will learn what.</li>
+<li>When you are looking for a job with your internship experience, the name of your internship company only exists for the interviewer to have heard of&#x2F;not heard of two situations. If the goal is to work for a big company, it is not particularly recommended to go to outsourcing companies and traditional industry companies (i.e. companies whose old business is not the Internet) or if you want to take “private jobs” from teachers and make sure to identify the good and bad projects, refer to <a href="https://survivesjtu.gitbook.io/survivesjtumanual/fang-tan-ji/xiao-xin-xiang-mu-de-xian-jing">Shanghai Jiao Tong University Survives Guide</a>.</li>
+</ul>
+<p><code>Taking part in the civil servant exam</code>: Mainly depends on the province, city, unit, and tier, the specific details are unknown.</p>
+<p><code>Push avoid</code>: The specific policy will change every year, refer to The Implementation plan for the work of recommending fresh outstanding undergraduate graduates to be exempted from studying for a master’s degree in <a href="https://cs.shu.edu.cn/info/1198/20176.htm">2022</a> and <a href="https://cs.shu.edu.cn/info/1198/19884.htm">2021</a> School of Computer Science of Shanghai University. The details of the policy will change every year, but it is important to be clear about where you need to get extra points.</p>
+<ul>
+<li>Note that “the scientific research achievements and competition awards of students who cooperate with their immediate family members or those with significantly higher education, titles and positions than themselves are only for reference and are not included in the calculation system of the comprehensive evaluation results.”, means that the route of publishing papers in cooperation with supervisors, finding joint competitions for graduate Ph.D. will not work.</li>
+<li>On the other hand, <code>Shanghai University has a lot of ACM experts == Shanghai University ACM is powerful != you will be powerful definitely when you come to ACM</code>, same for CTF, ASC, etc. Some competitions will cost a lot of time investment if you find it is not suitable also please give up the sunk cost in time, spend time to do leetcode than waste time in the competition.</li>
+</ul>
+<p><code>Taking part in the postgraduate entrance exams</code>: The students with low GPAs who want to fulfill their dreams of a famous domestic school is also the choice of most students who do not want to work for the time being. The preparation time for the exam begins in the second semester of the junior year, choice is greater than effort. The process of preparing for the exam, choosing a school, etc., depends on the individual situation, so I won’t go into detail here.</p>
+<p><code>Study abroad</code>: The first thing you need to do is to make sure that you are ready to go to the country you want to go to, whether you need to take IELTS or TOEFL, and whether you want to take GRE. In addition, striving to participate in internationally renowned competitions or publish some academic results but also trying to accumulate some foreign company internship experience, in the application are very plus points. As for whether to stay or return to your home country at the end of your graduate studies abroad, it ultimately depends on your situation.</p>
+<h1 id="4-Daily-life"><a href="#4-Daily-life" class="headerlink" title="4. Daily life"></a>4. Daily life</h1><blockquote>
+<p>What is life like in the college?</p>
+</blockquote>
+<ol>
+<li>Grade 2019 and 2020 dormitories are arranged in the New Century, subsequent accommodation is unknown, depending on the school arrangements.</li>
+<li>Some classes have been deleted from the seminar, but there are still a lot of reports, and some teachers have a lot of requirements.</li>
+<li>College study materials, textbooks, etc., in the major group chat, can also be seen, you can also refer to <a href="https://chasing1020.github.io/post/ces-materials/">CES Materials</a> and you may find it helpful to browse the <a href="https://github.com/shuosc/libshu">libshu</a> which includes the material collected by the Open Source Community.</li>
+<li>Many of the final exams are far less detailed than the freshman year, most of them are less incomplete, and you will need some preparation skills.</li>
+<li>In class, most of the girls sit in the front row more, and whether or not you can get rid of the single depends on your ability.</li>
+<li>About class activities, because our courses are self-selected, everyone’s daily life trajectory is more scattered or gathered in their small circle, I think the class cohesion is not so strong to some extent.</li>
+<li>Most of the courses, including laboratory classes, will be on the East Side, or relatively far, winter morning on eight East Side is very painful, so it is recommended to learn a bicycle for convenience.</li>
+<li>ACM and Cyberspace security labs are located on the 7th and 6th floors of the computer building, which are currently open to specific students. For teamwork competitions, it is important to find like-minded partners who are willing to devote their time and have strong abilities (not reflected in their GPAs).</li>
+<li>Students who major in AI should try to contact their supervisors as early as possible to try to borrow a GPU server, and those who are strong can also try to contact their supervisors in advance to join their graduate groups.</li>
+</ol>
+<h1 id="5-On-the-way"><a href="#5-On-the-way" class="headerlink" title="5. On the way"></a>5. On the way</h1><blockquote>
+<p>If you have decided to major in the Computer Science and Technology, here are some suggestions for studying in advance.</p>
+</blockquote>
+<ol>
+<li><p>English counts! English counts! English counts!</p>
+<ul>
+<li>Learn to use Google and learn to read English materials. Never use Baidu to find answers. (It is highly recommended to add <code>127.0.0.1 www.baidu.com</code> in your <a href="https://man7.org/linux/man-pages/man5/hosts.5.html">&#x2F;etc&#x2F;hosts</a> file, which will promise that you will not able to use it.)</li>
+<li>Learn more on <a href="https://github.com/">Github</a>, <a href="https://stackoverflow.com/">Stackoverflow</a> and less on CSDN or Cnblogs.</li>
+<li>Learn to fix bugs by <a href="https://en.wikipedia.org/wiki/STFW">STFW</a> and <a href="https://en.wikipedia.org/wiki/RTFM">RTFM</a>, which is the most important skill for a programmer.</li>
+<li>Learn <a href="http://www.catb.org/~esr/faqs/smart-questions.html">how to ask questions the smart way</a>.</li>
+</ul>
+</li>
+<li><p>Create a GitHub account, and build a personal blog on it, you can use <a href="https://gohugo.io/">hugo</a>, <a href="https://hexo.io/">hexo</a> and other frameworks, the whole specific process follows Google and official documentation, the process you will learn a lot, including Git, read documents, write configuration files and other operations.</p>
+</li>
+<li><p>Specific learning direction, learning a new language and related technologies, learning process to take notes.</p>
+<ul>
+<li>Back-end: Java, Golang, C++, Rust, etc., and Web frameworks such as Springboot, and Gin, capable students can learn about DBMS, Redis, MQ, ES and other technologies in advance.</li>
+<li>Front-end&#x2F;client: JavaScript, TypeScript, Dart, Kotlin, Swift and so on, frameworks including Vue, React, Angular, etc., learning Node.js, as well as agents, caches, gateways, tunnels, etc.</li>
+<li>AI can start to learn Python, Matlab and so on, as well as the common TensorFlow or PyTorch, efforts to improve the level of English and start trying to improve the ability to find literature&#x2F;reading literature.</li>
+</ul>
+</li>
+<li><p>Learn Linux including <a href="https://docs.microsoft.com/en-us/windows/wsl/install">WSL</a> and <a href="https://www.docker.com/">Docker</a>, it is highly recommended to learn Docker to save the time to build the environment.</p>
+</li>
+<li><p>Learn the professional course knowledge in advance, refer to the <a href="https://csdiy.wiki/">CS Self-Study Guide</a>, it is suggested to learn computer science by doing the labs.</p>
+</li>
+<li><p>When you finish the above, you should have a general direction of what to study in the future, you can also read <a href="https://chasing1020.github.io/post/my-cs-learning-route/">My Computer Study Route</a>.</p>
+</li>
+</ol>
+<h1 id="6-Ending"><a href="#6-Ending" class="headerlink" title="6. Ending"></a>6. Ending</h1><p>This article is only expressing my personal opinion, I hope students will not change their opinion towards this major because of the shortcomings of the profession I mentioned, or blindly decide because of the so-called high salary. On the way of choosing a major, often a decision will greatly affect the future trajectory of your life.</p>
+<p>The fact that you have the grades to get into a computer science college also means that you have the right to choose almost any major, so please choose your major carefully. After all, the final choice of major is still yours, so please make sure to make a decision based on your interests, family environment, future development and all kinds of factors, and remember that at this point, anyone, including your teachers, family and classmates, can only just provide advice at all.</p>
+<p>Four years of college life is neither too long nor too short. While enjoying the comfortable campus life, you have become a frog in warm water without realizing it.</p>
+<p>We need to break away from the inertia of student thinking under the score measurement system, “Please be sure to remember: four years of college life gives you is just a kind of the undergo of your life, when you graduate, the string of pale scores has been invalidated.”.</p>
+<h1 id="7-Remarks"><a href="#7-Remarks" class="headerlink" title="7. Remarks"></a>7. Remarks</h1><p>Here are some links related to this post.</p>
+<ol>
+<li><p><a href="https://lemon-412.github.io/2020/07/17/%E4%B8%8A%E5%A4%A7%E8%AE%A1%E9%99%A2%E6%8A%A5%E8%80%83%E6%8C%87%E5%8C%97/">Guide of Choice SHU CES</a></p>
+</li>
+<li><p><a href="https://luminolt.cn/post/a-guide-for-newbies-in-cs/">A Guide for newbies in Cyberspace Security</a></p>
+</li>
+</ol>
+<p>Thank you for reading here, after you have finished your blog, you can comment on this post below to contact me to add your link. Anyway, you are free to ask any questions about this post. If there is anything inappropriate, please comment&#x2F;contact me and I will change it as soon as possible.</p>
+]]></content>
+      <categories>
+        <category>转载</category>
       </categories>
   </entry>
   <entry>
@@ -275,164 +493,5 @@
         <tag>windows</tag>
         <tag>计算机</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>【转载】About Computer Science</title>
-    <url>/content/%E3%80%90%E8%BD%AC%E8%BD%BD%E3%80%91About%20Computer%20Science/</url>
-    <content><![CDATA[<p>授权转载自<a href="https://chasing1020.github.io/post/about-computer-science/">chasing学长的博客</a>。</p>
-<p>要知道写一份像这样的经验分享东西，而且是关于学科专业生活学习各个方面的博客，是很花费精力和心血的。在此对学长表示感谢。文中涉及了计算机科学相关的问题：什么是计算机科学与工程？我们为什么要学习它？我们所处的环境怎样？未来的形势会如何？专业的日常生活是什么样？我们该以何种方法途径去学习？</p>
-<hr>
-<p>It is a yearly “divide major” season, and now I am looking back at the series of computer science <a href="https://www.zhihu.com/question/326615493/answer/711051528">questions</a> and answers I have browsed in Zhihu during my freshman year, and I feel a lot of emotions. I have been thinking about it for a long time, and this is the first time I have seen such numerous questions and discussions about computer science, hence I write about this post. If you find any bugs or grammar issues, please don’t hesitate to contact me to fix them. Anyway, thanks again for accepting my poor English.</p>
-<h1 id="0-Preface"><a href="#0-Preface" class="headerlink" title="0. Preface"></a>0. Preface</h1><blockquote>
-<p>What is computer science? Why does our country need students majoring in it? What is the future of this major? Will computer science be popular in the future?</p>
-</blockquote>
-<p>Two years later, when I introduced this major to my younger brother and sister who study at our university as a “past person”, it was too difficult for me to write the answer because I was worried about my lack of ability and short-sightedness, which brought all kinds of misguidance to them; secondly, the choice of major at the undergraduate level will probably affect a person’s life and mislead others. The third is that the choice of major at the undergraduate level may affect one’s life and mislead the future of others.</p>
-<p>Therefore, in this article, I will try my best to talk about my experience and thoughts in computer science over the past two years, and hope readers can gain something worthwhile. The content I share is only my opinion and does not represent any absolute theory. </p>
-<h1 id="1-Our-Environment"><a href="#1-Our-Environment" class="headerlink" title="1. Our Environment"></a>1. Our Environment</h1><blockquote>
-<p>This is an era of prosperity and crisis: Owing to the COVID-19, our world is experiencing changes never seen in a century.</p>
-</blockquote>
-<p>The annually spring and autumn recruitment is the barometer of the development of the computer industry, from last year, Tencent paid 40w high salary in the hot search, and then some time ago, due to the epidemic of the re-emergence of the side of layoffs while also locking the head count. Until today President Liu Kiping of Tencent issued an article: “Internal manpower investment will be adjusted from the edge of the business to the core business, in the industry to occur fundamental changes in the industry when actively embracing change”.</p>
-<p>In the general environment, today’s Internet is far less than what it was 10 years ago, the so-called “Although it is a pig, it can wind and waves.”, which Howard’s comment is: “Now the Internet from the era of incremental into the era of stock. Everyone has no way to make the cake bigger, so they can only grab each other’s cake”.</p>
-<p><a href="https://en.wikipedia.org/wiki/The_Mythical_Man-Month">The Mythical Man-Month</a> which is the bible of software engineering points out that more people can not shorten the software development progress, and it is dangerous to use “man-month” to measure the size of the work. Because <code>the number of people != efficiency</code>, the way to adjust the organizational structure of the current major manufacturers is also very straightforward - leaving the most valuable programmers. In this environment, with only a small pool of talent to dig, the Internet starting salary also seems very high.</p>
-<p>If only to high salary or good employment and blindly choose computer science major, it can only be said to have entered the survivorship bias. An objective fact is that the average salary of students graduating from our school is far below the average level of Zhihu or Maimai. The best students can collect offers from all the big companies, but the students who usually waste their time, even though they choose this major, often end up not as good as they expect. The salary distribution of this industry is not normal but power-law distribution, only a small group of the best people can share the most cake, the variance of the future development of the same industry will be very large. If you will choose to enter the industry in the future, please try to become the front group of people.</p>
-<p>In this regard, I think the reason for choosing this major should be “you love computer science enough”, not “this major is hot”. If you like the process of building a whole world of order through a process control (auto-state machine) and have some interest in this major, you may want to read on below.</p>
-<h1 id="2-About-CES"><a href="#2-About-CES" class="headerlink" title="2. About CES"></a>2. About CES</h1><blockquote>
-<p>What is the Computer Engineering and Science?</p>
-</blockquote>
-<p>The School of Computer Engineering and Science (CES) offers four majors: Computer Science and Technology, Intelligent Science and Technology, Cyberspace Security, and Artificial Intelligence.</p>
-<p>The gap between these majors, as reflected in the professional courses taken at the undergraduate level, will not be so big, at least most of the basic courses such as data structures, principles of computer composition, operating systems, computer networks (i.e., the 408 in the Master’s degree examination) are treated equally. Corresponding professional courses will focus on the study content, specific details refer to Shanghai University undergraduate professional training program in <a href="https://www.jwc.shu.edu.cn/content.jsp?urltype=news.NewsContentUrl&wbtreeid=1192&wbnewsid=31263">2019</a> and <a href="https://www.jwc.shu.edu.cn/content.jsp?urltype=news.NewsContentUrl&wbtreeid=1192&wbnewsid=32552">2020</a>. And all majors’ rankings are represented by the following table:</p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>2021 Plan</th>
-<th>2021 Rank</th>
-<th>2020 Plan</th>
-<th>2020 Rank</th>
-<th>2019 Plan</th>
-<th>2019 Rank</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Computer Science and Technology</td>
-<td>110</td>
-<td>289&#x2F;1573</td>
-<td>135</td>
-<td>560&#x2F;2029</td>
-<td>150</td>
-<td>582&#x2F;2090</td>
-</tr>
-<tr>
-<td>Intelligent Science and Technology</td>
-<td>26</td>
-<td>375&#x2F;1573</td>
-<td>45</td>
-<td>486&#x2F;2029</td>
-<td>60</td>
-<td>281&#x2F;2090</td>
-</tr>
-<tr>
-<td>Cyberspace Security</td>
-<td>20</td>
-<td>396&#x2F;1573</td>
-<td>25</td>
-<td>495&#x2F;2029</td>
-<td>-</td>
-<td>-</td>
-</tr>
-<tr>
-<td>Artificial Intelligence</td>
-<td>21</td>
-<td>366&#x2F;1573</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-</tbody></table>
-<p>In most cases, there will not be a significant gap in the daily academic communication of interdisciplinary students, because the skills you will use in your future work may not be as closely related to your current chosen major. What teachers teach you will not determine what you will learn about. For example, if you choose computer science and technology, you can still study artificial intelligence, and if you choose AI, you can study cybersecurity-related content. But in detail:</p>
-<ul>
-<li>Computer science and technology: can be understood as the computer industry, the Polytechnic University class, belongs to the computer in the basic disciplines, both soft and hard, optional development direction range is very wide, and the specific direction of research depends entirely on your interest.</li>
-<li>Intelligent science and technology: need to learn some signal processing, matrix algebra, brain cognition, and operations research-related courses, across a wide range.</li>
-<li>Cyberspace security: a new major in my year, the scope of the study is not limited to the so-called “cyber security”, but also distinguishes penetration, reverse, cryptography and so on.</li>
-<li>Artificial intelligence: the research direction and professional course arrangement are also close to the wisdom of science, including mathematical logic, data mining, brain cognition, etc.,<br>it is recommended that students with good mathematics choose, need very good linear algebra and probability theory foundation, but also this is the Department of Mathematics “to grab a job” one of the directions.</li>
-</ul>
-<p>There is no absolute answer to the question of whether a specific major is better or worse. From a personal point of view, the teaching program of the new major still needs time to settle down, 10 weeks of short semesters are compressed together, and even if you take grade 4.0 does not mean that you learned the course well.</p>
-<p>Remember <code>what the school teaches != what I need to learn</code>, you need to be clear about where your future competitiveness in the industry lies. Nowadays, more than 90% of the interview contents of large Internet companies are not what the teachers can teach you, but the fact that the teacher did not teach is not a reason why you don’t know that.</p>
-<h1 id="3-The-future"><a href="#3-The-future" class="headerlink" title="3. The future"></a>3. The future</h1><blockquote>
-<p>What I will do in the future?</p>
-</blockquote>
-<p>In fact, each road is divided and the choice will be different.</p>
-<p><code>For work</code>: If you do not have the intention to study what, it is not recommended to go in the direction of algorithms, the main directions include front-end, client, back-end, testing, operations and maintenance, security, etc. Before the junior year, make sure to finish the professional courses, and do not leave too many courses for the senior year. As early as possible to determine the technology stack used in the interview, looking for online classes (preferably open courses in foreign famous universities, books, blogs, and <a href="https://github.com/sindresorhus/awesome">awesome list</a>; job search in the early efforts to do <a href="https://leetcode.com/problemset/all/">leetcode</a>, the summer of the junior year (or the end of the second year of winter) as early as possible to go to the Internet companies for internship, more accumulated internship experience project experience.</p>
-<ul>
-<li>Internship: it is best to find the schoolmates or online internal push, more understanding of the department’s working environment, overtime status, etc. The primary purpose of the internship is to enrich the resume, it is not recommended to care too much about the salary more or less, the key is you will learn what.</li>
-<li>When you are looking for a job with your internship experience, the name of your internship company only exists for the interviewer to have heard of&#x2F;not heard of two situations. If the goal is to work for a big company, it is not particularly recommended to go to outsourcing companies and traditional industry companies (i.e. companies whose old business is not the Internet) or if you want to take “private jobs” from teachers and make sure to identify the good and bad projects, refer to <a href="https://survivesjtu.gitbook.io/survivesjtumanual/fang-tan-ji/xiao-xin-xiang-mu-de-xian-jing">Shanghai Jiao Tong University Survives Guide</a>.</li>
-</ul>
-<p><code>Taking part in the civil servant exam</code>: Mainly depends on the province, city, unit, and tier, the specific details are unknown.</p>
-<p><code>Push avoid</code>: The specific policy will change every year, refer to The Implementation plan for the work of recommending fresh outstanding undergraduate graduates to be exempted from studying for a master’s degree in <a href="https://cs.shu.edu.cn/info/1198/20176.htm">2022</a> and <a href="https://cs.shu.edu.cn/info/1198/19884.htm">2021</a> School of Computer Science of Shanghai University. The details of the policy will change every year, but it is important to be clear about where you need to get extra points.</p>
-<ul>
-<li>Note that “the scientific research achievements and competition awards of students who cooperate with their immediate family members or those with significantly higher education, titles and positions than themselves are only for reference and are not included in the calculation system of the comprehensive evaluation results.”, means that the route of publishing papers in cooperation with supervisors, finding joint competitions for graduate Ph.D. will not work.</li>
-<li>On the other hand, <code>Shanghai University has a lot of ACM experts == Shanghai University ACM is powerful != you will be powerful definitely when you come to ACM</code>, same for CTF, ASC, etc. Some competitions will cost a lot of time investment if you find it is not suitable also please give up the sunk cost in time, spend time to do leetcode than waste time in the competition.</li>
-</ul>
-<p><code>Taking part in the postgraduate entrance exams</code>: The students with low GPAs who want to fulfill their dreams of a famous domestic school is also the choice of most students who do not want to work for the time being. The preparation time for the exam begins in the second semester of the junior year, choice is greater than effort. The process of preparing for the exam, choosing a school, etc., depends on the individual situation, so I won’t go into detail here.</p>
-<p><code>Study abroad</code>: The first thing you need to do is to make sure that you are ready to go to the country you want to go to, whether you need to take IELTS or TOEFL, and whether you want to take GRE. In addition, striving to participate in internationally renowned competitions or publish some academic results but also trying to accumulate some foreign company internship experience, in the application are very plus points. As for whether to stay or return to your home country at the end of your graduate studies abroad, it ultimately depends on your situation.</p>
-<h1 id="4-Daily-life"><a href="#4-Daily-life" class="headerlink" title="4. Daily life"></a>4. Daily life</h1><blockquote>
-<p>What is life like in the college?</p>
-</blockquote>
-<ol>
-<li>Grade 2019 and 2020 dormitories are arranged in the New Century, subsequent accommodation is unknown, depending on the school arrangements.</li>
-<li>Some classes have been deleted from the seminar, but there are still a lot of reports, and some teachers have a lot of requirements.</li>
-<li>College study materials, textbooks, etc., in the major group chat, can also be seen, you can also refer to <a href="https://chasing1020.github.io/post/ces-materials/">CES Materials</a> and you may find it helpful to browse the <a href="https://github.com/shuosc/libshu">libshu</a> which includes the material collected by the Open Source Community.</li>
-<li>Many of the final exams are far less detailed than the freshman year, most of them are less incomplete, and you will need some preparation skills.</li>
-<li>In class, most of the girls sit in the front row more, and whether or not you can get rid of the single depends on your ability.</li>
-<li>About class activities, because our courses are self-selected, everyone’s daily life trajectory is more scattered or gathered in their small circle, I think the class cohesion is not so strong to some extent.</li>
-<li>Most of the courses, including laboratory classes, will be on the East Side, or relatively far, winter morning on eight East Side is very painful, so it is recommended to learn a bicycle for convenience.</li>
-<li>ACM and Cyberspace security labs are located on the 7th and 6th floors of the computer building, which are currently open to specific students. For teamwork competitions, it is important to find like-minded partners who are willing to devote their time and have strong abilities (not reflected in their GPAs).</li>
-<li>Students who major in AI should try to contact their supervisors as early as possible to try to borrow a GPU server, and those who are strong can also try to contact their supervisors in advance to join their graduate groups.</li>
-</ol>
-<h1 id="5-On-the-way"><a href="#5-On-the-way" class="headerlink" title="5. On the way"></a>5. On the way</h1><blockquote>
-<p>If you have decided to major in the Computer Science and Technology, here are some suggestions for studying in advance.</p>
-</blockquote>
-<ol>
-<li><p>English counts! English counts! English counts!</p>
-<ul>
-<li>Learn to use Google and learn to read English materials. Never use Baidu to find answers. (It is highly recommended to add <code>127.0.0.1 www.baidu.com</code> in your <a href="https://man7.org/linux/man-pages/man5/hosts.5.html">&#x2F;etc&#x2F;hosts</a> file, which will promise that you will not able to use it.)</li>
-<li>Learn more on <a href="https://github.com/">Github</a>, <a href="https://stackoverflow.com/">Stackoverflow</a> and less on CSDN or Cnblogs.</li>
-<li>Learn to fix bugs by <a href="https://en.wikipedia.org/wiki/STFW">STFW</a> and <a href="https://en.wikipedia.org/wiki/RTFM">RTFM</a>, which is the most important skill for a programmer.</li>
-<li>Learn <a href="http://www.catb.org/~esr/faqs/smart-questions.html">how to ask questions the smart way</a>.</li>
-</ul>
-</li>
-<li><p>Create a GitHub account, and build a personal blog on it, you can use <a href="https://gohugo.io/">hugo</a>, <a href="https://hexo.io/">hexo</a> and other frameworks, the whole specific process follows Google and official documentation, the process you will learn a lot, including Git, read documents, write configuration files and other operations.</p>
-</li>
-<li><p>Specific learning direction, learning a new language and related technologies, learning process to take notes.</p>
-<ul>
-<li>Back-end: Java, Golang, C++, Rust, etc., and Web frameworks such as Springboot, and Gin, capable students can learn about DBMS, Redis, MQ, ES and other technologies in advance.</li>
-<li>Front-end&#x2F;client: JavaScript, TypeScript, Dart, Kotlin, Swift and so on, frameworks including Vue, React, Angular, etc., learning Node.js, as well as agents, caches, gateways, tunnels, etc.</li>
-<li>AI can start to learn Python, Matlab and so on, as well as the common TensorFlow or PyTorch, efforts to improve the level of English and start trying to improve the ability to find literature&#x2F;reading literature.</li>
-</ul>
-</li>
-<li><p>Learn Linux including <a href="https://docs.microsoft.com/en-us/windows/wsl/install">WSL</a> and <a href="https://www.docker.com/">Docker</a>, it is highly recommended to learn Docker to save the time to build the environment.</p>
-</li>
-<li><p>Learn the professional course knowledge in advance, refer to the <a href="https://csdiy.wiki/">CS Self-Study Guide</a>, it is suggested to learn computer science by doing the labs.</p>
-</li>
-<li><p>When you finish the above, you should have a general direction of what to study in the future, you can also read <a href="https://chasing1020.github.io/post/my-cs-learning-route/">My Computer Study Route</a>.</p>
-</li>
-</ol>
-<h1 id="6-Ending"><a href="#6-Ending" class="headerlink" title="6. Ending"></a>6. Ending</h1><p>This article is only expressing my personal opinion, I hope students will not change their opinion towards this major because of the shortcomings of the profession I mentioned, or blindly decide because of the so-called high salary. On the way of choosing a major, often a decision will greatly affect the future trajectory of your life.</p>
-<p>The fact that you have the grades to get into a computer science college also means that you have the right to choose almost any major, so please choose your major carefully. After all, the final choice of major is still yours, so please make sure to make a decision based on your interests, family environment, future development and all kinds of factors, and remember that at this point, anyone, including your teachers, family and classmates, can only just provide advice at all.</p>
-<p>Four years of college life is neither too long nor too short. While enjoying the comfortable campus life, you have become a frog in warm water without realizing it.</p>
-<p>We need to break away from the inertia of student thinking under the score measurement system, “Please be sure to remember: four years of college life gives you is just a kind of the undergo of your life, when you graduate, the string of pale scores has been invalidated.”.</p>
-<h1 id="7-Remarks"><a href="#7-Remarks" class="headerlink" title="7. Remarks"></a>7. Remarks</h1><p>Here are some links related to this post.</p>
-<ol>
-<li><p><a href="https://lemon-412.github.io/2020/07/17/%E4%B8%8A%E5%A4%A7%E8%AE%A1%E9%99%A2%E6%8A%A5%E8%80%83%E6%8C%87%E5%8C%97/">Guide of Choice SHU CES</a></p>
-</li>
-<li><p><a href="https://luminolt.cn/post/a-guide-for-newbies-in-cs/">A Guide for newbies in Cyberspace Security</a></p>
-</li>
-</ol>
-<p>Thank you for reading here, after you have finished your blog, you can comment on this post below to contact me to add your link. Anyway, you are free to ask any questions about this post. If there is anything inappropriate, please comment&#x2F;contact me and I will change it as soon as possible.</p>
-]]></content>
-      <categories>
-        <category>转载</category>
-      </categories>
   </entry>
 </search>
