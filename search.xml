@@ -1,65 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Kubernetes 集群搭建与使用（一）</title>
-    <url>/Kubernetes-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<blockquote>
-<p>本篇主讲 Kubernates 集群如何以 Containerd 初始化 Kube-APIServer 以及加入节点。</p>
-</blockquote>
-<h1 id="Kubernetes-集群初始化"><a href="#Kubernetes-集群初始化" class="headerlink" title="Kubernetes 集群初始化"></a>Kubernetes 集群初始化</h1><h2 id="Kebernetes-API-server安装"><a href="#Kebernetes-API-server安装" class="headerlink" title="Kebernetes API-server安装"></a>Kebernetes API-server安装</h2><h3 id="1-install-kubectl-kubelet-and-kubectl"><a href="#1-install-kubectl-kubelet-and-kubectl" class="headerlink" title="1. install kubectl, kubelet and kubectl"></a>1. install kubectl, kubelet and kubectl</h3><p>根据自己的需要选择合适的版本进行安装，这里我选择使用 <a href="https://v1-30.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl">v1.30</a> ，跟随文档完成五步安装即可。目前最新的 Release 版本是 <code>v1.31</code>，但是很多生态并没有完全适配最新稳定版本，选用<code>v1.30</code>可以支持上下浮动一个版本。</p>
-<p>配置完成后加载补全。</p>
-<p>对于 <code>fish</code>：<code>kubectl completion fish &gt; ~/.config/fish/completions/kubectl.fish</code>。</p>
-<p>对于 <code>zsh</code> ： <code>kubectl completion zsh &gt; ~/.kubectl-completion &amp;&amp; source ~/.kubectl-completion</code>。</p>
-<h3 id="2-install-containerd"><a href="#2-install-containerd" class="headerlink" title="2. install containerd"></a>2. install containerd</h3><ul>
-<li>启用IPv4包转发</li>
-</ul>
-<p>开启IPv4数据包转发:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># sysctl params required by setup, params persist across reboots</span><br><span class="line">cat &lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"># Apply sysctl params without reboot</span><br><span class="line">sudo sysctl --system</span><br></pre></td></tr></table></figure>
-
-<p>验证 <code>net.ipv4.ip_forward</code> 是否设置为1:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.ip_forward # -&gt; net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>控制组(cgroup)驱动程序</li>
-</ul>
-<p><code>control groups</code> 在Linux上用于限制分配给进程的资源，目前PC机上的最新Linux OS大多采用的是<code>systemd</code>作为<code>cgroup driver</code>。</p>
-<p>修改 <code>ctr</code> 设置(<code>/etc/containerd/config.toml</code>)，启动 <code>cgroup</code>。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">[<span class="string">plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes.runc.options</span>]</span><br><span class="line">  <span class="string">...</span></span><br><span class="line">  <span class="string">SystemdCgroup</span> <span class="string">=</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>修改配置后重启服务。</p>
-<p>选择选项1 <a href="https://v1-30.docs.kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd">从官方源下载containerd</a>，完成三步的安装。</p>
-<ul>
-<li>配置 <code>ctr</code> HTTP代理</li>
-</ul>
-<p>在 <code>systemd</code> 处配置HTTP代理。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo vim /etc/systemd/system/containerd.service</span></span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">...</span><br><span class="line">Environment=&quot;HTTP_PROXY=http://10.0.65.15:3128&quot;</span><br><span class="line">Environment=&quot;HTTPS_PROXY=http://10.0.65.15:3128&quot;</span><br><span class="line">Environment=&quot;NO_PROXY=localhost,127.0.0.1,10.0.4.11&quot;</span><br></pre></td></tr></table></figure>
-
-<p>重新加载配置生效。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl daemon-reload &amp;&amp; sudo systemctl restart containerd</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>修改 <code>ctr</code> 配置<br>修改 <code>sandbox镜像</code> 为 <code>registry.lank8s.cn/pause:3.9</code>（根据kubeadm提示的版本）。<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># /etc/containerd/config.toml</span></span><br><span class="line">[<span class="string">plugins.&quot;io.containerd.grpc.v1.cri&quot;</span>]</span><br><span class="line"> <span class="string">...</span></span><br><span class="line"> <span class="string">sandbox_image</span> <span class="string">=</span> <span class="string">&quot;registry.lank8s.cn/pause:3.9&quot;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="3-kubeadm-启动"><a href="#3-kubeadm-启动" class="headerlink" title="3. kubeadm 启动"></a>3. kubeadm 启动</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo kubeadm init --image-repository=lank8s.cn --kubernetes-version=v1.30.4 --pod-network-cidr=10.244.0.0/16 --service-cidr=10.96.0.0/12 --ignore-preflight-errors=Swap </span><br></pre></td></tr></table></figure>
-
-<p>此时应当看到集群成功初始化，可以看到可以加入其他节点到集群中。</p>
-<p>初始化完成后会提醒必须先完成 配置 <code>KUBECONFIG</code> 变量以及完成 <code>k8s</code>网络配置后才能加入新的 <code>node</code> 。注意按照初始化完成后提示的步骤将 <code>kubelet</code> 的配置文件复制并更改拥有权到 <code>~/.kube/config</code> 文件处。</p>
-<p>完成配置和网络设置后，可以向集群加入新的 <code>node</code>。</p>
-<p>对于新的 <code>node</code> 至少需要完成步骤一和步骤二，才能成功加入。</p>
-<p>如果 <code>kubectl get node</code> 发现不在 <code>Running</code> 状态，可以使用 <code>systemctl</code>, <code>journalctl</code>, <code>kubectl describe</code>, <code>kubectl get</code> 等等命令检查集群状态。</p>
-<p>如果初始化搭建不成功，可以使用 <code>kubeadm reset</code> 重新进行操作。</p>
-<h3 id="关于网络配置"><a href="#关于网络配置" class="headerlink" title="关于网络配置"></a>关于网络配置</h3><p>Kubernetes 官方给出了诸多方案，也算其生态混乱的一种体现。这里先选用最简单的一种网络方案 <code>flaanel</code>。</p>
-<p>如果选用 <code>flannel</code>，似乎需要在每个加入的节点都安装。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Deploying Flannel with kubectl</span><br><span class="line">kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Learning</category>
-      </categories>
-      <tags>
-        <tag>运维</tag>
-        <tag>集群</tag>
-        <tag>Kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C++现代特性</title>
     <url>/content/C-%E7%8E%B0%E4%BB%A3%E7%89%B9%E6%80%A7/</url>
     <content><![CDATA[<h1 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h1><h2 id="C-11"><a href="#C-11" class="headerlink" title="C++11"></a>C++11</h2><h3 id="Lambda-Expressions"><a href="#Lambda-Expressions" class="headerlink" title="Lambda Expressions"></a>Lambda Expressions</h3><p>C++11开始支持lambda函数。</p>
@@ -492,6 +433,80 @@
         <tag>装机</tag>
         <tag>windows</tag>
         <tag>计算机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kubernetes 集群搭建与使用（一）</title>
+    <url>/content/Kubernetes-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<blockquote>
+<p>本篇主讲 Kubernates 集群如何以 Containerd 初始化 Kube-APIServer 以及加入节点。</p>
+</blockquote>
+<h1 id="Kubernetes-集群初始化"><a href="#Kubernetes-集群初始化" class="headerlink" title="Kubernetes 集群初始化"></a>Kubernetes 集群初始化</h1><h2 id="Kebernetes-API-server安装"><a href="#Kebernetes-API-server安装" class="headerlink" title="Kebernetes API-server安装"></a>Kebernetes API-server安装</h2><h3 id="1-install-kubectl-kubelet-and-kubectl"><a href="#1-install-kubectl-kubelet-and-kubectl" class="headerlink" title="1. install kubectl, kubelet and kubectl"></a>1. install kubectl, kubelet and kubectl</h3><p>根据自己的需要选择合适的版本进行安装，这里我选择使用 <a href="https://v1-30.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl">v1.30</a> ，跟随文档完成五步安装即可。目前最新的 Release 版本是 <code>v1.31</code>，但是很多生态并没有完全适配最新稳定版本，选用<code>v1.30</code>可以支持上下浮动一个版本。</p>
+<p>配置完成后加载补全。</p>
+<p>对于 <code>fish</code>：<code>kubectl completion fish &gt; ~/.config/fish/completions/kubectl.fish</code>。</p>
+<p>对于 <code>zsh</code> ： <code>kubectl completion zsh &gt; ~/.kubectl-completion &amp;&amp; source ~/.kubectl-completion</code>。</p>
+<h3 id="2-install-containerd"><a href="#2-install-containerd" class="headerlink" title="2. install containerd"></a>2. install containerd</h3><ul>
+<li>启用IPv4包转发</li>
+</ul>
+<p>开启IPv4数据包转发:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># sysctl params required by setup, params persist across reboots</span><br><span class="line">cat &lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf</span><br><span class="line">net.ipv4.ip_forward = 1</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"># Apply sysctl params without reboot</span><br><span class="line">sudo sysctl --system</span><br></pre></td></tr></table></figure>
+
+<p>验证 <code>net.ipv4.ip_forward</code> 是否设置为1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sysctl net.ipv4.ip_forward # -&gt; net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure>
+
+
+
+<p>选择选项1 <a href="https://v1-30.docs.kubernetes.io/docs/setup/production-environment/container-runtimes/#containerd">从官方源下载containerd</a>，完成三步的安装。并注意留心按文档安装过程中不要跳过 <code>systemd</code> 的设置。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo curl -L https://raw.githubusercontent.com/containerd/containerd/main/containerd.service -o /etc/systemd/system/containerd.service</span><br></pre></td></tr></table></figure>
+
+<p>同时设置代理。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[Service]</span><br><span class="line">...</span><br><span class="line">Environment=&quot;HTTP_PROXY=http://10.0.65.15:3128&quot;</span><br><span class="line">Environment=&quot;HTTPS_PROXY=http://10.0.65.15:3128&quot;</span><br><span class="line">Environment=&quot;NO_PROXY=localhost,127.0.0.1,10.0.4.11&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl daemon-reload &amp;&amp; sudo systemctl restart containerd</span><br></pre></td></tr></table></figure>
+<p>重新启动服务。</p>
+<p>生成 <code>containerd</code> 默认配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir -p /etc/containerd</span><br><span class="line">containerd config default &gt; /etc/containerd/config.toml</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>控制组(cgroup)驱动程序</li>
+</ul>
+<p><code>control groups</code> 在Linux上用于限制分配给进程的资源，目前PC机上的最新Linux OS大多采用的是<code>systemd</code>作为<code>cgroup driver</code>。</p>
+<p>修改 <code>ctr</code> 设置(<code>/etc/containerd/config.toml</code>)，启动 <code>cgroup</code>。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">[<span class="string">plugins.&quot;io.containerd.grpc.v1.cri&quot;.containerd.runtimes.runc.options</span>]</span><br><span class="line">  <span class="string">...</span></span><br><span class="line">  <span class="string">SystemdCgroup</span> <span class="string">=</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>修改配置后重启服务。</p>
+<ul>
+<li>配置 <code>ctr</code> HTTP代理</li>
+</ul>
+<p>在 <code>systemd</code> 处配置HTTP代理。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo vim /etc/systemd/system/containerd.service</span></span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">...</span><br><span class="line">Environment=&quot;HTTP_PROXY=http://10.0.65.15:3128&quot;</span><br><span class="line">Environment=&quot;HTTPS_PROXY=http://10.0.65.15:3128&quot;</span><br><span class="line">Environment=&quot;NO_PROXY=localhost,127.0.0.1,10.0.4.11&quot;</span><br></pre></td></tr></table></figure>
+
+<p>重新加载配置生效。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl daemon-reload &amp;&amp; sudo systemctl restart containerd</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改 <code>ctr</code> 配置<br>修改 <code>sandbox镜像</code> 为 <code>registry.lank8s.cn/pause:3.9</code>（根据kubeadm提示的版本）。<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># /etc/containerd/config.toml</span></span><br><span class="line">[<span class="string">plugins.&quot;io.containerd.grpc.v1.cri&quot;</span>]</span><br><span class="line"> <span class="string">...</span></span><br><span class="line"> <span class="string">sandbox_image</span> <span class="string">=</span> <span class="string">&quot;registry.lank8s.cn/pause:3.9&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-kubeadm-启动"><a href="#3-kubeadm-启动" class="headerlink" title="3. kubeadm 启动"></a>3. kubeadm 启动</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo kubeadm init --image-repository=registry.lank8s.cn --kubernetes-version=v1.30.4 --pod-network-cidr=10.244.0.0/16 --service-cidr=10.96.0.0/12 --ignore-preflight-errors=Swap </span><br></pre></td></tr></table></figure>
+
+<p>此时应当看到集群成功初始化，可以看到可以加入其他节点到集群中。</p>
+<p>初始化完成后会提醒必须先完成 配置 <code>KUBECONFIG</code> 变量以及完成 <code>k8s</code>网络配置后才能加入新的 <code>node</code> 。注意按照初始化完成后提示的步骤将 <code>kubelet</code> 的配置文件复制并更改拥有权到 <code>~/.kube/config</code> 文件处。</p>
+<p>完成配置和网络设置后，可以向集群加入新的 <code>node</code>。</p>
+<p>对于新的 <code>node</code> 至少需要完成步骤一和步骤二，才能成功加入。</p>
+<p>如果 <code>kubectl get node</code> 发现不在 <code>Running</code> 状态，可以使用 <code>systemctl</code>, <code>journalctl</code>, <code>kubectl describe</code>, <code>kubectl get</code> 等等命令检查集群状态。</p>
+<p>如果初始化搭建不成功，可以使用 <code>kubeadm reset</code> 重新进行操作。</p>
+<h3 id="关于网络配置"><a href="#关于网络配置" class="headerlink" title="关于网络配置"></a>关于网络配置</h3><p>Kubernetes 官方给出了诸多方案，也算其生态混乱的一种体现。这里先选用最简单的一种网络方案 <code>flaanel</code>。</p>
+<p>如果选用 <code>flannel</code>，似乎需要在每个加入的节点都安装。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Deploying Flannel with kubectl</span><br><span class="line">kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>运维</category>
+      </categories>
+      <tags>
+        <tag>运维</tag>
+        <tag>集群</tag>
+        <tag>Kubernetes</tag>
       </tags>
   </entry>
 </search>
